@@ -345,6 +345,9 @@ body.stage .bv{display:none!important}
 .bv .btns button{min-height:44px}
 .bibord{display:flex;align-items:center;gap:8px}.bibord label{margin:0;white-space:nowrap}.bibord select{min-height:44px}
 .bibit .bx.mv{min-width:36px;padding:6px 4px}
+.syncbox{border:1px solid var(--line);border-radius:10px;padding:8px 10px}.syncbox summary{cursor:pointer;min-height:36px;display:flex;align-items:center;gap:8px;font-weight:700}
+.syncchip{font-weight:400;font-size:12px;color:var(--mut)}.syncchip.w{color:#b45309}.syncchip.ok{color:#15803d}.syncchip.e{color:#dc2626}
+.bibd .bh .syncchip{margin-left:auto;margin-right:8px}
 /* Diálogo del botón Atrás */
 .atr{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px}
 .atrb{width:100%;max-width:400px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 8px 30px rgba(0,0,0,.35)}
@@ -405,6 +408,18 @@ body.sb-esc .songbar .sb1{display:none}body.sb-esc .songbar .sb2{margin-top:0}
 body.stage .songbar{display:none!important}@media print{.songbar{display:none!important}}
 .bibsum{padding:8px 10px;border:1px solid var(--line);border-left:4px solid #2563eb;border-radius:10px;background:rgba(37,99,235,.07);font-size:13px;line-height:1.4}
 .bibsum b{font-size:14px}.bibsum .m{color:var(--mut)}.bibley{font-size:11.5px;color:var(--mut)}
+
+/* ===== PRO v0.43: configuración general y pasos guiados ===== */
+.topbar .ttl .cfgb{min-height:32px;min-width:32px;padding:2px 6px;font-size:16px;line-height:1}@media(max-width:600px){.topbar .ttl{gap:8px}.topbar .ttl .cfgb{min-height:30px;min-width:30px;padding:0 5px;font-size:15px}}
+.gshade{position:fixed;z-index:80;pointer-events:none;border-radius:10px;box-shadow:0 0 0 9999px rgba(0,0,0,.55);outline:3px solid #60a5fa;outline-offset:2px;transition:top .15s,left .15s,width .15s,height .15s}
+.gshade.full{left:50%!important;top:50%!important;width:0!important;height:0!important;outline:0}
+.gpop{position:fixed;z-index:81;width:min(360px,92vw);background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:12px;box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.gpop .gph{display:flex;justify-content:space-between;gap:8px;align-items:baseline;margin-bottom:6px}.gpop .gph b{font-size:14px}.gpop .gph span{font-size:12px;color:var(--mut);white-space:nowrap}
+.gpop .gpx{font-size:14.5px;line-height:1.4}.gpop .gpx .nota{display:block;margin-top:6px;font-size:12px;color:#b45309}
+.gpop .btns{margin-top:10px}.gpop .btns button{min-height:44px;flex:1 1 0}
+body.stage .gshade,body.stage .gpop{display:none!important}@media print{.gshade,.gpop{display:none!important}}
+#cfggen{z-index:79}
+#cfggen .bibit .bo{min-height:44px}#cfggen .bibit .bx{min-height:44px}
 @media print{
 .nsw{display:none!important}
 .topbar,.tabs,.stagex{display:none!important}
@@ -430,12 +445,20 @@ body{background:#fff}
 </head>
 <body>
 <script>try{var t=localStorage.getItem("cifrado-pro-tema")||"oscuro";if(t==="oscuro")document.documentElement.setAttribute("data-theme","dark");else if(t==="claro")document.documentElement.setAttribute("data-theme","light");else document.documentElement.removeAttribute("data-theme")}catch(e){document.documentElement.setAttribute("data-theme","dark")}</script>
-<div class="topbar"><div class="ttl"><h2>Plantilla de Cifrado PRO</h2><div class="ver"><span id="verTxt"></span><button id="tb-cl" class="lnk" onclick="abrirChangelog()">Changelog</button></div></div><div class="tbr"><button class="bvb" onclick="bvAbrir()" title="Página de inicio">⌂<span class="bvl"> Inicio</span></button><button id="bibbtn" onclick="bibAbrirCajon()" title="Biblioteca de canciones y setlists">♫ Repertorio<i id="bibdot" class="bibdot" hidden></i></button><button id="tb-pdf" class="main" onclick="window.print()">Imprimir / PDF</button><button id="tb-esc" onclick="entrarEscenario()">▶ Escenario</button></div></div>
+<div class="topbar"><div class="ttl"><h2>Plantilla de Cifrado PRO</h2><div class="ver"><span id="verTxt"></span><button id="tb-cl" class="lnk" onclick="abrirChangelog()">Changelog</button></div><button id="tb-cfg" class="cfgb" onclick="cfgGenAbrir()" title="Configuración general" aria-label="Configuración general">⚙</button></div><div class="tbr"><button class="bvb" onclick="bvAbrir()" title="Página de inicio">⌂<span class="bvl"> Inicio</span></button><button id="bibbtn" onclick="bibAbrirCajon()" title="Biblioteca de canciones y setlists">♫ Repertorio<i id="bibdot" class="bibdot" hidden></i></button><button id="tb-pdf" class="main" onclick="window.print()">Imprimir / PDF</button><button id="tb-esc" onclick="entrarEscenario()">▶ Escenario</button></div></div>
 <button class="stagex" onclick="salirEscenario()">✕ Salir</button>
 <button class="stzone l" tabindex="-1" onclick="stZone(-1)" aria-label="Retroceder">◀</button><button class="stzone r" tabindex="-1" onclick="stZone(1)" aria-label="Avanzar">▶</button>
 <div class="stbar" id="stbar"><span class="stg" id="st-setg" hidden><button id="st-tp" onclick="stTema(-1)" title="Tema anterior del setlist">◀ Tema</button><button id="st-ti" onclick="stSetLista()">– de –</button><button id="st-tn" onclick="stTema(1)" title="Tema siguiente del setlist">Tema ▶</button></span><span class="stg"><button id="st-m" onclick="stTrans(-1)" title="Bajar un semitono">♭ −1</button><b id="st-key">—</b><button id="st-p" onclick="stTrans(1)" title="Subir un semitono">♯ +1</button><button onclick="stTrans(0,1)" title="Volver al tono original">↺</button></span><button class="bpmonly" onclick="stNudge(-1)" title="Atrasar una fila">◀ fila</button><button id="st-auto" onclick="toggleAuto()">▶ Auto-scroll</button><button class="bpmonly" onclick="stNudge(1)" title="Adelantar una fila">fila ▶</button><select id="st-not" onchange="stNot(this.value)" title="Notación"><option value="orig">Origen</option><option value="am">C D E</option><option value="lat">Do Re Mi</option><option value="rom">I II III</option><option value="impl">1 2 3</option><option value="nash">1 2m 3</option></select><button id="st-tap" onclick="tapTempo()" title="Tap tempo">TAP</button><button id="st-tapr" onclick="tapRestore()" disabled title="Restablecer el BPM anterior">↺ BPM</button><button id="st-met" onclick="metToggle()" title="Metrónomo">♩ Metrónomo</button><button id="st-neg" onclick="negSet('S')" title="Hoja en negativo">◐ Negativo</button><button id="st-cfg" onclick="$('stset').classList.toggle('open')" title="Parámetros de desplazamiento">⚙</button><button onclick="document.body.classList.add('stmin')" title="Ocultar barra">▾</button></div>
 <button class="stchip" onclick="document.body.classList.remove('stmin')">⋯</button>
 <div class="sttoast" id="sttoast"></div>
+<div id="cfggen" class="clov" style="display:none" onclick="if(event.target===this)cfgGenCerrar()"><div class="clbox" role="dialog" aria-label="Configuración general"><div class="clh"><b>⚙ Configuración general</b><span></span><button onclick="cfgGenCerrar()">Cerrar</button></div>
+<label class="bvno"><input type="checkbox" id="gon" onchange="guiaCfg()">Asistencia con pasos guiados</label>
+<label class="bvno" style="margin-top:6px"><input type="checkbox" id="gofr" onchange="guiaCfg()">Ofrecer las guías en el Inicio mientras no hayas hecho ninguna</label>
+<div class="rt" style="display:block">Las guías resaltan el control de cada paso sobre la pantalla real y avanzan solas cuando hacés la acción. Se definen en la pestaña “Guias” de la planilla del menú; si no está disponible, se usan las incluidas en la app.</div>
+<h4 style="margin:12px 0 4px;font-size:13px">Guías</h4><div id="glista" class="biblist"></div><div id="gmsg" class="rt"></div>
+</div></div>
+<div id="gshade" class="gshade" hidden></div>
+<div id="gpop" class="gpop" hidden role="dialog" aria-live="polite"><div class="gph"><b id="gpt"></b><span id="gpn"></span></div><div id="gpx" class="gpx"></div><div class="btns"><button id="gpb" onclick="guiaPaso(-1)">◀ Atrás</button><button id="gpf" class="main" onclick="guiaPaso(1)">Siguiente ▶</button><button onclick="guiaFin(false)">✕ Salir</button></div></div>
 <div id="metf" class="metf" hidden role="group" aria-label="Metrónomo"><span id="metdot" class="metdot"></span><b id="metbpm">♩</b><button id="metmute" onclick="metMute()" title="Silenciar o activar el sonido del metrónomo">🔊</button><button onclick="metStop()" title="Detener el metrónomo">■</button></div>
 <div class="stsl" id="stsl" hidden></div>
 <div class="stset" id="stset"><b>Desplazamiento</b>
@@ -451,20 +474,30 @@ body{background:#fff}
 <div class="rt" style="display:block">El auto-scroll está desactivado por defecto: se activa con el botón “Auto-scroll”. Por BPM avanza fila a fila según el tempo (con el BPM del campo), cuenta las repeticiones ×N y se resincroniza tocando una fila o con ◀ fila / fila ▶. Se pausa al deslizar con el dedo o la rueda y se detiene solo al llegar al final. Los toques en los costados, las flechas y el pedal funcionan siempre: sin auto-scroll avanzan o retroceden; por tiempo, además reinician el conteo; por BPM pasan a la fila siguiente o anterior sin detenerlo.</div></div>
 <div id="bibov" class="bibov" hidden onclick="bibCerrar()"></div>
 <aside id="bibd" class="bibd" hidden role="dialog" aria-label="Repertorio">
-<div class="bh"><b>♫ Repertorio</b><button onclick="bibCerrar()">✕ Cerrar</button></div>
+<div class="bh"><b>♫ Repertorio</b><span id="syncchip2" class="syncchip"></span><button onclick="bibCerrar()">✕ Cerrar</button></div>
 <div id="bibrec" class="vconf" hidden><div id="bibrecTxt"></div><div class="btns"><button class="main" onclick="bibExportar()">Exportar ahora</button><button onclick="bibPosponer()">Recordármelo en 3 días</button></div></div>
 <div class="bibtabs"><button data-bt="can" class="on" onclick="bibTab('can')">Canciones</button><button data-bt="set" onclick="bibTab('set')">Setlists</button></div>
 <div id="bibp-can" class="bibpane">
 <div id="bibcur" class="bibcur"></div>
-<div class="btns"><button id="bibg" class="main" onclick="bibGuardar()">Guardar en la biblioteca</button><button onclick="bibGuardar(true)">Guardar como nueva</button></div>
+<div class="btns"><button id="bibg" class="main" onclick="bibGuardar()">Guardar en la biblioteca</button><button id="bibnueva" onclick="bibGuardar(true)">Guardar como nueva</button></div>
 <input id="bibq" type="search" placeholder="Buscar por título o artista" autocomplete="off" oninput="bibUi()">
 <div class="bibord"><label for="bibord">Ordenar por</label><select id="bibord" onchange="bibOrdSet(this.value)"><option value="tit">Título A → Z</option><option value="titz">Título Z → A</option><option value="art">Artista A → Z</option><option value="rec">Modificadas recientemente</option><option value="tono">Tono</option><option value="man">Manual (▲ ▼)</option></select></div>
 <div id="bibconf" class="vconf" hidden><div id="bibconfTxt"></div><div id="bibconfBtns" class="btns"></div></div>
 <div id="biblist" class="biblist"></div>
 <div id="bibmsg" class="rt"></div>
 <div class="btns"><button id="bibexp" onclick="bibExportar()">Exportar repertorio</button><button id="bibimp" onclick="$('bibfile').click()">Importar repertorio…</button></div>
-<input type="file" id="bibfile" accept=".json,application/json" style="display:none" onchange="bibArchivo(this.files[0]);this.value=''">
+<input type="file" id="bibfile" style="display:none" onchange="bibArchivo(this.files[0]);this.value=''">
 <div id="bibesp" class="rt"></div>
+<details id="syncbox" class="syncbox"><summary>☁ Sincronización en la nube <span id="syncchip" class="syncchip"></span></summary>
+<div class="rt" style="display:block">El repertorio y los setlists siempre se usan desde este dispositivo, con o sin internet. La sincronización sube tus cambios y trae los de tus otros dispositivos a una planilla privada de Google (con un script que instalás una vez; las instrucciones vienen en el .zip).</div>
+<label class="bvno"><input type="checkbox" id="syncon" onchange="syncCfgGuardar()">Sincronizar este dispositivo</label>
+<label for="syncurl">URL de la aplicación web del script (termina en /exec)</label>
+<input id="syncurl" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://script.google.com/macros/s/…/exec" onchange="syncCfgGuardar()">
+<label for="syncclave">Clave (la misma que pusiste en el script)</label>
+<input id="syncclave" type="password" autocomplete="off" onchange="syncCfgGuardar()">
+<div class="btns"><button id="syncya" class="main" onclick="syncAhora(true)">↻ Sincronizar ahora</button><button id="syncrest" onclick="syncRestaurar(this)">Restaurar copia previa</button></div>
+<div id="syncmsg" class="rt" style="display:block"></div>
+</details>
 </div>
 <div id="bibp-set" class="bibpane" hidden>
 <div id="setlistas">
@@ -472,14 +505,14 @@ body{background:#fff}
 <div id="setlist" class="biblist"></div>
 <div class="btns"><button id="setexpall" onclick="setExportar()">Exportar todos los setlists</button><button id="setimp" onclick="$('setfile').click()">Importar setlist…</button></div>
 <div class="rt" style="display:block">Los setlists se guardan solos en este navegador. Exportarlos sirve para pasarlos a otro dispositivo o a otro músico: cada archivo incluye sus canciones.</div>
-<input type="file" id="setfile" accept=".json,application/json" style="display:none" onchange="setArchivo(this.files[0]);this.value=''">
+<input type="file" id="setfile" style="display:none" onchange="setArchivo(this.files[0]);this.value=''">
 <div id="setimpconf" class="vconf" hidden><div id="setimpTxt"></div><div id="setimpBtns" class="btns"></div></div>
 </div>
 <div id="seted" hidden>
 <div class="btns"><button onclick="setVolver()">← Setlists</button></div>
 <label for="setednom">Nombre</label><input id="setednom" maxlength="60" autocomplete="off" oninput="setEdit()">
 <label for="setedfec">Fecha</label><input id="setedfec" type="date" onchange="setEdit()">
-<div class="btns"><button class="main" onclick="setUsar()">▶ Usar en el Escenario</button><button onclick="setPrimero()">Abrir el primer tema</button><button id="setdes" onclick="setDesactivar()">Desactivar</button></div>
+<div class="btns"><button id="setusar" class="main" onclick="setUsar()">▶ Usar en el Escenario</button><button onclick="setPrimero()">Abrir el primer tema</button><button id="setdes" onclick="setDesactivar()">Desactivar</button></div>
 <div class="btns"><button id="setdupb" onclick="setDupPedir()">⧉ Duplicar setlist</button><button id="setexp1" onclick="setExportar(SET.ed)">Exportar este setlist</button></div>
 <div id="setdup" class="vconf" hidden><label for="setdupnom" style="margin-top:0">Nombre del setlist duplicado</label><input id="setdupnom" maxlength="60" autocomplete="off" onkeydown="if(event.key==='Enter')setDuplicar()"><div class="btns"><button class="main" onclick="setDuplicar()">Guardar el duplicado</button><button onclick="$('setdup').hidden=true">Cancelar</button></div></div>
 <div id="setact" class="rt"></div>
@@ -491,10 +524,11 @@ body{background:#fff}
 </aside>
 <div id="bv" class="bv" hidden role="dialog" aria-label="Inicio">
 <div class="bvin">
-<div class="bvh"><div><div class="bvt">Cifrado PRO</div><span class="bvv" id="bvver"></span></div><button onclick="bvCerrar()" title="Cerrar el inicio e ir a la plantilla">✕ Cerrar</button></div>
+<div class="bvh"><div><div class="bvt">Cifrado PRO</div><span class="bvv" id="bvver"></span></div><div style="display:flex;gap:8px"><button onclick="cfgGenAbrir()" title="Configuración general" aria-label="Configuración general">⚙</button><button onclick="bvCerrar()" title="Cerrar el inicio e ir a la plantilla">✕ Cerrar</button></div></div>
 <button id="bvcont" class="main bvcont" onclick="bvIr('continuar')"></button>
 <div id="bvsync" class="bvsync" hidden><span id="bvsyncTxt"></span><button id="bvsyncBtn" onclick="bvSync(1)">↻ Actualizar menú</button></div>
 <div id="bvvacio" class="vconf" hidden><b>Este archivo todavía no tiene repertorio guardado.</b><div style="margin-top:4px">Los datos quedan guardados en el navegador junto a la ruta del archivo: al abrir una versión nueva guardada con otro nombre o en otra carpeta, empieza vacía. Si tenías canciones y setlists en otra versión, importá tu copia de seguridad (repertorio_….cifrado.json).</div><div class="btns"><button class="main" onclick="bvCerrar();bibAbrirCajon();bibTab('can');$('bibfile').click()">Importar repertorio…</button><button onclick="bvVacioNo()">No mostrar más</button></div></div>
+<div id="gofrece" class="vconf" hidden><b>¿Primera vez? Probá una guía paso a paso.</b><div id="gofreceB" class="btns"></div></div>
 <div id="bvmenu"></div>
 <details class="bvcfg" id="bvcfg"><summary>⚙ Configurar este menú</summary>
 <div id="bvorig" class="rt" style="display:block"></div>
@@ -504,7 +538,7 @@ body{background:#fff}
 <input id="bvsurl" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://docs.google.com/spreadsheets/d/e/…/pub?…output=csv" onchange="bvSrcGuardar()">
 <div class="rt" style="display:block">Se lee cada vez que se abre el Inicio con conexión. Con el link publicado, Google tarda unos minutos (normalmente hasta 5) en publicar los cambios; con el link de edición (lectura directa) se ven casi al instante. Sin conexión se usa la última versión descargada.</div></div>
 <div class="btns"><button onclick="$('bvfile').click()">Importar menú (.json o .csv)…</button><button onclick="bvExportar('json')">Exportar menú (.json)</button><button onclick="bvExportar('csv')">Exportar para Google Sheets (.csv)</button><button id="bvrst" onclick="bvRestablecer(this)">Restablecer el menú incluido</button></div>
-<input type="file" id="bvfile" accept=".json,.csv,text/csv,application/json,text/plain" style="display:none" onchange="bvArchivo(this.files[0]);this.value=''">
+<input type="file" id="bvfile" style="display:none" onchange="bvArchivo(this.files[0]);this.value=''">
 <div id="bvmsg" class="rt"></div>
 <details id="bvlei" ontoggle="if(this.open)bvLeidoUi()"><summary>🔍 Ver lo que leyó de la planilla</summary><div id="bvleiBox" class="lei"></div></details>
 <details><summary>Columnas y destinos válidos</summary><div id="bvdest"></div></details>
@@ -562,14 +596,14 @@ body{background:#fff}
 <div class="btns"><button id="tsug" style="display:none;margin-top:6px" onclick="usarSug()"></button></div>
 <label for="showorig">Mostrar el tono original en la hoja</label>
 <select id="showorig"><option value="si">Sí (después de transponer)</option><option value="no">No</option></select>
-<div class="btns" style="margin-top:10px"><button onclick="applyTr()">Aplicar al texto</button></div>
+<div class="btns" style="margin-top:10px"><button id="tapply" onclick="applyTr()">Aplicar al texto</button></div>
 <div class="rb"><button id="undo" onclick="undoTr()">Volver al tono previo</button><div id="tgo1" class="rt"></div></div>
 <div class="rb"><button id="undo0" onclick="undoAll()">Volver al tono original</button><div id="tgo0" class="rt"></div></div>
 <div class="rt">Volver a otro tono transpone de nuevo el texto actual a ese tono: no deshace lo que hayas editado en “Estructura”.</div>
 </div>
 <div class="tbox" id="vbox">
 <h3>Versiones guardadas</h3>
-<div class="rb"><button onclick="saveVer('trans')">Guardar versión transportada</button><div id="vh1" class="rt"></div></div>
+<div class="rb"><button id="vsavet" onclick="saveVer('trans')">Guardar versión transportada</button><div id="vh1" class="rt"></div></div>
 <div class="rb"><button onclick="saveVer('orig')">Guardar versión tonalidad original</button><div id="vh0" class="rt"></div></div>
 <label for="vsel">Versión a restaurar</label>
 <select id="vsel"></select>
@@ -642,7 +676,7 @@ body{background:#fff}
 <label>Importar</label>
 <div class="btns"><button onclick="$('impfile').click()">Importar archivo…</button><button id="imppdfb" onclick="$('imppdf').click()">Importar desde PDF…</button><button id="impundo" onclick="impDeshacer()" style="display:none">Deshacer último reemplazo o importación</button></div>
 <input type="file" id="imppdf" accept=".pdf,application/pdf" style="display:none" onchange="importarPdf(this.files[0]);this.value=''">
-<input type="file" id="impfile" accept=".json,.txt,.cifrado,text/plain,application/json" style="display:none" onchange="importarArchivo(this.files[0]);this.value=''">
+<input type="file" id="impfile" style="display:none" onchange="importarArchivo(this.files[0]);this.value=''">
 <div id="impconf" class="vconf" style="display:none"><div id="impTxt"></div><div id="impBtns" class="btns"></div></div>
 <div id="impmsg" class="rt"></div>
 </div>
@@ -689,6 +723,8 @@ body{background:#fff}
 <b>Configuración por canción:</b> en Archivo, “Guardar configuración” guarda notación, formato, transposición, vista y auto-scroll / BPM (sin el Tono) como <code>Config_[Canción]_[fecha]</code>; si la hoja no tiene título, pide el nombre. Después ofrece exportarla. La lista muestra primero las de la canción en pantalla; aplicar pide confirmación y se elimina con dos toques.<br>
 <b>Tema y hoja en negativo:</b> en Formato › “Pantalla y metrónomo” se elige el tema de la app: oscuro (por defecto), según el sistema o claro. “◐ Negativo”, en la barra de notación y en la barra del Escenario, muestra la hoja con fondo oscuro y letra clara (por defecto en el Escenario); el PDF y la impresión siempre salen en blanco.<br>
 <b>Metrónomo:</b> “♩ Metrónomo” (junto a TAP, en el Escenario y en Formato) da un pulso visual con el BPM del campo, marcando el primer tiempo según el primer @3/4, @6/8… (4/4 si no hay). El click de audio es opcional; mientras suena, el control flotante permite silenciarlo (🔇) o detenerlo (■) desde cualquier pantalla, y también los controles multimedia del dispositivo.<br>
+<b>Sincronización en la nube:</b> en “♫ Repertorio” › “☁ Sincronización en la nube” se activa con la URL del script de Google y su clave (instrucciones en el .zip). El repertorio siempre se usa desde el dispositivo, con o sin internet; al sincronizar se combinan los cambios de todos los dispositivos (gana la modificación más reciente) y nunca se borra algo solo porque falte en la nube. Si falla la conexión o el script, los cambios quedan pendientes y se reintenta; antes de cada combinación se guarda una copia previa que se puede restaurar.<br>
+<b>Pasos guiados:</b> en “⚙” (barra superior o Inicio) se activa la asistencia. Cada guía resalta el control de cada paso sobre la pantalla real, con “Paso n de N”, ◀ Atrás, Siguiente ▶ y ✕ Salir, y avanza sola cuando hacés la acción. Las guías se definen en la pestaña “Guias” de la planilla del menú (columnas guia, titulo, orden, texto, destino, completa); sin planilla se usan las incluidas. En el menú del Inicio se lanzan con el destino guia:&lt;nombre&gt;.<br>
 <b>Repertorio (biblioteca):</b> “♫ Repertorio”, en la barra superior, abre la lista de canciones guardadas en este navegador, con buscador. “Guardar en la biblioteca” guarda la canción completa (estructura, datos, tono, transposición, notación y formato); al abrirla se ve igual que como la dejaste. La canción abierta desde la biblioteca se guarda sola mientras la editás, y al abrir otra la actual se guarda antes. Con ✎ se renombra y con ✕ se elimina (dos toques). Si editás el título de una canción abierta desde la biblioteca, su nombre en la lista se actualiza (un nombre puesto con ✎ se mantiene hasta que cambies el título). No se autoguardan la transposición rápida del Escenario ni el ejemplo, las demos, la plantilla de Estructura o una hoja vacía sin modificar. Ejemplo, Vaciar, las demos y las importaciones de una sola canción reemplazan la hoja y la desvinculan, sin tocar la biblioteca. “Exportar repertorio” baja todas las canciones en un solo archivo, como copia de seguridad o para pasarlas a otro dispositivo; al importarlo podés agregarlas (si una ya estaba, queda la versión más reciente) o reemplazar la biblioteca. Las “Versiones guardadas” (variantes de tono de una canción) siguen aparte.<br>
 <b>Setlists:</b> en “♫ Repertorio”, pestaña “Setlists”, creá un setlist con nombre y fecha y agregale canciones de la biblioteca (una misma canción puede ir más de una vez, por ejemplo un bis); se ordenan con ▲ ▼ y se quitan con ✕ sin borrarlas de la biblioteca. “▶ Usar en el Escenario” lo deja activo y entra al Escenario; “Abrir el primer tema” carga el primero. Si eliminás una canción de la biblioteca, se quita de los setlists. Exportar e importar el repertorio incluye los setlists. En el Escenario, con un setlist activo aparecen “◀ Tema”, “Tema ▶” y el indicador (por ejemplo “3 de 12”); al tocar el indicador se abre la lista con el tema actual resaltado y un toque salta a ese tema. Solo se cambia de tema con esos botones: el pedal y las flechas siguen moviendo la hoja. Al cambiar de tema se descarta la transposición rápida de ±1 y el tema abre con su propia transposición guardada. En el último tema, “Tema ▶” queda deshabilitado (no vuelve al primero).<br>
 <b>Copia de seguridad:</b> si pasan más de 7 días sin exportar el repertorio, aparece un punto rojo en “♫ Repertorio” y un aviso en el cajón con “Exportar ahora” o “Recordármelo en 3 días”.<br>
@@ -1374,6 +1410,9 @@ u1M0/kZW0TQdukZHUlBn4XQoaA1iQVAJNVNqYfEgKBGJtezh1tgxVSchyO1wipf1J0chYnLI8PXR2EDo
 /* ===== Versión y registro de cambios (agregar cada versión nueva ARRIBA de todo) ===== */
 const ULTCOMP='Última versión compartida con la otra plantilla: PRO v0.22 (e0.34) ↔ Estándar v0.34 (p0.22)'; /* actualizar SOLO cuando un cambio se aplique a ambas versiones */
 const VERSION_LOG=[
+{v:'PRO 0.43',f:'03/11/2026',c:['[PRO] Botón “⚙” de configuración general en la barra superior (todas las pestañas) y en el Inicio. Por ahora reúne la activación de la asistencia con pasos guiados, la opción de ofrecer las guías en el Inicio mientras no se haya hecho ninguna y la lista de guías para empezarlas.','[PRO] Pasos guiados (formato de foco sobre la pantalla real): se oscurece la pantalla salvo el control del paso, con un globo “Paso n de N”, ◀ Atrás, Siguiente ▶ (u Omitir ▶) y ✕ Salir. El paso avanza solo al hacer la acción (tocar, escribir, elegir o entrar al Escenario). Se recuerda dónde quedó cada guía. No se muestran durante el Escenario.','[PRO] Guías incluidas: “Tu primera canción”, “Preparar un show” y “Transportar y guardar una versión”. Se pueden redefinir sin versiones nuevas desde la pestaña “Guias” de la planilla del menú (columnas guia, titulo, orden, texto, destino, completa), con la misma lectura directa o alternativa del menú y copia sin conexión. Destino de menú nuevo: guia:<nombre>.','[PRO] Nombres nuevos para apuntar controles: tapply (Aplicar al texto), vsavet (Guardar versión transportada), bibnueva (Guardar como nueva) y setusar (▶ Usar en el Escenario).']},
+{v:'PRO 0.42',f:'03/11/2026',c:['[PRO] Sincronización del repertorio y los setlists con una planilla privada de Google mediante un script (Apps Script) que se instala una vez; el código y las instrucciones vienen en el .zip. Se configura en “♫ Repertorio” › “☁ Sincronización en la nube” (URL del script y clave).','[PRO] Local primero: el repertorio siempre se usa desde el dispositivo, con o sin internet. Al abrir la app, al guardar cambios y al volver la conexión, se sincroniza en segundo plano: se lee la nube, se valida, se guarda una copia previa, se combina registro por registro (gana la modificación más reciente) y se suben los cambios locales.','[PRO] Si falla la conexión, el script o la planilla (vacía, dañada o con otra clave), no se cambia nada en el dispositivo, se avisa el motivo y los cambios quedan pendientes. Nunca se borra algo local porque falte en la nube; solo se borra lo eliminado explícitamente en algún dispositivo. Durante el Escenario no se aplican cambios de otros dispositivos: se aplican al salir. Si la canción abierta cambió en otro dispositivo mientras se edita acá, se conserva lo de acá.','[PRO] Estado visible en el cajón (✓ sincronizado, ⏳ pendientes, ⚠ error), “↻ Sincronizar ahora” y “Restaurar copia previa” (dos toques).']},
+{v:'PRO 0.41',f:'03/11/2026',c:['[PRO] Importar: los botones “Importar repertorio…”, “Importar setlist…”, “Importar archivo…” y “Importar menú” aceptan cualquier archivo y lo reconocen por su contenido, no por su extensión. Así se puede elegir directamente desde Drive en el selector de archivos de Android, o un archivo que llegó por WhatsApp, renombrado o sin extensión.','[PRO] Mensajes con la causa concreta cuando no se puede importar: archivo vacío, incompleto o dañado (se cortó al copiarlo), página web en lugar del archivo (vista previa de Drive), no es de esta app, es de una versión más nueva, o no se pudo leer (por ejemplo, porque está en la nube sin descargar).']},
 {v:'PRO 0.40',f:'02/11/2026',c:['[PRO] Repertorio › Canciones: selector “Ordenar por” (Título A → Z, Título Z → A, Artista, Modificadas recientemente, Tono o Manual), que se recuerda en el dispositivo. Cada canción tiene ▲ ▼ para moverla: si el orden activo no es Manual, pasa solo a Manual a partir del orden que se estaba viendo. Con una búsqueda escrita, las flechas se deshabilitan.','[PRO] Setlists: “⧉ Duplicar setlist” con un nombre a elección (por defecto «… (copia)»); “Exportar este setlist” y “Exportar todos los setlists”, en un archivo que incluye sus canciones; “Importar setlist…”: las canciones que ya están en la biblioteca se reutilizan y las demás se agregan; si ya existe un setlist con el mismo nombre, se elige importarlo como nuevo o reemplazarlo. El importador general y el de “Importar repertorio…” también reconocen estos archivos.','[PRO] Inicio: si el archivo todavía no tiene canciones ni setlists guardados, un aviso explica que los datos quedan guardados junto a la ruta del archivo y ofrece “Importar repertorio…” (con “No mostrar más”).']},
 {v:'PRO 0.39',f:'02/11/2026',c:['[PRO] Franja “Canción en pantalla” arriba del panel, en todas las pestañas: título y artista, tono (original, o “F# → G (+1)” si está transportada, con la distancia más corta en semitonos), notación y estado (guardada en el Repertorio como «…», importada de «archivo» y sin guardar, o sin guardar). En Escritura se muestra reducida (sin título ni artista, que ya están en los campos). Tocarla lleva a Escritura.','[PRO] Repertorio: arriba del cajón, el resumen de la canción en pantalla y la leyenda de los nombres; el botón dice “Guardar «Título» en la biblioteca”. Si ya hay canciones con ese título, se avisa antes de guardar con su tono y el de la pantalla, y se elige entre guardar como versión nueva, reemplazar una existente o cancelar.','[PRO] Nombres de versión: tono original entre corchetes, “Boomerang [ F# ]”; transportada entre llaves con la distancia en semitonos, “Boomerang { G (+1) }”; si el nombre ya existe, se agrega (2), (3)…; sin tono, solo el número. “Guardar como nueva” usa el mismo criterio. Al cambiar el título de una canción guardada se conserva su etiqueta de tono.','Changelog: el número de versión va siempre con la “v” pegada y, en todas las versiones con modo sin conexión (desde PRO v0.19 (e0.31)), con el sufijo de ese modo, también en las entradas anteriores. En la barra superior y en el Inicio se ve en forma corta, sin el paréntesis; en el celular, apilado arriba de “Changelog”.']},
 {v:'PRO 0.38',f:'02/11/2026',c:['[PRO] Corrección: al entrar a una pestaña (por ejemplo Estructura PRO) la pantalla arranca desde arriba. Antes se conservaba la altura de la pestaña anterior y, en el celular, el navegador la empujaba casi hasta el final; tampoco se restaura la posición anterior al recargar. Tocar la pestaña en la que ya estás también vuelve arriba. Los accesos del Inicio siguen llevando y resaltando el control elegido.']},
@@ -3532,6 +3571,222 @@ function bvVacioNo(){try{localStorage.setItem('cifrado-pro-vacio-no','1')}catch(
 function bvVacioUi(){let no=false;try{no=localStorage.getItem('cifrado-pro-vacio-no')==='1'}catch(e){}$('bvvacio').hidden=no||BIB.lib.length>0||SET.l.length>0}
 {const a=bvAbrir;bvAbrir=function(){const r=a.apply(this,arguments);try{bvVacioUi()}catch(e){}return r}}
 try{bvVacioUi()}catch(e){}
+
+/* PRO v0.41: los botones de importar aceptan cualquier archivo (Drive, WhatsApp, descargas, USB) y lo reconocen por su contenido.
+   Los mensajes indican la causa concreta cuando no se puede importar. */
+function impDiag(txt){const t=String(txt||'').replace(/^﻿/,'').trim();
+if(!t)return{err:'El archivo está vacío. Puede que la descarga o la copia no se haya completado.'};
+if(/^</.test(t))return{err:'El archivo es una página web, no una exportación de la app. Si viene de Drive, descargá el archivo en lugar de abrir su vista previa.'};
+if(t[0]!=='{')return{err:'El archivo no es una exportación de la app (no tiene el formato esperado).'};
+let o;try{o=JSON.parse(t)}catch(e){return{err:'El archivo está incompleto o dañado: puede haberse cortado al copiarlo o descargarlo. Exportalo de nuevo en el otro dispositivo.'}}
+if(!o||o.app!==APPID)return{err:'El archivo no es una exportación de esta app.'};
+if(+o.formato>1)return{err:'El archivo es de una versión más nueva de la app (formato '+o.formato+'). Actualizá la app en este dispositivo.'};
+return{o}}
+function impLeerArchivo(f,cb,msg,max){if(!f)return;if(f.size>(max||8*1048576)){msg('El archivo es demasiado grande (máx. '+Math.round((max||8*1048576)/1048576)+' MB).',1);return}
+const r=new FileReader();r.onerror=()=>msg('No se pudo leer el archivo. Si está en Drive o en la nube, probá descargarlo primero al dispositivo y volver a importarlo.',1);
+r.onload=()=>cb(String(r.result||''));r.readAsText(f)}
+bibArchivo=function(f){impLeerArchivo(f,txt=>{const d=impDiag(txt);if(d.err){bibMsg(d.err,1);return}const o=d.o;
+if(o.tipo==='repertorio'){bibImportar(o,f.name);return}if(o.tipo==='setlist'){bibTab('set');SET.ed=null;setUi();setImportar(o,f.name);return}
+bibMsg('El archivo es de una sola canción, no un repertorio. Para traerlo usá “Importar archivo…” en la pestaña Archivo.',1)},bibMsg)};
+setArchivo=function(f){impLeerArchivo(f,txt=>{const d=impDiag(txt);if(d.err){setMsg(d.err,1);return}const o=d.o;
+if(o.tipo==='repertorio'){setMsg('Es un repertorio completo: se abrió la pestaña Canciones para importarlo.',0);bibTab('can');bibImportar(o,f.name);return}
+if(o.tipo!=='setlist'){setMsg('El archivo no contiene setlists.',1);return}setImportar(o,f.name)},setMsg)};
+{const a=importarArchivo;importarArchivo=function(f){if(!f)return;SONGPEND=f.name||null;
+impLeerArchivo(f,txt=>{const t=txt.replace(/^﻿/,'').trim();if(t[0]==='{'||/^</.test(t)||!t){const d=impDiag(txt);if(d.err){impMsg(d.err,1);return}}impLeer(txt,f.name)},impMsg,1048576)}}
+
+/* ===== PRO v0.42: sincronización del repertorio con una planilla privada de Google (Apps Script), local primero =====
+   - El repertorio y los setlists viven en el dispositivo; sin internet se usa siempre la copia local.
+   - Al sincronizar: se lee la nube, se valida, se guarda un respaldo, se combina registro por registro (gana la modificación más reciente)
+     y se suben los cambios locales. Nunca se borra algo local porque falte en la nube: solo con un borrado explícito (sincronizado).
+   - Si algo falla (sin conexión, script, planilla vacía o dañada, clave), no se toca nada local y los cambios quedan pendientes. */
+const SYNCK='cifrado-sync-cfg',SYNCHK='cifrado-sync-hash',SYNCTK='cifrado-sync-borrados',SYNCBK='cifrado-sync-respaldo';
+const SYNC={on:false,url:'',clave:'',ult:0,err:'',h:{},tomb:{},corriendo:false,tm:null,prevB:null,prevS:null,difer:false};
+try{Object.assign(SYNC,JSON.parse(localStorage.getItem(SYNCK))||{});SYNC.h=JSON.parse(localStorage.getItem(SYNCHK))||{};SYNC.tomb=JSON.parse(localStorage.getItem(SYNCTK))||{}}catch(e){}
+SYNC.corriendo=false;SYNC.tm=null;
+function syncGuardarEstado(){try{localStorage.setItem(SYNCK,JSON.stringify({on:SYNC.on,url:SYNC.url,clave:SYNC.clave,ult:SYNC.ult,err:SYNC.err}));localStorage.setItem(SYNCHK,JSON.stringify(SYNC.h));localStorage.setItem(SYNCTK,JSON.stringify(SYNC.tomb))}catch(e){}}
+const syncHash=t=>{let h=5381;for(let i=0;i<t.length;i++)h=((h<<5)+h+t.charCodeAt(i))|0;return(h>>>0).toString(36)+':'+t.length};
+const syncDatoC=x=>JSON.stringify({id:x.id,nombre:x.nombre,t:x.t,est:x.est,cfg:x.cfg});
+const syncDatoS=x=>JSON.stringify({id:x.id,nombre:x.nombre,fecha:x.fecha,items:x.items,t:x.t});
+const syncUrlOk=u=>/^https:\/\/script\.google(usercontent)?\.com\/[^\s]+$/i.test(u);
+/* Registros locales: canciones, setlists y borrados */
+function syncLocales(){const R={};BIB.lib.forEach(x=>R['c:'+x.id]={id:'c:'+x.id,tipo:'cancion',t:+x.t||0,nombre:x.nombre,dato:syncDatoC(x),ref:x});
+SET.l.forEach(x=>R['s:'+x.id]={id:'s:'+x.id,tipo:'setlist',t:+x.t||0,nombre:x.nombre,dato:syncDatoS(x),ref:x});
+Object.keys(SYNC.tomb).forEach(k=>{if(!R[k])R[k]={id:k,tipo:k[0]==='c'?'cancion':'setlist',t:SYNC.tomb[k],del:true,nombre:'',dato:''}});return R}
+/* Detecta ediciones que no actualizaron la fecha y se la actualiza, para que ganen al combinar */
+function syncMarcar(){const now=Date.now();let cb=false,cs=false;
+BIB.lib.forEach(x=>{const k='c:'+x.id,h=syncHash(syncDatoC(Object.assign({},x,{t:0})));if(SYNC.h[k]&&SYNC.h[k].h!==h&&(+x.t||0)<=SYNC.h[k].t){x.t=now;cb=true}});
+SET.l.forEach(x=>{const k='s:'+x.id,h=syncHash(syncDatoS(Object.assign({},x,{t:0})));if(SYNC.h[k]&&SYNC.h[k].h!==h&&(+x.t||0)<=SYNC.h[k].t){x.t=now;cs=true}});
+if(cb)bibSaveRaw();if(cs)setSaveRaw()}
+function syncPendientes(){if(!SYNC.on)return 0;let n=0;
+BIB.lib.forEach(x=>{const k='c:'+x.id,s=SYNC.h[k];if(!s||s.h!==syncHash(syncDatoC(Object.assign({},x,{t:0})))||s.t<(+x.t||0))n++});
+SET.l.forEach(x=>{const k='s:'+x.id,s=SYNC.h[k];if(!s||s.h!==syncHash(syncDatoS(Object.assign({},x,{t:0})))||s.t<(+x.t||0))n++});
+Object.keys(SYNC.tomb).forEach(k=>{const s=SYNC.h[k];if(!s||!s.del)n++});return n}
+/* Borrados explícitos: se registran comparando lo guardado antes y después (eliminar, reemplazar el repertorio, eliminar setlist) */
+const bibSaveRaw=bibSave,setSaveRaw=setSave;
+SYNC.prevB=new Set(BIB.lib.map(x=>x.id));SYNC.prevS=new Set(SET.l.map(x=>x.id));
+bibSave=function(){const r=bibSaveRaw.apply(this,arguments);if(r){const now=new Set(BIB.lib.map(x=>x.id));SYNC.prevB.forEach(id=>{if(!now.has(id)&&!SYNC.aplicando)SYNC.tomb['c:'+id]=Date.now()});now.forEach(id=>{delete SYNC.tomb['c:'+id]});SYNC.prevB=now;syncGuardarEstado();syncProgramar()}return r};
+setSave=function(){const r=setSaveRaw.apply(this,arguments);if(r){const now=new Set(SET.l.map(x=>x.id));SYNC.prevS.forEach(id=>{if(!now.has(id)&&!SYNC.aplicando)SYNC.tomb['s:'+id]=Date.now()});now.forEach(id=>{delete SYNC.tomb['s:'+id]});SYNC.prevS=now;syncGuardarEstado();syncProgramar()}return r};
+{const a=bibRenombrar;bibRenombrar=function(id){const s=BIB.lib.find(x=>x.id===id),n=s&&s.nombre;const r=a.apply(this,arguments);if(s&&s.nombre!==n){s.t=Date.now();bibSaveRaw();syncProgramar()}return r}}
+function syncProgramar(){if(!SYNC.on)return;clearTimeout(SYNC.tm);SYNC.tm=setTimeout(()=>syncAhora(false),5000);syncUi()}
+/* Transporte: GET con fetch (o JSONP si el navegador lo bloquea); POST con fetch (o formulario oculto si se bloquea) */
+function syncJsonp(u){return new Promise((ok,ko)=>{const cb='syncb'+Date.now()+Math.floor(Math.random()*1e4),sc=document.createElement('script');let fin=false;
+const end=(f,v)=>{if(fin)return;fin=true;clearTimeout(t);try{delete window[cb]}catch(e){window[cb]=undefined}sc.remove();f(v)};const t=setTimeout(()=>end(ko,new Error('tiempo')),15000);
+window[cb]=j=>end(ok,j);sc.onerror=()=>end(ko,new Error('script'));sc.src=u+'&cb='+cb;document.head.appendChild(sc)})}
+async function syncLeer(){const u=SYNC.url+(SYNC.url.includes('?')?'&':'?')+'accion=leer&clave='+encodeURIComponent(SYNC.clave)+'&_t='+Date.now();
+try{const ac=window.AbortController?new AbortController():null,to=setTimeout(()=>ac&&ac.abort(),15000);const r=await fetch(u,{cache:'no-store',signal:ac?ac.signal:undefined});clearTimeout(to);if(!r.ok)throw new Error('http '+r.status);const t=await r.text();if(/^\s*</.test(t))throw new Error('html');return JSON.parse(t)}
+catch(e){if(e&&e.message==='html')throw e;return await syncJsonp(u)}}
+async function syncEscribir(regs){const body=JSON.stringify({accion:'escribir',clave:SYNC.clave,registros:regs.map(r=>({id:r.id,tipo:r.tipo,t:r.t,del:!!r.del,nombre:r.nombre,dato:r.dato}))});
+try{const r=await fetch(SYNC.url,{method:'POST',body,cache:'no-store'});if(!r.ok)throw new Error('http '+r.status);const t=await r.text();return JSON.parse(t)}
+catch(e){await new Promise(ok=>{const n='syncf'+Date.now(),fr=document.createElement('iframe');fr.name=n;fr.style.display='none';document.body.appendChild(fr);
+const f=document.createElement('form');f.method='POST';f.action=SYNC.url;f.target=n;f.style.display='none';const i=document.createElement('input');i.type='hidden';i.name='payload';i.value=body;f.appendChild(i);document.body.appendChild(f);
+let fin=false;const end=()=>{if(fin)return;fin=true;setTimeout(()=>{f.remove();fr.remove()},500);ok()};fr.onload=end;setTimeout(end,15000);f.submit()});return{ok:true,confirmar:true}}}
+/* Validación de lo que llega de la nube */
+function syncValido(j){if(!j||typeof j!=='object')return'La nube respondió algo inesperado.';if(j.ok===false)return j.error==='clave'?'La clave no coincide con la del script.':'El script respondió un error ('+(j.error||'desconocido')+').';
+if(!Array.isArray(j.registros))return'La nube respondió sin datos del repertorio.';for(const r of j.registros){if(!r||typeof r.id!=='string'||!/^[cs]:/.test(r.id)||!isFinite(+r.t))return'Hay datos dañados en la planilla.';if(!r.del){try{const d=JSON.parse(r.dato);if(!d||!d.id)return'Hay datos dañados en la planilla.';if(r.tipo==='cancion'&&typeof d.est!=='string')return'Hay datos dañados en la planilla.'}catch(e){return'Hay datos incompletos en la planilla (una canción no se pudo leer).'}}}return''}
+async function syncAhora(manual){if(!SYNC.on||SYNC.corriendo)return;if(!syncUrlOk(SYNC.url)||!SYNC.clave){SYNC.err='Falta la URL del script o la clave.';syncUi();return}
+if(navigator.onLine===false){SYNC.err='Sin conexión: se usa la copia del dispositivo.';syncUi();return}
+SYNC.corriendo=true;syncUi();let msg='';
+try{clearTimeout(BIB.tm);bibFlush(false);syncMarcar();
+let j;try{j=await syncLeer()}catch(e){throw new Error(e&&e.message==='html'?'El script no está publicado como aplicación web para “Cualquier usuario”.':'No se pudo conectar con la nube (sin conexión o el script no respondió). Se usa la copia del dispositivo.')}
+const inv=syncValido(j);if(inv)throw new Error(inv+' No se cambió nada en este dispositivo.');
+const S={};j.registros.forEach(r=>S[r.id]=r);const L=syncLocales(),bajar=[],subir=[];
+new Set(Object.keys(S).concat(Object.keys(L))).forEach(k=>{const a=L[k],b=S[k];if(b&&(!a||+b.t>a.t))bajar.push(b);else if(a&&(!b||a.t>+b.t))subir.push(a)});
+const enEsc=document.body.classList.contains('stage');
+if(bajar.length&&enEsc){SYNC.difer=true;msg='Hay cambios de otros dispositivos: se aplican al salir del Escenario.'}
+else if(bajar.length){
+ try{localStorage.setItem(SYNCBK,JSON.stringify({t:Date.now(),lib:BIB.lib,setlists:SET.l}))}catch(e){}
+ SYNC.aplicando=true;const curAntes=BIB.cur,editado=BIB.cur&&bibSnap()!==BIB.snap;let curNuevo=false;
+ bajar.forEach(b=>{const tipo=b.id[0],id=b.id.slice(2);
+  if(tipo==='c'){const i=BIB.lib.findIndex(x=>x.id===id);if(b.del){if(i>=0){BIB.lib.splice(i,1);if(BIB.cur===id){BIB.cur=null;BIB.snap='';bibCurSave()}}SYNC.tomb[b.id]=+b.t}
+   else{const d=JSON.parse(b.dato),e={id,nombre:String(d.nombre||'Sin título').slice(0,80),t:+b.t,est:String(d.est).slice(0,200000),cfg:d.cfg&&typeof d.cfg==='object'?cfgClean(d.cfg):{}};if(i>=0)BIB.lib[i]=e;else BIB.lib.push(e);delete SYNC.tomb[b.id];if(id===curAntes)curNuevo=true}}
+  else{const i=SET.l.findIndex(x=>x.id===id);if(b.del){if(i>=0)SET.l.splice(i,1);SYNC.tomb[b.id]=+b.t}
+   else{const d=setSanear([JSON.parse(b.dato)])[0];d.id=id;d.t=+b.t;if(i>=0)SET.l[i]=d;else SET.l.push(d);delete SYNC.tomb[b.id]}}});
+ bibSaveRaw();setSaveRaw();SYNC.prevB=new Set(BIB.lib.map(x=>x.id));SYNC.prevS=new Set(SET.l.map(x=>x.id));setLimpiar();setSaveRaw();SYNC.aplicando=false;
+ if(curNuevo){if(!editado){const e=BIB.lib.find(x=>x.id===curAntes);const c=cfgClean(e.cfg||{});if(!c.prev)c.prev=[];applyData(e.est,c);BIB.cur=curAntes;bibCurSave();BIB.snap=bibSnap()}else msg='La canción abierta también cambió en otro dispositivo; se conserva lo que estás editando acá.'}
+ if(typeof bibUi==='function')bibUi();if(typeof setUi==='function'&&!$('bibp-set').hidden)setUi()}
+if(subir.length){const w=await syncEscribir(subir);if(!w||w.ok===false)throw new Error(w&&w.error==='clave'?'La clave no coincide con la del script.':'No se pudieron subir los cambios; quedan pendientes.');
+ if(w.confirmar){const j2=await syncLeer();if(syncValido(j2))throw new Error('No se pudo confirmar la subida; los cambios quedan pendientes.');const S2={};j2.registros.forEach(r=>S2[r.id]=r);
+  if(subir.some(a=>!S2[a.id]||+S2[a.id].t<a.t))throw new Error('No se pudo confirmar la subida; los cambios quedan pendientes.');Object.assign(S,S2)}
+ subir.forEach(a=>S[a.id]={id:a.id,t:a.t,del:a.del})}
+/* registro de lo ya sincronizado */
+const H={};const L2=syncLocales();Object.keys(L2).forEach(k=>{const a=L2[k];if(a.del)H[k]={t:a.t,del:true};else H[k]={t:a.t,h:syncHash(a.tipo==='cancion'?syncDatoC(Object.assign({},a.ref,{t:0})):syncDatoS(Object.assign({},a.ref,{t:0})))}});
+SYNC.h=H;SYNC.ult=Date.now();SYNC.err='';syncGuardarEstado();
+if(manual||bajar.length||subir.length)msg=msg||('Sincronizado: '+bajar.length+' cambio'+(bajar.length===1?'':'s')+' recibido'+(bajar.length===1?'':'s')+' y '+subir.length+' enviado'+(subir.length===1?'':'s')+'.')}
+catch(e){SYNC.err=e&&e.message||'Error de sincronización.';syncGuardarEstado()}
+SYNC.corriendo=false;syncUi(msg)}
+function syncUi(msg){const ch=[$('syncchip'),$('syncchip2')],p=syncPendientes(),f=t=>new Date(t).toLocaleString('es',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+let t='',c='';if(!SYNC.on){t='desactivada';c=''}else if(SYNC.corriendo){t='☁ sincronizando…';c=''}else if(SYNC.err){t='☁ ⚠ '+(p?p+' pendiente'+(p===1?'':'s'):'sin sincronizar');c=navigator.onLine===false?'w':'e'}else if(p){t='☁ ⏳ '+p+' pendiente'+(p===1?'':'s');c='w'}else if(SYNC.ult){t='☁ ✓ '+f(SYNC.ult);c='ok'}else{t='☁ sin sincronizar';c='w'}
+ch.forEach((e,i)=>{if(!e)return;e.textContent=i===1&&!SYNC.on?'':t;e.className='syncchip '+c});
+if($('syncon')){$('syncon').checked=SYNC.on;if(document.activeElement!==$('syncurl'))$('syncurl').value=SYNC.url;if(document.activeElement!==$('syncclave'))$('syncclave').value=SYNC.clave;$('syncya').disabled=!SYNC.on||SYNC.corriendo;
+let r=null;try{r=JSON.parse(localStorage.getItem(SYNCBK))}catch(e){}$('syncrest').disabled=!r;
+$('syncmsg').textContent=(msg?msg+' ':'')+(SYNC.err?SYNC.err:'')+(r?' Copia previa disponible del '+f(r.t)+'.':'');$('syncmsg').className='rt'+(SYNC.err?' err':'')}}
+function syncCfgGuardar(){SYNC.on=$('syncon').checked;SYNC.url=$('syncurl').value.trim();SYNC.clave=$('syncclave').value;SYNC.err='';
+if(SYNC.on&&!syncUrlOk(SYNC.url)){SYNC.err='La URL debe ser la de la aplicación web del script (https://script.google.com/…/exec).'}syncGuardarEstado();syncUi();if(SYNC.on&&!SYNC.err)syncAhora(true)}
+function syncRestaurar(b){let r=null;try{r=JSON.parse(localStorage.getItem(SYNCBK))}catch(e){}if(!r)return;
+if(!b.dataset.arm){b.dataset.arm='1';b.textContent='¿Volver a la copia del '+new Date(r.t).toLocaleString('es',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+'? Tocá de nuevo';b.classList.add('arm');b._t=setTimeout(()=>{delete b.dataset.arm;b.textContent='Restaurar copia previa';b.classList.remove('arm')},3500);return}
+clearTimeout(b._t);delete b.dataset.arm;b.textContent='Restaurar copia previa';b.classList.remove('arm');
+const now=Date.now();BIB.lib=(r.lib||[]).map(x=>Object.assign({},x,{t:now}));SET.l=(r.setlists||[]).map(x=>Object.assign({},x,{t:now}));
+if(BIB.cur&&!BIB.lib.some(x=>x.id===BIB.cur)){BIB.cur=null;BIB.snap='';bibCurSave()}bibSave();setSave();setLimpiar();bibUi();syncUi('Se restauró la copia previa; se sincroniza como el estado más reciente.')}
+addEventListener('online',()=>{if(SYNC.on)syncAhora(false)});addEventListener('offline',()=>syncUi());
+{const a=salirEscenario;salirEscenario=function(){const r=a.apply(this,arguments);if(SYNC.difer){SYNC.difer=false;setTimeout(()=>syncAhora(false),500)}return r}}
+{const a=bibAbrirCajon;bibAbrirCajon=function(){const r=a.apply(this,arguments);syncUi();return r}}
+syncUi();if(SYNC.on)setTimeout(()=>syncAhora(false),1500);
+
+/* ===== PRO v0.43: asistencia con pasos guiados (formato 1: foco sobre la pantalla real) =====
+   Guías definidas en la pestaña “Guias” de la planilla del menú (columnas: guia, titulo, orden, texto, destino, completa)
+   completa: siguiente (botón) · clic (tocar el control) · escribir (escribir algo) · cambio (elegir una opción) · escenario (entrar al Escenario) */
+const GK='cifrado-pro-guias',GCK='cifrado-pro-guias-cfg',GHK='cifrado-pro-guias-hechas',GPK='cifrado-pro-guias-pos';
+const GDEF=[
+['primera-cancion','Tu primera canción',1,'Escribí el título de la canción.','ir:esc/title','escribir'],
+['primera-cancion','Tu primera canción',2,'Escribí el tono original (por ejemplo G, Am o F#).','ir:esc/key','escribir'],
+['primera-cancion','Tu primera canción',3,'Acá va la estructura: cada sección empieza con “::” y los acordes se separan por espacios (un compás cada uno). Podés escribirla ahora o seguir y completarla después.','ir:esc/body','siguiente'],
+['primera-cancion','Tu primera canción',4,'En Estructura PRO editás lo mismo por secciones y compases, con sugerencias de acordes y duraciones.','ir:epro/eprobox','siguiente'],
+['primera-cancion','Tu primera canción',5,'Guardá la canción en tu Repertorio para tenerla siempre a mano.','cajon:can/bibg','clic'],
+['primera-cancion','Tu primera canción',6,'¡Listo! La canción quedó en el Repertorio. Acá ves cómo sale la hoja; “◐ Negativo” la muestra con fondo oscuro.','hoja','siguiente'],
+['preparar-show','Preparar un show',1,'Escribí el nombre del show o de la fecha (por ejemplo “Bar La Esquina”).','cajon:set/setnom','escribir'],
+['preparar-show','Preparar un show',2,'Creá el setlist.','cajon:set/setcrear','clic'],
+['preparar-show','Preparar un show',3,'Agregá canciones con ＋ en esta lista (una misma puede ir dos veces, por ejemplo un bis). Después las ordenás con ▲ ▼ en “Temas del setlist”.','cajon:set/setlib','siguiente'],
+['preparar-show','Preparar un show',4,'Tocá “▶ Usar en el Escenario”. Ahí vas a tener “◀ Tema / Tema ▶”, el auto-scroll y el metrónomo en la barra de abajo.','cajon:set/setusar','escenario'],
+['transportar-version','Transportar y guardar una versión',1,'Escribí la tónica a la que querés transportar (por ejemplo A).','ir:ton/dest','escribir'],
+['transportar-version','Transportar y guardar una versión',2,'Elegí cómo se escriben las alteraciones: “Inteligente” usa las de la tonalidad de destino (Bb y no A#, por ejemplo).','ir:ton/acc','siguiente'],
+['transportar-version','Transportar y guardar una versión',3,'Aplicá el transporte al texto de la estructura.','ir:ton/tapply','clic'],
+['transportar-version','Transportar y guardar una versión',4,'Guardá esta versión transportada para volver a ella cuando quieras.','ir:ton/vsavet','clic'],
+['transportar-version','Transportar y guardar una versión',5,'Si además la querés en el Repertorio como versión aparte, tocá “Guardar como nueva”: el nombre lleva el tono, por ejemplo “{ A (+2) }”.','cajon:can/bibnueva','clic'],
+['transportar-version','Transportar y guardar una versión',6,'Desde “Versión a restaurar” volvés a cualquier versión guardada, y “Volver al tono original” transporta de nuevo al primer tono.','ir:ton/vsel','siguiente']
+].map(r=>({guia:r[0],titulo:r[1],orden:r[2],texto:r[3],destino:r[4],completa:r[5]}));
+const GCOL=['guia','titulo','orden','texto','destino','completa'],GCOMP=['siguiente','clic','escribir','cambio','escenario'];
+const G={on:false,ofr:true,act:null,i:0,tick:null,lis:null,deb:null,el:null};
+try{Object.assign(G,JSON.parse(localStorage.getItem(GCK))||{})}catch(e){}G.act=null;
+function guiaCfgSave(){try{localStorage.setItem(GCK,JSON.stringify({on:G.on,ofr:G.ofr}))}catch(e){}}
+function guiaHechas(){try{return JSON.parse(localStorage.getItem(GHK))||{}}catch(e){return{}}}
+function guiaFilas(){let c=null;try{c=JSON.parse(localStorage.getItem(GK))}catch(e){}return c&&Array.isArray(c.filas)&&c.filas.length?c.filas:GDEF}
+function guiaLista(){const by={},ord=[];guiaFilas().forEach(r=>{if(!by[r.guia]){by[r.guia]={id:r.guia,titulo:r.titulo||r.guia,pasos:[]};ord.push(r.guia)}if(r.titulo&&!by[r.guia].titulo)by[r.guia].titulo=r.titulo;by[r.guia].pasos.push(r)});
+return ord.map(k=>{by[k].pasos.sort((a,b)=>a.orden-b.orden);return by[k]})}
+/* Lectura desde la pestaña “Guias” de la planilla del menú (misma vía que el menú: directa o alternativa) */
+function guiaFila(r,i,warn){const g=k=>String(r[k]==null?'':r[k]).trim();const id=bvNorm(g('guia')).replace(/\s+/g,'-'),tx=g('texto');if(!id||!tx)return null;
+let c=bvNorm(g('completa'))||'siguiente';if(!GCOMP.includes(c)){warn.push('Guía «'+id+'», paso '+(g('orden')||i+1)+': «completa» no válida ('+c+'), se usa “siguiente”.');c='siguiente'}
+const o=parseFloat(String(r.orden).replace(',','.'));return{guia:id,titulo:g('titulo').slice(0,80),orden:isFinite(o)?o:1000+i,texto:tx.slice(0,400),destino:g('destino').slice(0,120),completa:c}}
+async function guiaSync(){const s=bvSrc();if(!s.on)return;const m=String(s.url).match(/^https:\/\/docs\.google\.com\/spreadsheets\/d\/([A-Za-z0-9_-]{20,})\//);if(!m)return;
+const base='https://docs.google.com/spreadsheets/d/'+m[1]+'/gviz/tq?headers=1&sheet=Guias';let rows=null;
+try{const r=await fetch(base+'&tqx=out:csv&_t='+Date.now(),{cache:'no-store'});const t=await r.text();if(r.ok&&!/^\s*</.test(t)){const R=bvCsv(t.replace(/^﻿/,''));const H=(R[0]||[]).map(bvNorm);if(H.includes('guia')&&H.includes('texto'))rows=R.slice(1).filter(x=>x.some(c=>c.trim())).map(x=>{const o={};H.forEach((h,j)=>{if(GCOL.includes(h))o[h]=x[j]||''});return o})}}
+catch(e){try{const R=await new Promise((ok,ko)=>{const cb='gcb'+Date.now(),sc=document.createElement('script');let fin=false;const end=(f,v)=>{if(fin)return;fin=true;clearTimeout(t);try{delete window[cb]}catch(x){}sc.remove();f(v)};const t=setTimeout(()=>end(ko,0),10000);
+window[cb]=j=>{try{if(!j||j.status==='error')return end(ko,0);const H=j.table.cols.map(c=>bvNorm(c.label||''));end(ok,j.table.rows.map(r=>{const o={};H.forEach((h,i)=>{const x=(r.c||[])[i];if(GCOL.includes(h))o[h]=x==null||x.v==null?'':String(x.v)});return o}))}catch(x){end(ko,0)}};sc.onerror=()=>end(ko,0);sc.src=base+'&tqx=out:json;responseHandler:'+cb+'&_t='+Date.now();document.head.appendChild(sc)});
+if(R.length&&'guia'in R[0])rows=R}catch(x){}}
+if(!rows)return;const warn=[],filas=rows.slice(0,300).map((r,i)=>guiaFila(r,i,warn)).filter(Boolean);if(!filas.length)return;
+try{localStorage.setItem(GK,JSON.stringify({fecha:Date.now(),filas}))}catch(e){}G.warn=warn;guiaUi()}
+/* Configuración general */
+function cfgGenAbrir(){guiaUi();$('cfggen').style.display='flex'}
+function cfgGenCerrar(){$('cfggen').style.display='none'}
+function guiaCfg(){G.on=$('gon').checked;G.ofr=$('gofr').checked;guiaCfgSave();if(!G.on&&G.act)guiaFin(false);guiaUi();if(!$('bv').hidden)guiaOfrecer()}
+function guiaUi(){if(!$('gon'))return;$('gon').checked=G.on;$('gofr').checked=G.ofr;$('gofr').disabled=!G.on;const box=$('glista');box.textContent='';const H=guiaHechas();let c=null;try{c=JSON.parse(localStorage.getItem(GK))}catch(e){}
+guiaLista().forEach(g=>{const it=mk('div','bibit'),bo=mkBtn('',G.on?'Empezar la guía':'Activá la asistencia para usar las guías',()=>{cfgGenCerrar();guiaIniciar(g.id)},'bo');bo.disabled=!G.on;
+bo.appendChild(mk('span','a',(H[g.id]?'✓ ':'')+g.titulo));bo.appendChild(mk('span','b',g.pasos.length+' pasos'+(H[g.id]?' · hecha':'')+' · destino de menú: guia:'+g.id));it.appendChild(bo);box.appendChild(it)});
+$('gmsg').textContent=(c?'Guías tomadas de la planilla ('+new Date(c.fecha).toLocaleString('es',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+').':'Guías incluidas en la app.')+(G.warn&&G.warn.length?' Avisos: '+G.warn.join(' '):'')}
+function guiaOfrecer(){const b=$('gofrece');if(!b)return;const H=guiaHechas();let no=false;try{no=localStorage.getItem('cifrado-pro-guias-ofr-no')==='1'}catch(e){}
+if(!G.on||!G.ofr||no||Object.keys(H).length){b.hidden=true;return}const bb=$('gofreceB');bb.textContent='';
+guiaLista().slice(0,3).forEach(g=>{const x=mkBtn(g.titulo,'',()=>{bvCerrar();guiaIniciar(g.id)},'');bb.appendChild(x)});
+bb.appendChild(mkBtn('No, gracias','',()=>{try{localStorage.setItem('cifrado-pro-guias-ofr-no','1')}catch(e){}b.hidden=true},''));b.hidden=false}
+{const a=bvAbrir;bvAbrir=function(){const r=a.apply(this,arguments);try{guiaOfrecer()}catch(e){}return r}}
+{const a=bvSync;bvSync=async function(){const r=await a.apply(this,arguments);try{await guiaSync()}catch(e){}return r}}
+/* Motor de la guía */
+function guiaIniciar(id){if(!G.on){bvAviso('Activá la asistencia con pasos guiados en ⚙ Configuración.');return}if(document.body.classList.contains('stage'))return;
+const g=guiaLista().find(x=>x.id===bvNorm(id).replace(/\s+/g,'-'));if(!g){bvAviso('No existe la guía «'+id+'».');return}
+let pos=null;try{pos=JSON.parse(localStorage.getItem(GPK))}catch(e){}G.act=g;G.i=pos&&pos.id===g.id&&pos.i>0&&pos.i<g.pasos.length?pos.i:0;
+if(!$('bv').hidden)bvCerrar();cfgGenCerrar();cerrarChangelog();guiaMostrar();clearInterval(G.tick);G.tick=setInterval(guiaPos,300)}
+function guiaResolver(dest){const d=String(dest||'').trim();if(!d){bibCerrar();return null}const R=bvGen(d);if(!R||R.err)return null;
+if(R.tipo==='ir'){bibCerrar();irTab(R.tab);return R.el?$(R.el):document.querySelector('.tab[data-tab="'+R.tab+'"] .tbox')||document.querySelector('.tab[data-tab="'+R.tab+'"]')}
+if(R.tipo==='cajon'){if($('bibd').hidden)bibAbrirCajon();bibTab(R.tab);return R.el?$(R.el):$('bibp-'+R.tab)}
+if(R.tipo==='hoja'){bibCerrar();return R.el?$(R.el):$('wrap')}if(R.tipo==='barra'){bibCerrar();return $(R.el)}return null}
+function guiaMostrar(){const g=G.act;if(!g)return;const p=g.pasos[G.i];guiaSoltar();
+try{localStorage.setItem(GPK,JSON.stringify({id:g.id,i:G.i}))}catch(e){}
+const el=guiaResolver(p.destino);G.el=el&&el.id?el.id:null;G.elRef=el;
+$('gpt').textContent=g.titulo;$('gpn').textContent='Paso '+(G.i+1)+' de '+g.pasos.length;const x=$('gpx');x.textContent=p.texto;
+if(p.destino&&!el){const n=mk('span','nota','(No se encontró el control de este paso: «'+p.destino+'». Revisá la planilla.)');x.appendChild(n)}
+$('gpb').disabled=G.i===0;const ult=G.i===g.pasos.length-1;$('gpf').textContent=ult&&p.completa==='siguiente'?'✓ Terminar':p.completa==='siguiente'?'Siguiente ▶':'Omitir ▶';
+$('gshade').hidden=false;$('gpop').hidden=false;if(el&&el.scrollIntoView)setTimeout(()=>{try{el.scrollIntoView({block:'center',behavior:'smooth'})}catch(e){}},90);setTimeout(guiaPos,120);setTimeout(guiaPos,450);
+/* qué completa el paso */
+const c=p.completa;if(c==='siguiente'||!el)return;
+const hecho=()=>{guiaSoltar();setTimeout(()=>guiaPaso(1,true),250)};
+if(c==='clic'){G.lis=['click',e=>{const t=G.el?$(G.el):G.elRef;if(t&&(e.target===t||t.contains(e.target)))hecho()}];document.addEventListener('click',G.lis[1],true)}
+else if(c==='escribir'){G.lis=['input',e=>{const t=G.el?$(G.el):G.elRef;if(t&&e.target===t&&String(t.value||'').trim()){clearTimeout(G.deb);G.deb=setTimeout(hecho,1300)}}];document.addEventListener('input',G.lis[1],true)}
+else if(c==='cambio'){G.lis=['change',e=>{const t=G.el?$(G.el):G.elRef;if(t&&(e.target===t||t.contains(e.target)))hecho()}];document.addEventListener('change',G.lis[1],true)}}
+function guiaSoltar(){if(G.lis){document.removeEventListener(G.lis[0],G.lis[1],true);G.lis=null}clearTimeout(G.deb)}
+function guiaPos(){if(!G.act)return;if(document.body.classList.contains('stage')){const p=G.act.pasos[G.i];if(p&&p.completa==='escenario')guiaFin(true);else guiaFin(false);return}
+const sh=$('gshade'),pop=$('gpop'),t=G.el?$(G.el):G.elRef,vh=window.visualViewport?visualViewport.height:innerHeight,vw=innerWidth;
+if(!t||!t.getClientRects().length){sh.classList.add('full');pop.style.left=Math.max(8,(vw-pop.offsetWidth)/2)+'px';pop.style.top=Math.max(8,(vh-pop.offsetHeight)/2)+'px';return}
+sh.classList.remove('full');const r=t.getBoundingClientRect();sh.style.left=(r.left-4)+'px';sh.style.top=(r.top-4)+'px';sh.style.width=(r.width+8)+'px';sh.style.height=(r.height+8)+'px';
+const ph=pop.offsetHeight,pw=pop.offsetWidth,abajo=r.bottom+12+ph<=vh-8,arriba=r.top-12-ph>=8;
+let top=abajo?r.bottom+12:arriba?r.top-12-ph:Math.max(8,vh-ph-8);pop.style.top=top+'px';pop.style.left=Math.min(Math.max(8,r.left+r.width/2-pw/2),vw-pw-8)+'px'}
+function guiaPaso(d,auto){const g=G.act;if(!g)return;const n=G.i+d;if(n<0)return;if(n>=g.pasos.length){guiaFin(true);return}G.i=n;guiaMostrar()}
+function guiaFin(ok){const g=G.act;guiaSoltar();clearInterval(G.tick);G.act=null;$('gshade').hidden=true;$('gpop').hidden=true;
+if(g){if(ok){const H=guiaHechas();H[g.id]=Date.now();try{localStorage.setItem(GHK,JSON.stringify(H));localStorage.removeItem(GPK)}catch(e){}
+bvAviso('✓ Guía terminada: «'+g.titulo+'».')}}}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&G.act)guiaFin(false)});addEventListener('resize',()=>{if(G.act)guiaPos()});
+/* destino de menú guia:<nombre> */
+{const a=bvGen;bvGen=function(raw){const m=String(raw||'').trim().match(/^gu[ií]a\s*:\s*([A-Za-z0-9 _-]+)$/i);if(m){const id=bvNorm(m[1]).replace(/\s+/g,'-');return{tipo:'guia',id,dest:'guia:'+id}}return a.apply(this,arguments)}}
+{const a=bvGenIr;bvGenIr=function(G2){if(G2&&G2.tipo==='guia'){guiaIniciar(G2.id);return}return a.apply(this,arguments)}}
+{const a=bvGenDesc;bvGenDesc=function(d){const R=bvGen(d);if(R&&R.tipo==='guia'){const g=guiaLista().find(x=>x.id===R.id);return'Guía paso a paso'+(g?': '+g.titulo:'')}return a.apply(this,arguments)}}
+guiaUi();
 </script>
 </body>
 </html>
