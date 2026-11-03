@@ -187,7 +187,7 @@ body.stage .right{height:auto;overflow:visible}
 .stbar button,.stbar select,.stagex,.stchip{color:#fff;background:rgba(20,20,20,.85);border-color:rgba(255,255,255,.35)}
 .stbar select option{color:#1d1d1b;background:#fff}.stbar button:disabled{opacity:.4}
 /* Barra superior en pantallas angostas: título arriba y botones abajo */
-@media(max-width:600px){.topbar{height:auto;flex-wrap:wrap;row-gap:6px;padding:8px 12px}.topbar .ttl{flex:1 1 100%;justify-content:space-between}.tbr{flex:1 1 100%;gap:6px}.tbr button{flex:1 1 0;white-space:nowrap;padding:8px 6px;font-size:13.5px}}
+@media(max-width:600px){.topbar .ver{flex-direction:column;align-items:flex-end;gap:0;line-height:1.15;white-space:nowrap}.topbar .ver .lnk{font-size:11px}.topbar{height:auto;flex-wrap:wrap;row-gap:6px;padding:8px 12px}.topbar .ttl{flex:1 1 100%;justify-content:space-between}.tbr{flex:1 1 100%;gap:6px}.tbr button{flex:1 1 0;white-space:nowrap;padding:8px 6px;font-size:13.5px}}
 /* ===== Repertorio: cajón lateral de la biblioteca ===== */
 .bibov{position:fixed;inset:0;z-index:55;background:rgba(0,0,0,.35)}
 .bibd{position:fixed;top:0;right:0;bottom:0;z-index:56;width:min(390px,94vw);background:var(--panel);color:var(--ink);border-left:1px solid var(--line);box-shadow:-4px 0 18px rgba(0,0,0,.2);display:flex;flex-direction:column;gap:8px;padding:14px;padding-top:calc(14px + env(safe-area-inset-top,0px));padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));box-sizing:border-box}
@@ -391,6 +391,17 @@ body.negE:not(.stage) .pill,body.stage.negS .pill{background:#2a3440;color:#c9d3
 body.negE:not(.stage) .ev.tin .cn,body.stage.negS .ev.tin .cn{color:#9aa7b4}
 body.negE:not(.stage) .dd .ev+.ev,body.stage.negS .dd .ev+.ev{border-left-color:#4a5561}
 body.stage.negS{background:#000}}
+
+/* ===== PRO v0.39: franja “Canción en pantalla” y resumen en el Repertorio ===== */
+.songbar{flex:none;cursor:pointer;margin:0 0 8px;padding:8px 10px;border:1px solid var(--line);border-left:4px solid #2563eb;border-radius:10px;background:rgba(37,99,235,.07);min-width:0}
+.songbar .sb1{display:flex;gap:6px;align-items:baseline;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.songbar .sb1 b{font-size:15px;overflow:hidden;text-overflow:ellipsis}.songbar .sb1 span{font-size:13px;color:var(--mut);overflow:hidden;text-overflow:ellipsis}
+.songbar .sb2{font-size:12.5px;color:var(--mut);margin-top:2px;overflow-wrap:anywhere}.songbar .sb2 .w{color:#b45309;font-weight:700}.songbar .sb2 .ok{color:#15803d;font-weight:700}
+body.sb-esc .songbar .sb1{display:none}body.sb-esc .songbar .sb2{margin-top:0}
+@media(max-width:900px){.songbar{order:0;margin:0}}
+body.stage .songbar{display:none!important}@media print{.songbar{display:none!important}}
+.bibsum{padding:8px 10px;border:1px solid var(--line);border-left:4px solid #2563eb;border-radius:10px;background:rgba(37,99,235,.07);font-size:13px;line-height:1.4}
+.bibsum b{font-size:14px}.bibsum .m{color:var(--mut)}.bibley{font-size:11.5px;color:var(--mut)}
 @media print{
 .nsw{display:none!important}
 .topbar,.tabs,.stagex{display:none!important}
@@ -492,6 +503,7 @@ body{background:#fff}
 </div>
 <div class="app">
 <div class="editor">
+<div id="songbar" class="songbar" role="button" tabindex="0" title="Ir a Escritura para editar los datos de la canción" onclick="irTab('esc')"><div class="sb1"><b id="sb-t"></b><span id="sb-a"></span></div><div class="sb2" id="sb-2"></div></div>
 <nav class="tabs"><button data-tab="esc" class="on" onclick="irTab('esc')">Escritura<i id="dot-esc" class="dot" style="display:none"></i></button><button data-tab="ton" onclick="irTab('ton')">Tonalidad</button><button data-tab="fmt" onclick="irTab('fmt')">Formato</button><button data-tab="epro" onclick="irTab('epro')">Estructura PRO</button><button data-tab="arc" onclick="irTab('arc')">Archivo</button></nav>
 <section class="tab on" data-tab="esc">
 <label for="title">Título <span class="req" title="Campo obligatorio">*</span></label><input id="title">
@@ -1351,6 +1363,7 @@ u1M0/kZW0TQdukZHUlBn4XQoaA1iQVAJNVNqYfEgKBGJtezh1tgxVSchyO1wipf1J0chYnLI8PXR2EDo
 /* ===== Versión y registro de cambios (agregar cada versión nueva ARRIBA de todo) ===== */
 const ULTCOMP='Última versión compartida con la otra plantilla: PRO v0.22 (e0.34) ↔ Estándar v0.34 (p0.22)'; /* actualizar SOLO cuando un cambio se aplique a ambas versiones */
 const VERSION_LOG=[
+{v:'PRO 0.39',f:'02/11/2026',c:['[PRO] Franja “Canción en pantalla” arriba del panel, en todas las pestañas: título y artista, tono (original, o “F# → G (+1)” si está transportada, con la distancia más corta en semitonos), notación y estado (guardada en el Repertorio como «…», importada de «archivo» y sin guardar, o sin guardar). En Escritura se muestra reducida (sin título ni artista, que ya están en los campos). Tocarla lleva a Escritura.','[PRO] Repertorio: arriba del cajón, el resumen de la canción en pantalla y la leyenda de los nombres; el botón dice “Guardar «Título» en la biblioteca”. Si ya hay canciones con ese título, se avisa antes de guardar con su tono y el de la pantalla, y se elige entre guardar como versión nueva, reemplazar una existente o cancelar.','[PRO] Nombres de versión: tono original entre corchetes, “Boomerang [ F# ]”; transportada entre llaves con la distancia en semitonos, “Boomerang { G (+1) }”; si el nombre ya existe, se agrega (2), (3)…; sin tono, solo el número. “Guardar como nueva” usa el mismo criterio. Al cambiar el título de una canción guardada se conserva su etiqueta de tono.','Changelog: el número de versión va siempre con la “v” pegada y, en todas las versiones con modo sin conexión (desde PRO v0.19 (e0.31)), con el sufijo de ese modo, también en las entradas anteriores. En la barra superior y en el Inicio se ve en forma corta, sin el paréntesis; en el celular, apilado arriba de “Changelog”.']},
 {v:'PRO 0.38',f:'02/11/2026',c:['[PRO] Corrección: al entrar a una pestaña (por ejemplo Estructura PRO) la pantalla arranca desde arriba. Antes se conservaba la altura de la pestaña anterior y, en el celular, el navegador la empujaba casi hasta el final; tampoco se restaura la posición anterior al recargar. Tocar la pestaña en la que ya estás también vuelve arriba. Los accesos del Inicio siguen llevando y resaltando el control elegido.']},
 {v:'PRO 0.37',f:'02/11/2026',c:['[PRO] Tema de la aplicación oscuro por defecto, con opción “Según el tema del sistema” o “Claro” (Formato › Pantalla y metrónomo).','[PRO] Hoja en negativo (fondo oscuro, letra clara) con el botón “◐ Negativo” en la barra de notación de la vista previa y en la barra del Escenario; por defecto activada en el Escenario. El PDF y la impresión siempre salen en blanco.','[PRO] Metrónomo visual y auditivo: “♩ Metrónomo” junto a TAP, en el Escenario y en Formato. Pulso en un control flotante (acento en el primer tiempo según el primer @n/d, 4/4 si no hay) y click de audio opcional con volumen y acento. El control flotante, visible en cualquier pantalla mientras suena, permite silenciar (🔇) y detener (■); también responde a los controles multimedia del dispositivo. El silencio propio es independiente del volumen del sistema, que igual puede bajarlo o anularlo.','[PRO] Estructura PRO: arriba, después del minimapa, ↶ Deshacer, ▾ Contraer Secciones, ▸ Expandir Todo, la vista ancha o compacta y el teclado; abajo quedan ＋ Sección, Deshacer, Contraer Secciones y Expandir Todo.','“Cifrado” con inicial mayúscula en los títulos: “Cifrado PRO” y “Plantilla de Cifrado PRO”.']},
 {v:'PRO 0.36',f:'02/11/2026',c:['[PRO] Estructura PRO › sugerencias con criterios anidados para los acordes usados: primero los de las secciones del mismo tipo que la del compás (misma letra: A, A\', A2 cuentan como A) y, dentro de cada grupo, por frecuencia en toda la canción. Con el compás vacío aparece primero el grupo “De las secciones A (misma letra)”, antes de “Del tono” y de “Usados en la canción”; al escribir, el mismo orden se aplica a la lista filtrada.']},
@@ -1413,13 +1426,20 @@ const VERSION_LOG=[
 {v:'0.5',c:['Escritura por grados (justo, bemol o aumentado) con traducción automática a los acordes de la escala o modo.','Vistas de la hoja con acordes, grados o ambos, también al imprimir.']},
 {v:'0.4',c:['Versión base recibida.']}
 ];
-const APPV=VERSION_LOG[0].v,vl=v=>/^PRO/.test(v)?v:'v'+v;
+/* PRO v0.39: “v” pegada al número y, desde PRO v0.19 (modo sin conexión), el sufijo [OFFLN-CAP] (offline-capable) */
+const verOff=(a,b)=>+a>0||+b>=19;
+function verFmt(v,full){const m=String(v).match(/^PRO v?(\d+)\.(\d+)(.*)$/);if(!m)return/^v/.test(v)?v:'v'+v;
+return'PRO v'+m[1]+'.'+m[2]+m[3]+(verOff(m[1],m[2])?' [OFFLN-CAP]'+(full?' (offline-capable)':''):'')}
+function clFmt(t){return String(t).replace(/PRO v?(\d+)\.(\d+)( \([ep]\d+\.\d+\))?/g,(m,a,b,par,off,str)=>{const rest=str.slice(off+m.length);
+if(/^(?: ?\[OFFLN|_\[?OFFLN)/.test(rest))return'PRO v'+a+'.'+b+(par||'');return'PRO v'+a+'.'+b+(par||'')+(verOff(a,b)?' [OFFLN-CAP] (offline-capable)':'')})}
+function clTexto(i){const e=VERSION_LOG[i||0];return'Plantilla de Cifrado PRO — Changelog\nVersión '+verFmt(e.v,true)+(e.f?' · '+e.f:'')+'\n\n'+e.c.map(x=>'- '+clFmt(x)).join('\n')+'\n\n'+clFmt(ULTCOMP)+'\n'}
+const APPV=VERSION_LOG[0].v,vl=v=>verFmt(v,false);
 (function(){const t=document.getElementById('verTxt');if(t)t.textContent=vl(APPV)})();
 function abrirChangelog(){
-$('clver').textContent='versión actual: '+vl(APPV);const b=$('clbody');b.textContent='';const nu=document.createElement('p');nu.style.cssText='margin:0 0 8px;font-size:12.5px;opacity:.85';nu.textContent=ULTCOMP;b.appendChild(nu);
+$('clver').textContent='versión actual: '+verFmt(APPV,true);const b=$('clbody');b.textContent='';const nu=document.createElement('p');nu.style.cssText='margin:0 0 8px;font-size:12.5px;opacity:.85';nu.textContent=clFmt(ULTCOMP);b.appendChild(nu);
 VERSION_LOG.forEach((e,i)=>{const d=document.createElement('details');if(i===0)d.open=true;
-const sm=document.createElement('summary'),bo=document.createElement('b');bo.textContent=vl(e.v);sm.appendChild(bo);if(e.f)sm.appendChild(document.createTextNode(' · '+e.f));d.appendChild(sm);
-const ul=document.createElement('ul');e.c.forEach(x=>{const li=document.createElement('li');li.textContent=x;ul.appendChild(li)});d.appendChild(ul);b.appendChild(d)});
+const sm=document.createElement('summary'),bo=document.createElement('b');bo.textContent=verFmt(e.v,true);sm.appendChild(bo);if(e.f)sm.appendChild(document.createTextNode(' · '+e.f));d.appendChild(sm);
+const ul=document.createElement('ul');e.c.forEach(x=>{const li=document.createElement('li');li.textContent=clFmt(x);ul.appendChild(li)});d.appendChild(ul);b.appendChild(d)});
 $('clov').style.display='flex'}
 function cerrarChangelog(){$('clov').style.display='none'}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')cerrarChangelog()});
@@ -2769,7 +2789,7 @@ function bibFlush(alAbrir){
 if(BIB.cur){const e=BIB.lib.find(x=>x.id===BIB.cur);if(!e){BIB.cur=null;bibCurSave();return true}
 const s=bibSnap();if(s===BIB.snap)return true;
 const old={est:e.est,cfg:e.cfg,t:e.t,nombre:e.nombre},nt=get().title.trim();
-if(nt&&nt!==((e.cfg||{}).title||'').trim())e.nombre=bibNombre(nt,e.id);
+if(nt&&nt!==((e.cfg||{}).title||'').trim()){const ot=((e.cfg||{}).title||'').trim(),tg=ot&&e.nombre.startsWith(ot)?e.nombre.slice(ot.length).replace(/ \(\d+\)$/,''):'';e.nombre=bibNombre(nt+tg,e.id)}
 e.est=get().body;e.cfg=cfgNow();e.t=Date.now();
 if(!bibSave()){Object.assign(e,old);bibMsg(BIBLLENO,1);return false}BIB.snap=s;return true}
 if(!alAbrir||bibIntacto())return true;
@@ -3052,7 +3072,7 @@ const n2=g.n2.filter(k=>!k).concat(g.n2.filter(k=>k));
 n2.forEach(k2=>{const box2=k2?mk('div','bvsub'):sec;if(k2)box2.appendChild(mk('h4','',k2));const gr=mk('div','bvgrid');
 g.S[k2].slice().sort((a,b)=>a.orden-b.orden).forEach(x=>gr.appendChild(boton(x)));box2.appendChild(gr);if(k2)sec.appendChild(box2)});
 box.appendChild(sec)});
-const t=(get().title||'').trim(),cur=window.BIB&&BIB.cur?BIB.lib.find(x=>x.id===BIB.cur):null;
+const t=(get().title||'').trim(),cur=(typeof BIB!=='undefined')&&BIB.cur?BIB.lib.find(x=>x.id===BIB.cur):null;
 const c=$('bvcont');c.textContent='';c.appendChild(document.createTextNode('Continuar con '+(cur?'«'+cur.nombre+'»':t?'«'+t+'»':'la hoja actual')));
 const sm=mk('small','',[get().artist,get().key?'Tono '+get().key:'',cur?'guardada en el Repertorio':''].filter(Boolean).join(' · ')||'Ir a la plantilla');c.appendChild(sm);
 $('bvver').textContent=vl(APPV)+' · funciona con o sin conexión';
@@ -3385,6 +3405,57 @@ if(matchMedia('(max-width:900px)').matches){const t=document.querySelector('.tab
 {const _it=irTab;irTab=function(id){const prev=(document.querySelector('.tab.on')||{}).dataset;const was=prev?prev.tab:null;_it(id);if(was!==id)tabArriba()}}
 document.querySelectorAll('.tabs button[data-tab]').forEach(b=>b.addEventListener('click',()=>{if(!document.body.classList.contains('stage'))tabArriba()}));
 addEventListener('load',()=>{if(!document.body.classList.contains('stage'))setTimeout(tabArriba,0)});
+
+/* ===== PRO v0.39: canción en pantalla (franja y Repertorio) y aviso de duplicado ===== */
+let SONGSRC=null,SONGPEND=null;try{SONGSRC=localStorage.getItem('cifrado-pro-origen')}catch(e){}
+function songSrcSet(v){SONGSRC=v||null;try{if(SONGSRC)localStorage.setItem('cifrado-pro-origen',SONGSRC);else localStorage.removeItem('cifrado-pro-origen')}catch(e){}}
+{const a=importarArchivo;importarArchivo=function(f){SONGPEND=f&&f.name||null;return a.apply(this,arguments)}}
+{const a=importarPdf;importarPdf=function(f){SONGPEND=f&&f.name||null;return a.apply(this,arguments)}}
+{const a=applyData;applyData=function(est,cfg){const r=a.apply(this,arguments);if(est!==null){songSrcSet(SONGPEND);SONGPEND=null}songUi();return r}}
+{const a=reset;reset=function(){songSrcSet(null);const r=a.apply(this,arguments);songUi();return r}}
+{const a=impDeshacer;impDeshacer=function(){songSrcSet(null);const r=a.apply(this,arguments);songUi();return r}}
+/* Distancia más corta en semitonos (−5 a +6) entre el tono original y el de destino */
+function songDist(k,d){k=(k||'').trim();d=(d||'').trim();if(!k||!d)return null;const lk=/^(Do|Re|Mi|Fa|Sol|La|Si)/.test(k),ld=/^(Do|Re|Mi|Fa|Sol|La|Si)/.test(d),a=root(k,lk),b=root(d,ld);if(!a||!b)return null;let n=((b.pc-a.pc)%12+12)%12;if(n>6)n-=12;return n}
+function songTono(){const d=get(),k=d.key.trim(),t=d.dest.trim(),n=songDist(k,t);if(!k)return{txt:'Sin tono',orig:true,k:'',t:'',n:null};
+if(!t||n===null||n===0)return{txt:'Tono '+k+' (original)',orig:true,k,t:'',n:0};return{txt:'Tono '+k+' → '+t+' ('+(n>0?'+':'')+n+')',orig:false,k,t,n}}
+function songEstado(){const cur=(typeof BIB!=='undefined')&&BIB.cur?BIB.lib.find(x=>x.id===BIB.cur):null;
+if(cur)return{c:'ok',t:'Guardada en el Repertorio como «'+cur.nombre+'»'};if(SONGSRC)return{c:'w',t:'Importada de «'+SONGSRC+'» · sin guardar en el Repertorio'};return{c:'w',t:'Sin guardar en el Repertorio'}}
+const NOTN={acordes:'Acordes',romanos:'Romanos',impl:'Arábigos',nash:'Nashville'};
+function songUi(){const d=get(),T=songTono(),E=songEstado();$('sb-t').textContent=d.title.trim()||'(sin título)';$('sb-a').textContent=d.artist.trim()?'— '+d.artist.trim():'';
+const s2=$('sb-2');s2.textContent='';s2.appendChild(document.createTextNode(T.txt+' · '+(NOTN[d.nota]||d.nota)+' · '));const st=document.createElement('span');st.className=E.c;st.textContent=E.t;s2.appendChild(st);
+const tab=(document.querySelector('.tab.on')||{dataset:{}}).dataset.tab;document.body.classList.toggle('sb-esc',tab==='esc');if((typeof BIB!=='undefined')&&$('bibcur'))bibSumUi()}
+['title','artist','key','dest','nota'].forEach(id=>{const e=$(id);if(e){e.addEventListener('input',songUi);e.addEventListener('change',songUi)}});
+{const a=irTab;irTab=function(){const r=a.apply(this,arguments);songUi();return r}}
+{const a=render;render=function(){const r=a.apply(this,arguments);try{songUi()}catch(e){}return r}}
+/* Nombre de versión: [ F# ] tono original, { G (+1) } transportada; si ya existe, se agrega (2), (3)… */
+function songTag(){const T=songTono();if(!T.k)return'';return T.orig?'[ '+T.k+' ]':'{ '+T.t+' ('+(T.n>0?'+':'')+T.n+') }'}
+function songVerNombre(skip){const base=(get().title||'').trim()||'Sin título',tg=songTag();return bibNombre(tg?base+' '+tg:base,skip)}
+function bibDups(){const t=(get().title||'').trim();if(!t)return[];const esc=t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),re=new RegExp('^'+esc+'(?: \\[ .+ \\]| \\{ .+ \\})?(?: \\(\\d+\\))?$');return BIB.lib.filter(x=>re.test(x.nombre))}
+function bibSumUi(){const d=get(),T=songTono(),E=songEstado(),box=$('bibcur');box.textContent='';box.className='bibsum';
+const b=document.createElement('b');b.textContent='En pantalla: '+(d.title.trim()||'(sin título)');box.appendChild(b);if(d.artist.trim())box.appendChild(document.createTextNode(' — '+d.artist.trim()));
+const m=document.createElement('div');m.className='m';m.textContent=T.txt+' · '+E.t;box.appendChild(m);
+const l=document.createElement('div');l.className='bibley';l.textContent='En los nombres: [ ] tono original · { } transportada (semitonos)';box.appendChild(l);
+const cur=BIB.cur?BIB.lib.find(x=>x.id===BIB.cur):null;$('bibg').textContent=cur?'Guardar ahora':'Guardar «'+(d.title.trim()||'Sin título')+'» en la biblioteca'}
+{const a=bibUi;bibUi=function(){const r=a.apply(this,arguments);try{bibSumUi()}catch(e){}return r}}
+/* Guardar con aviso de duplicado */
+function bibGuardarNueva(nombre){clearTimeout(BIB.tm);if(BIB.cur)bibFlush(false);const e=bibEntry(nombre);BIB.lib.push(e);if(!bibSave()){BIB.lib.pop();bibMsg(BIBLLENO,1);return}
+BIB.cur=e.id;bibCurSave();BIB.snap=bibSnap();songSrcSet(null);bibMsg('Guardada en la biblioteca: «'+e.nombre+'».',0);$('bibconf').hidden=true;bibUi();songUi()}
+function bibReemplazar(id){const e=BIB.lib.find(x=>x.id===id);if(!e)return;const old={est:e.est,cfg:e.cfg,t:e.t},n=bibEntry(e.nombre);e.est=n.est;e.cfg=n.cfg;e.t=Date.now();
+if(!bibSave()){Object.assign(e,old);bibMsg(BIBLLENO,1);return}BIB.cur=id;bibCurSave();BIB.snap=bibSnap();songSrcSet(null);bibMsg('Reemplazada en la biblioteca: «'+e.nombre+'».',0);$('bibconf').hidden=true;bibUi();songUi()}
+{const a=bibGuardar;bibGuardar=function(nueva){
+if(!nueva&&BIB.cur)return a.apply(this,arguments);
+const dups=bibDups();if(!dups.length&&!nueva){const r=a.apply(this,arguments);songSrcSet(null);songUi();return r}
+if(nueva){bibGuardarNueva(songVerNombre());return}
+const T=songTono(),c=$('bibconfTxt'),bt=$('bibconfBtns');c.textContent='';bt.textContent='';
+const p1=document.createElement('div');p1.textContent='Ya hay en la biblioteca '+(dups.length===1?'una canción':dups.length+' canciones')+' con el título «'+(get().title||'').trim()+'»:';c.appendChild(p1);
+const ul=document.createElement('ul');ul.style.cssText='margin:4px 0;padding-left:18px';dups.forEach(x=>{const li=document.createElement('li');const k=(x.cfg||{}).key||'',ds=(x.cfg||{}).dest||'';li.textContent=x.nombre+' — Tono '+(k||'—')+(ds?' → '+ds:'');ul.appendChild(li)});c.appendChild(ul);
+const p2=document.createElement('div');p2.textContent='En pantalla: '+T.txt+'. ¿Qué hago?';c.appendChild(p2);
+const add=(t,fn,main)=>{const x=document.createElement('button');x.type='button';x.textContent=t;if(main)x.className='main';x.onclick=fn;bt.appendChild(x)};
+const nn=songVerNombre();add('Guardar como versión nueva «'+nn+'»',()=>bibGuardarNueva(nn),1);
+dups.slice(0,3).forEach(x=>add('Reemplazar «'+x.nombre+'»',()=>bibReemplazar(x.id)));
+add('Cancelar',()=>{$('bibconf').hidden=true;bibMsg('No se guardó.',0)});
+$('bibconf').hidden=false;$('bibconf').scrollIntoView({block:'nearest'})}}
+songUi();
 </script>
 </body>
 </html>
