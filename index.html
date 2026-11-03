@@ -342,6 +342,9 @@ body.stage .bv{display:none!important}
 .lei .lf.ok{border-left-color:#15803d}.lei .lf.oc{border-left-color:#6b6a65}.lei .lf.pr{border-left-color:#2563eb}.lei .lf.om{border-left-color:#b45309}
 .lei .lf b{font-size:13px}.lei .lf .m{color:var(--mut)}.lei .lf .w{color:#b45309;font-weight:700}
 .lei .filt{display:flex;flex-wrap:wrap;gap:6px}.lei .filt button{min-height:40px;padding:4px 10px;font-size:12.5px}.lei .filt button.on{font-weight:700;box-shadow:inset 0 0 0 2px var(--ink)}
+.bv .btns button{min-height:44px}
+.bibord{display:flex;align-items:center;gap:8px}.bibord label{margin:0;white-space:nowrap}.bibord select{min-height:44px}
+.bibit .bx.mv{min-width:36px;padding:6px 4px}
 /* Diálogo del botón Atrás */
 .atr{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px}
 .atrb{width:100%;max-width:400px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 8px 30px rgba(0,0,0,.35)}
@@ -455,6 +458,7 @@ body{background:#fff}
 <div id="bibcur" class="bibcur"></div>
 <div class="btns"><button id="bibg" class="main" onclick="bibGuardar()">Guardar en la biblioteca</button><button onclick="bibGuardar(true)">Guardar como nueva</button></div>
 <input id="bibq" type="search" placeholder="Buscar por título o artista" autocomplete="off" oninput="bibUi()">
+<div class="bibord"><label for="bibord">Ordenar por</label><select id="bibord" onchange="bibOrdSet(this.value)"><option value="tit">Título A → Z</option><option value="titz">Título Z → A</option><option value="art">Artista A → Z</option><option value="rec">Modificadas recientemente</option><option value="tono">Tono</option><option value="man">Manual (▲ ▼)</option></select></div>
 <div id="bibconf" class="vconf" hidden><div id="bibconfTxt"></div><div id="bibconfBtns" class="btns"></div></div>
 <div id="biblist" class="biblist"></div>
 <div id="bibmsg" class="rt"></div>
@@ -466,12 +470,18 @@ body{background:#fff}
 <div id="setlistas">
 <div class="setnew"><b>Nuevo setlist</b><input id="setnom" maxlength="60" placeholder="Nombre (por ejemplo: Bar La Esquina)" autocomplete="off"><input id="setfec" type="date" aria-label="Fecha"><button id="setcrear" class="main" onclick="setCrear()">＋ Crear setlist</button></div>
 <div id="setlist" class="biblist"></div>
+<div class="btns"><button id="setexpall" onclick="setExportar()">Exportar todos los setlists</button><button id="setimp" onclick="$('setfile').click()">Importar setlist…</button></div>
+<div class="rt" style="display:block">Los setlists se guardan solos en este navegador. Exportarlos sirve para pasarlos a otro dispositivo o a otro músico: cada archivo incluye sus canciones.</div>
+<input type="file" id="setfile" accept=".json,application/json" style="display:none" onchange="setArchivo(this.files[0]);this.value=''">
+<div id="setimpconf" class="vconf" hidden><div id="setimpTxt"></div><div id="setimpBtns" class="btns"></div></div>
 </div>
 <div id="seted" hidden>
 <div class="btns"><button onclick="setVolver()">← Setlists</button></div>
 <label for="setednom">Nombre</label><input id="setednom" maxlength="60" autocomplete="off" oninput="setEdit()">
 <label for="setedfec">Fecha</label><input id="setedfec" type="date" onchange="setEdit()">
 <div class="btns"><button class="main" onclick="setUsar()">▶ Usar en el Escenario</button><button onclick="setPrimero()">Abrir el primer tema</button><button id="setdes" onclick="setDesactivar()">Desactivar</button></div>
+<div class="btns"><button id="setdupb" onclick="setDupPedir()">⧉ Duplicar setlist</button><button id="setexp1" onclick="setExportar(SET.ed)">Exportar este setlist</button></div>
+<div id="setdup" class="vconf" hidden><label for="setdupnom" style="margin-top:0">Nombre del setlist duplicado</label><input id="setdupnom" maxlength="60" autocomplete="off" onkeydown="if(event.key==='Enter')setDuplicar()"><div class="btns"><button class="main" onclick="setDuplicar()">Guardar el duplicado</button><button onclick="$('setdup').hidden=true">Cancelar</button></div></div>
 <div id="setact" class="rt"></div>
 <h4>Temas del setlist</h4><div id="setitems" class="biblist"></div>
 <h4>Agregar canciones de la biblioteca</h4><input id="setq" type="search" placeholder="Buscar por título o artista" autocomplete="off" oninput="setUi()"><div id="setlib" class="biblist"></div>
@@ -484,6 +494,7 @@ body{background:#fff}
 <div class="bvh"><div><div class="bvt">Cifrado PRO</div><span class="bvv" id="bvver"></span></div><button onclick="bvCerrar()" title="Cerrar el inicio e ir a la plantilla">✕ Cerrar</button></div>
 <button id="bvcont" class="main bvcont" onclick="bvIr('continuar')"></button>
 <div id="bvsync" class="bvsync" hidden><span id="bvsyncTxt"></span><button id="bvsyncBtn" onclick="bvSync(1)">↻ Actualizar menú</button></div>
+<div id="bvvacio" class="vconf" hidden><b>Este archivo todavía no tiene repertorio guardado.</b><div style="margin-top:4px">Los datos quedan guardados en el navegador junto a la ruta del archivo: al abrir una versión nueva guardada con otro nombre o en otra carpeta, empieza vacía. Si tenías canciones y setlists en otra versión, importá tu copia de seguridad (repertorio_….cifrado.json).</div><div class="btns"><button class="main" onclick="bvCerrar();bibAbrirCajon();bibTab('can');$('bibfile').click()">Importar repertorio…</button><button onclick="bvVacioNo()">No mostrar más</button></div></div>
 <div id="bvmenu"></div>
 <details class="bvcfg" id="bvcfg"><summary>⚙ Configurar este menú</summary>
 <div id="bvorig" class="rt" style="display:block"></div>
@@ -1363,6 +1374,7 @@ u1M0/kZW0TQdukZHUlBn4XQoaA1iQVAJNVNqYfEgKBGJtezh1tgxVSchyO1wipf1J0chYnLI8PXR2EDo
 /* ===== Versión y registro de cambios (agregar cada versión nueva ARRIBA de todo) ===== */
 const ULTCOMP='Última versión compartida con la otra plantilla: PRO v0.22 (e0.34) ↔ Estándar v0.34 (p0.22)'; /* actualizar SOLO cuando un cambio se aplique a ambas versiones */
 const VERSION_LOG=[
+{v:'PRO 0.40',f:'02/11/2026',c:['[PRO] Repertorio › Canciones: selector “Ordenar por” (Título A → Z, Título Z → A, Artista, Modificadas recientemente, Tono o Manual), que se recuerda en el dispositivo. Cada canción tiene ▲ ▼ para moverla: si el orden activo no es Manual, pasa solo a Manual a partir del orden que se estaba viendo. Con una búsqueda escrita, las flechas se deshabilitan.','[PRO] Setlists: “⧉ Duplicar setlist” con un nombre a elección (por defecto «… (copia)»); “Exportar este setlist” y “Exportar todos los setlists”, en un archivo que incluye sus canciones; “Importar setlist…”: las canciones que ya están en la biblioteca se reutilizan y las demás se agregan; si ya existe un setlist con el mismo nombre, se elige importarlo como nuevo o reemplazarlo. El importador general y el de “Importar repertorio…” también reconocen estos archivos.','[PRO] Inicio: si el archivo todavía no tiene canciones ni setlists guardados, un aviso explica que los datos quedan guardados junto a la ruta del archivo y ofrece “Importar repertorio…” (con “No mostrar más”).']},
 {v:'PRO 0.39',f:'02/11/2026',c:['[PRO] Franja “Canción en pantalla” arriba del panel, en todas las pestañas: título y artista, tono (original, o “F# → G (+1)” si está transportada, con la distancia más corta en semitonos), notación y estado (guardada en el Repertorio como «…», importada de «archivo» y sin guardar, o sin guardar). En Escritura se muestra reducida (sin título ni artista, que ya están en los campos). Tocarla lleva a Escritura.','[PRO] Repertorio: arriba del cajón, el resumen de la canción en pantalla y la leyenda de los nombres; el botón dice “Guardar «Título» en la biblioteca”. Si ya hay canciones con ese título, se avisa antes de guardar con su tono y el de la pantalla, y se elige entre guardar como versión nueva, reemplazar una existente o cancelar.','[PRO] Nombres de versión: tono original entre corchetes, “Boomerang [ F# ]”; transportada entre llaves con la distancia en semitonos, “Boomerang { G (+1) }”; si el nombre ya existe, se agrega (2), (3)…; sin tono, solo el número. “Guardar como nueva” usa el mismo criterio. Al cambiar el título de una canción guardada se conserva su etiqueta de tono.','Changelog: el número de versión va siempre con la “v” pegada y, en todas las versiones con modo sin conexión (desde PRO v0.19 (e0.31)), con el sufijo de ese modo, también en las entradas anteriores. En la barra superior y en el Inicio se ve en forma corta, sin el paréntesis; en el celular, apilado arriba de “Changelog”.']},
 {v:'PRO 0.38',f:'02/11/2026',c:['[PRO] Corrección: al entrar a una pestaña (por ejemplo Estructura PRO) la pantalla arranca desde arriba. Antes se conservaba la altura de la pestaña anterior y, en el celular, el navegador la empujaba casi hasta el final; tampoco se restaura la posición anterior al recargar. Tocar la pestaña en la que ya estás también vuelve arriba. Los accesos del Inicio siguen llevando y resaltando el control elegido.']},
 {v:'PRO 0.37',f:'02/11/2026',c:['[PRO] Tema de la aplicación oscuro por defecto, con opción “Según el tema del sistema” o “Claro” (Formato › Pantalla y metrónomo).','[PRO] Hoja en negativo (fondo oscuro, letra clara) con el botón “◐ Negativo” en la barra de notación de la vista previa y en la barra del Escenario; por defecto activada en el Escenario. El PDF y la impresión siempre salen en blanco.','[PRO] Metrónomo visual y auditivo: “♩ Metrónomo” junto a TAP, en el Escenario y en Formato. Pulso en un control flotante (acento en el primer tiempo según el primer @n/d, 4/4 si no hay) y click de audio opcional con volumen y acento. El control flotante, visible en cualquier pantalla mientras suena, permite silenciar (🔇) y detener (■); también responde a los controles multimedia del dispositivo. El silencio propio es independiente del volumen del sistema, que igual puede bajarlo o anularlo.','[PRO] Estructura PRO: arriba, después del minimapa, ↶ Deshacer, ▾ Contraer Secciones, ▸ Expandir Todo, la vista ancha o compacta y el teclado; abajo quedan ＋ Sección, Deshacer, Contraer Secciones y Expandir Todo.','“Cifrado” con inicial mayúscula en los títulos: “Cifrado PRO” y “Plantilla de Cifrado PRO”.']},
@@ -2823,13 +2835,30 @@ if(BIB.cur===id){BIB.cur=null;BIB.snap='';bibCurSave()}
 const af=SET.l.filter(x=>x.items.includes(id)).length;setLimpiar();setSave();
 bibMsg('Eliminada de la biblioteca: «'+s.nombre+'». La hoja que está en pantalla no se borra.'+(af?' También se quitó de '+af+(af===1?' setlist.':' setlists.'):''),0);bibUi()}
 function bibEspacio(){let n=0;try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);n+=k.length+(localStorage.getItem(k)||'').length}}catch(e){}return Math.round(n*2/1024)}
+/* PRO v0.40: orden de la biblioteca (Título, Artista, Recientes, Tono o Manual con ▲ ▼) */
+const BIBOK='cifrado-biblio-orden',BIBOMK='cifrado-biblio-modo';
+let BIBO=[],BIBMODO='tit';try{BIBO=JSON.parse(localStorage.getItem(BIBOK))||[];BIBMODO=localStorage.getItem(BIBOMK)||'tit'}catch(e){}
+if(!Array.isArray(BIBO))BIBO=[];if(!['tit','titz','art','rec','tono','man'].includes(BIBMODO))BIBMODO='tit';
+function bibOrdSave(){try{localStorage.setItem(BIBOK,JSON.stringify(BIBO));localStorage.setItem(BIBOMK,BIBMODO)}catch(e){}}
+const bibCmp=(a,b)=>a.localeCompare(b,'es',{sensitivity:'base'});
+function bibOrdenar(L,modo){modo=modo||BIBMODO;const n=x=>x.nombre,c=x=>x.cfg||{};
+if(modo==='titz')return L.sort((a,b)=>bibCmp(n(b),n(a)));
+if(modo==='art')return L.sort((a,b)=>bibCmp(c(a).artist||'￿',c(b).artist||'￿')||bibCmp(n(a),n(b)));
+if(modo==='rec')return L.sort((a,b)=>(b.t||0)-(a.t||0));
+if(modo==='tono')return L.sort((a,b)=>bibCmp((c(a).dest||c(a).key||'￿'),(c(b).dest||c(b).key||'￿'))||bibCmp(n(a),n(b)));
+if(modo==='man'){const ix={};BIBO.forEach((id,i)=>ix[id]=i);return L.sort((a,b)=>((a.id in ix)?ix[a.id]:1e9+(a.t||0)/1e13)-((b.id in ix)?ix[b.id]:1e9+(b.t||0)/1e13))}
+return L.sort((a,b)=>bibCmp(n(a),n(b)))}
+function bibOrdSet(v){BIBMODO=v;if(v==='man'&&!BIBO.length)BIBO=bibOrdenar(BIB.lib.slice(),'tit').map(x=>x.id);bibOrdSave();bibUi()}
+function bibMover(id,dir){let ids=bibOrdenar(BIB.lib.slice()).map(x=>x.id);
+if(BIBMODO!=='man'){BIBMODO='man';bibMsg('El orden pasó a “Manual”, a partir del que estabas viendo.',0)}
+const i=ids.indexOf(id),j=i+dir;if(i<0||j<0||j>=ids.length)return;[ids[i],ids[j]]=[ids[j],ids[i]];BIBO=ids;bibOrdSave();bibUi()}
 function bibUi(){
 const box=$('biblist');if(!box)return;
 const cur=BIB.lib.find(x=>x.id===BIB.cur);
 $('bibcur').textContent=cur?'Canción abierta: «'+cur.nombre+'» · se guarda sola mientras la editás.':'La hoja en pantalla no está guardada en la biblioteca.';
 $('bibg').textContent=cur?'Guardar ahora':'Guardar en la biblioteca';
 const q=($('bibq').value||'').trim().toLowerCase();
-const L=BIB.lib.filter(x=>!q||(x.nombre+' '+((x.cfg||{}).artist||'')).toLowerCase().includes(q)).sort((a,b)=>a.nombre.localeCompare(b.nombre,'es',{sensitivity:'base'}));
+const L=bibOrdenar(BIB.lib.filter(x=>!q||(x.nombre+' '+((x.cfg||{}).artist||'')).toLowerCase().includes(q)));const LA=bibOrdenar(BIB.lib.slice()).map(x=>x.id);$('bibord').value=BIBMODO;
 box.textContent='';
 if(!L.length){const v=document.createElement('div');v.className='bibvac';v.textContent=BIB.lib.length?'Ninguna canción coincide con la búsqueda.':'Todavía no hay canciones guardadas. Tocá “Guardar en la biblioteca” para guardar la que está en pantalla.';box.appendChild(v)}
 L.forEach(s=>{const it=document.createElement('div');it.className='bibit'+(s.id===BIB.cur?' cur':'');
@@ -2838,6 +2867,7 @@ const a=document.createElement('span');a.className='a';a.textContent=s.nombre;
 const c=s.cfg||{},b=document.createElement('span');b.className='b';
 b.textContent=[c.artist,c.key?'Tono '+c.key+(c.dest?' → '+c.dest:''):'',new Date(s.t).toLocaleDateString('es',{day:'2-digit',month:'2-digit',year:'2-digit'})].filter(Boolean).join(' · ');
 bo.appendChild(a);bo.appendChild(b);it.appendChild(bo);
+{const ix=LA.indexOf(s.id),up=mkBtn('▲',q?'Borrá la búsqueda para mover':'Subir',()=>bibMover(s.id,-1),'bx mv'),dn=mkBtn('▼',q?'Borrá la búsqueda para mover':'Bajar',()=>bibMover(s.id,1),'bx mv');up.disabled=!!q||ix<=0;dn.disabled=!!q||ix>=LA.length-1;it.appendChild(up);it.appendChild(dn)}
 const rn=document.createElement('button');rn.className='bx';rn.type='button';rn.textContent='✎';rn.title='Renombrar';rn.onclick=()=>bibRenombrar(s.id);it.appendChild(rn);
 const dl=document.createElement('button');dl.className='bx';dl.type='button';dl.textContent='✕';dl.title='Eliminar de la biblioteca';
 dl.onclick=()=>{if(dl.dataset.arm){clearTimeout(dl._t);bibEliminar(s.id);return}dl.dataset.arm='1';dl.textContent='¿Eliminar?';dl.classList.add('arm');dl._t=setTimeout(()=>{delete dl.dataset.arm;dl.textContent='✕';dl.classList.remove('arm')},3500)};
@@ -3456,6 +3486,52 @@ dups.slice(0,3).forEach(x=>add('Reemplazar «'+x.nombre+'»',()=>bibReemplazar(x
 add('Cancelar',()=>{$('bibconf').hidden=true;bibMsg('No se guardó.',0)});
 $('bibconf').hidden=false;$('bibconf').scrollIntoView({block:'nearest'})}}
 songUi();
+
+/* ===== PRO v0.40: setlists: duplicar con nombre, exportar (uno o todos, con sus canciones) e importar ===== */
+function setDupPedir(){const s=setGet();if(!s)return;$('setdupnom').value=setNomLibre(s.nombre+' (copia)');$('setdup').hidden=false;setTimeout(()=>{$('setdupnom').focus();$('setdupnom').select()},30)}
+function setNomLibre(n,skip){n=(n||'Setlist').trim().slice(0,60)||'Setlist';let r=n,k=2;while(SET.l.some(x=>x.nombre===r&&x.id!==skip))r=n+' ('+(k++)+')';return r}
+function setDuplicar(){const s=setGet();if(!s)return;const n=$('setdupnom').value.trim().slice(0,60);if(!n){setMsg('Escribí un nombre para el duplicado.',1);$('setdupnom').focus();return}
+const c={id:'s'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),nombre:setNomLibre(n),fecha:s.fecha,items:s.items.slice(),t:Date.now()};
+SET.l.push(c);if(!setSave()){SET.l.pop();setMsg(BIBLLENO,1);return}$('setdup').hidden=true;SET.ed=c.id;setUi();setMsg('Duplicado como «'+c.nombre+'». Ahora estás editando la copia.',0)}
+const setSlug=t=>String(t||'').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^A-Za-z0-9]+/g,'_').replace(/^_+|_+$/g,'')||'setlist';
+function setExportar(id){const L=id?SET.l.filter(x=>x.id===id):SET.l.slice();if(!L.length){setMsg('No hay setlists para exportar.',1);return}
+clearTimeout(BIB.tm);bibFlush(false);const ids=new Set();L.forEach(x=>x.items.forEach(i=>ids.add(i)));const C=BIB.lib.filter(x=>ids.has(x.id));
+const o={app:APPID,formato:1,version:APPV,tipo:'setlist',exportado:new Date().toISOString(),setlists:L,canciones:C};
+const f=id?'setlist_'+setSlug(L[0].nombre)+'_'+(L[0].fecha||hoyISO())+'.cifrado.json':'setlists_'+hoyISO()+'.cifrado.json';
+dl(f,JSON.stringify(o),'application/json');setMsg('Exportad'+(L.length===1?'o el setlist «'+L[0].nombre+'»':'os '+L.length+' setlists')+' con '+C.length+(C.length===1?' canción':' canciones')+'.',0)}
+function setArchivo(f){if(!f)return;if(f.size>8*1048576){setMsg('El archivo es demasiado grande (máx. 8 MB).',1);return}
+const r=new FileReader();r.onload=()=>{let o=null;try{o=JSON.parse(String(r.result||'').replace(/^﻿/,''))}catch(e){}
+if(!o||o.app!==APPID){setMsg('El archivo no es una exportación de esta plantilla.',1);return}
+if(o.tipo==='repertorio'){setMsg('Es un repertorio completo: se abrió la pestaña Canciones para importarlo.',0);bibTab('can');bibImportar(o,f.name);return}
+if(o.tipo!=='setlist'){setMsg('El archivo no contiene setlists.',1);return}setImportar(o,f.name)};r.onerror=()=>setMsg('No se pudo leer el archivo.',1);r.readAsText(f)}
+function setImportar(o,name){const LS=setSanear(o.setlists);if(!LS.length){setMsg('El archivo no contiene setlists.',1);return}
+const C=(Array.isArray(o.canciones)?o.canciones:[]).filter(x=>x&&typeof x.est==='string').slice(0,2000);
+const conf=LS.filter(x=>SET.l.some(y=>y.nombre===x.nombre));
+const hacer=modo=>{const prev=BIB.lib.slice(),prevS=JSON.stringify(SET.l),map={};let nu=0,ex=0;
+C.forEach(x=>{const id=typeof x.id==='string'?x.id:'';let e=BIB.lib.find(y=>y.id===id)||BIB.lib.find(y=>y.nombre===String(x.nombre||''));
+if(e){map[id]=e.id;ex++;return}const n={id:/^[\w-]{1,40}$/.test(id)?id:'c'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),nombre:bibNombre(String(x.nombre||'Sin título').slice(0,80)),t:+x.t||Date.now(),est:x.est.slice(0,200000),cfg:x.cfg&&typeof x.cfg==='object'?cfgClean(x.cfg):{}};
+BIB.lib.push(n);map[id]=n.id;nu++});
+if(!bibSave()){BIB.lib=prev;setMsg(BIBLLENO,1);return}
+let sn=0,sr=0;LS.forEach(x=>{const items=x.items.map(i=>map[i]||i).filter(i=>BIB.lib.some(y=>y.id===i));const j=SET.l.findIndex(y=>y.nombre===x.nombre);
+if(j>=0&&modo==='rep'){SET.l[j]=Object.assign({},SET.l[j],{fecha:x.fecha||SET.l[j].fecha,items,t:Date.now()});sr++}
+else{SET.l.push({id:'s'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),nombre:setNomLibre(x.nombre),fecha:x.fecha,items,t:Date.now()});sn++}});
+if(!setSave()){SET.l=JSON.parse(prevS);BIB.lib=prev;bibSave();setMsg(BIBLLENO,1);return}
+$('setimpconf').hidden=true;SET.ed=null;setUi();setMsg('Importado «'+name+'»: '+sn+' setlists nuevos'+(sr?' y '+sr+' reemplazados':'')+'; canciones: '+nu+' agregadas a la biblioteca y '+ex+' que ya estaban.',0)};
+if(!conf.length){hacer('nuevo');return}
+const t=$('setimpTxt'),b=$('setimpBtns');t.textContent='El archivo trae '+LS.length+(LS.length===1?' setlist':' setlists')+'. Ya hay '+(conf.length===1?'uno con el mismo nombre':conf.length+' con el mismo nombre')+': '+conf.map(x=>'«'+x.nombre+'»').join(', ')+'. ¿Qué hago con '+(conf.length===1?'ese':'esos')+'?';b.textContent='';
+const add=(x,fn,m)=>{const e=document.createElement('button');e.type='button';e.textContent=x;if(m)e.className='main';e.onclick=fn;b.appendChild(e)};
+add('Importar como nuevo'+(conf.length===1?'':'s')+' (con (2), (3)…)',()=>hacer('nuevo'),1);add('Reemplazar el'+(conf.length===1?'':'los')+' existente'+(conf.length===1?'':'s'),()=>hacer('rep'));add('Cancelar',()=>{$('setimpconf').hidden=true;setMsg('Importación cancelada.',0)});
+$('setimpconf').hidden=false;$('setimpconf').scrollIntoView({block:'nearest'})}
+/* El importador general también reconoce archivos de setlists */
+{const a=impLeer;impLeer=function(txt,name){let o=null;try{const t=txt.replace(/^﻿/,'');if(t.trim()[0]==='{')o=JSON.parse(t)}catch(e){}
+if(o&&o.app===APPID&&o.tipo==='setlist'){impMsg('Es un archivo de setlists: se abrió “♫ Repertorio” › Setlists para importarlo.',0);bibAbrirCajon();bibTab('set');SET.ed=null;setUi();setImportar(o,name);return}return a.apply(this,arguments)}}
+{const a=bibArchivo;bibArchivo=function(f){if(!f)return;const r=new FileReader();r.onload=()=>{let o=null;try{o=JSON.parse(String(r.result||'').replace(/^﻿/,''))}catch(e){}
+if(o&&o.app===APPID&&o.tipo==='setlist'){bibTab('set');SET.ed=null;setUi();setImportar(o,f.name);return}a(f)};r.readAsText(f)}}
+/* Archivo sin repertorio: aviso en el Inicio para importar la copia */
+function bvVacioNo(){try{localStorage.setItem('cifrado-pro-vacio-no','1')}catch(e){}$('bvvacio').hidden=true}
+function bvVacioUi(){let no=false;try{no=localStorage.getItem('cifrado-pro-vacio-no')==='1'}catch(e){}$('bvvacio').hidden=no||BIB.lib.length>0||SET.l.length>0}
+{const a=bvAbrir;bvAbrir=function(){const r=a.apply(this,arguments);try{bvVacioUi()}catch(e){}return r}}
+try{bvVacioUi()}catch(e){}
 </script>
 </body>
 </html>
