@@ -348,6 +348,8 @@ body.stage .bv{display:none!important}
 .syncbox{border:1px solid var(--line);border-radius:10px;padding:8px 10px}.syncbox summary{cursor:pointer;min-height:36px;display:flex;align-items:center;gap:8px;font-weight:700}
 .syncchip{font-weight:400;font-size:12px;color:var(--mut)}.syncchip.w{color:#b45309}.syncchip.ok{color:#15803d}.syncchip.e{color:#dc2626}
 .bibd .bh .syncchip{margin-left:auto;margin-right:8px}
+.penadj .tr{position:absolute;left:3px;bottom:22px;min-height:30px!important;padding:0 8px;font-size:11.5px;border-radius:999px;background:#2563eb;color:#fff;border:0}
+.penadj .st{position:absolute;left:5px;top:4px;font-size:13px;text-shadow:0 0 3px rgba(0,0,0,.7)}
 /* Diálogo del botón Atrás */
 .atr{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px}
 .atrb{width:100%;max-width:400px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 8px 30px rgba(0,0,0,.35)}
@@ -440,6 +442,33 @@ body.stage .gshade,body.stage .gpop{display:none!important}@media print{.gshade,
 .pavis .pb .main{min-height:40px;background:#fff;color:#1f2d3b;border-color:#fff}.pavis .pb .lnk{min-height:40px;border:0;background:none;color:#bfdbfe;text-decoration:underline;padding:4px 2px;font-size:13px}
 @media(max-width:900px){.pavis{order:2;margin:0 0 8px}}
 @media print{.pavis{display:none!important}}body.stage .pavis{display:none!important}
+
+/* ===== PRO v0.47: links de audio, filtro claro y Pendientes ===== */
+.bibqrow{display:flex;gap:6px}.bibqrow input{flex:1 1 auto;min-width:0}.bibqrow button{flex:none;white-space:nowrap}.bibqrow button:disabled{opacity:.4}
+.bibfilt{padding:6px 10px;border-radius:8px;border:1px solid #d97706;background:rgba(217,119,6,.12);font-size:12.5px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.bibfilt b{color:#b45309}.bibfilt button{min-height:36px!important;padding:2px 10px;font-size:12.5px}
+.aud{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--panel)}.aud summary{cursor:pointer;font-weight:700;min-height:36px;display:flex;align-items:center;gap:8px}
+.audn{font-weight:400;font-size:12px;color:var(--mut)}
+.audl{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.audi{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center;padding:6px 8px;border:1px solid var(--line);border-radius:8px;font-size:13px}
+.audi .t{font-weight:700;overflow-wrap:anywhere}.audi .t span{font-weight:400;color:var(--mut)}.audi .d{grid-column:1/-1;font-size:12px;color:var(--mut);overflow-wrap:anywhere}
+.audi a{white-space:nowrap;font-weight:700;text-decoration:none;padding:6px 10px;border-radius:8px;border:1px solid var(--line);color:var(--ink);min-height:36px;display:inline-flex;align-items:center}
+.audi a.dr{background:#2563eb;color:#fff;border-color:#2563eb}.audi a.sp{border-color:#1db954;color:#15803d}.audi .nc{font-size:12px;color:var(--mut);white-space:nowrap}
+.audh{margin:0}@media(max-width:900px){.audh{order:2}}
+body.stage .aud{display:none!important}@media print{.aud,.penref{display:none!important}}
+.pencnt{display:inline-block;min-width:18px;margin-left:5px;padding:0 5px;border-radius:999px;background:#2563eb;color:#fff;font-size:11px;font-style:normal;line-height:18px}.pencnt:empty{display:none}
+.pendesc{min-height:160px;white-space:pre-wrap;font:14px/1.45 ui-monospace,Menlo,Consolas,monospace}
+.penlk{display:flex;gap:6px;margin-top:6px}.penlk input{flex:1 1 auto;min-width:0}.penlk button{flex:none;min-width:64px}
+.penadjs{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin-top:8px}
+.penadj{position:relative;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:rgba(127,127,127,.08);display:flex;flex-direction:column}
+.penadj .th{height:84px;display:flex;align-items:center;justify-content:center;font-size:30px;cursor:pointer;background:rgba(127,127,127,.12)}.penadj .th img{width:100%;height:100%;object-fit:cover}
+.penadj .nm{font-size:11px;padding:3px 5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.penadj .nm.o{color:var(--mut);font-style:italic}
+.penadj .x{position:absolute;top:3px;right:3px;min-height:30px!important;min-width:30px;padding:0;border-radius:999px;background:rgba(0,0,0,.6);color:#fff;border:0;font-size:13px}
+.penchip{font-size:11px;padding:1px 7px;border-radius:999px;border:1px solid var(--line);margin-left:6px}.penchip.pendiente{color:#b45309;border-color:#d97706}.penchip.proceso{color:#2563eb;border-color:#2563eb}.penchip.transcripta{color:#15803d;border-color:#15803d}
+.penref{border:1px solid #2563eb;border-left-width:4px;border-radius:10px;padding:8px 10px;margin:0 0 10px;background:rgba(37,99,235,.06)}
+.penref .prh{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}.penref .prh button{min-height:36px;padding:2px 10px;font-size:12.5px;margin-left:4px}
+.penref .prd{max-height:200px;overflow:auto;white-space:pre-wrap;font:13px/1.45 ui-monospace,Menlo,Consolas,monospace;margin-top:6px;padding:6px;border-radius:6px;background:rgba(127,127,127,.08);user-select:text}
+.penref .prl{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.penref .prl a{font-size:12.5px}
 @media print{
 .nsw{display:none!important}
 .topbar,.tabs,.stagex{display:none!important}
@@ -497,11 +526,43 @@ body{background:#fff}
 <aside id="bibd" class="bibd" hidden role="dialog" aria-label="Repertorio">
 <div class="bh"><b>♫ Repertorio</b><span id="syncchip2" class="syncchip"></span><button onclick="bibCerrar()">✕ Cerrar</button></div>
 <div id="bibrec" class="vconf" hidden><div id="bibrecTxt"></div><div class="btns"><button class="main" onclick="bibExportar()">Exportar ahora</button><button onclick="bibPosponer()">Recordármelo en 3 días</button></div></div>
-<div class="bibtabs"><button data-bt="can" class="on" onclick="bibTab('can')">Canciones</button><button data-bt="set" onclick="bibTab('set')">Setlists</button></div>
+<div class="bibtabs"><button data-bt="pen" onclick="bibTab('pen')">Pendientes<i id="pencnt" class="pencnt"></i></button><button data-bt="can" class="on" onclick="bibTab('can')">Canciones</button><button data-bt="set" onclick="bibTab('set')">Setlists</button></div>
+<div id="bibp-pen" class="bibpane" hidden>
+<div id="penlista">
+<div class="rt" style="display:block">Pendientes de transcribir: anotá canciones con lo que tengas (letra, acordes sueltos, links, fotos, PDF) para transcribirlas después.</div>
+<div class="btns"><button id="pennuevo" class="main" onclick="penEditar('nuevo')">＋ Nuevo pendiente</button></div>
+<div id="penitems" class="biblist"></div>
+<div class="btns"><button id="penexp" onclick="penExportar()">Exportar pendientes (con adjuntos)</button><button id="penimp" onclick="$('penfile').click()">Importar pendientes…</button></div>
+<input type="file" id="penfile" style="display:none" onchange="penArchivo(this.files[0]);this.value=''">
+</div>
+<div id="pened" hidden>
+<div class="btns"><button onclick="penVolver()">← Pendientes</button></div>
+<label for="pentit">Título de la canción <span class="req">*</span></label><input id="pentit" maxlength="120" autocomplete="off">
+<div id="pentith" class="rt"></div>
+<label for="penart">Artista</label><input id="penart" maxlength="120" autocomplete="off">
+<label for="penest">Estado</label><select id="penest"><option value="pendiente">Pendiente</option><option value="proceso">En proceso</option><option value="transcripta">Transcripta</option></select>
+<label for="pendesc">Descripción (letra, acordes, notas… lo que tengas)</label><textarea id="pendesc" class="pendesc" spellcheck="false"></textarea>
+<label>Links de referencia</label>
+<div class="penlk"><input id="penl1" type="url" inputmode="url" placeholder="https://… (YouTube, Spotify, Drive, una web)" autocomplete="off"><button data-l="1" onclick="penAbrirLink(1)">Abrir</button></div>
+<div class="penlk"><input id="penl2" type="url" inputmode="url" placeholder="https://…" autocomplete="off"><button data-l="2" onclick="penAbrirLink(2)">Abrir</button></div>
+<div class="penlk"><input id="penl3" type="url" inputmode="url" placeholder="https://…" autocomplete="off"><button data-l="3" onclick="penAbrirLink(3)">Abrir</button></div>
+<label>Adjuntos (imágenes, PDF, documentos, planillas)</label>
+<div class="btns"><button id="penadj" onclick="$('penadjf').click()">📎 Adjuntar archivos</button><button id="penfoto" onclick="$('penfotof').click()">📷 Sacar foto</button></div>
+<label class="bvno" style="margin-top:4px"><input type="checkbox" id="penorig">Conservar las fotos en tamaño original (sin reducir)</label>
+<div class="rt" style="display:block">También podés pegar una imagen copiada (Ctrl+V). Los adjuntos se guardan en este dispositivo; en otro dispositivo se ven como “guardado en otro dispositivo”.</div>
+<input type="file" id="penadjf" multiple style="display:none" onchange="penAdjuntar(this.files);this.value=''">
+<input type="file" id="penfotof" accept="image/*" capture="environment" style="display:none" onchange="penAdjuntar(this.files);this.value=''">
+<div id="penadjs" class="penadjs"></div>
+<div id="penmsg2" class="rt"></div>
+<div class="btns"><button id="pentrab" class="main" onclick="penTrabajar()">➜ Empezar a transcribir</button><button id="pendel" onclick="penEliminar(this)">✕ Eliminar pendiente</button></div>
+</div>
+<div id="penmsg" class="rt"></div>
+</div>
 <div id="bibp-can" class="bibpane">
 <div id="bibcur" class="bibcur"></div>
 <div class="btns"><button id="bibg" class="main" onclick="bibGuardar()">Guardar en la biblioteca</button><button id="bibnueva" onclick="bibGuardar(true)">Guardar como nueva</button></div>
-<input id="bibq" type="search" placeholder="Buscar por título o artista" autocomplete="off" oninput="bibUi()">
+<div class="bibqrow"><input id="bibq" type="search" placeholder="Buscar por título o artista" autocomplete="off" oninput="bibUi()"><button id="bibqx" onclick="bibFiltroBorrar()" title="Borrar el filtro y mostrar todas las canciones">✕ Borrar filtro</button></div>
+<div id="bibfilt" class="bibfilt" hidden></div>
 <div class="bibord"><label for="bibord">Ordenar por</label><select id="bibord" onchange="bibOrdSet(this.value)"><option value="tit">Título A → Z</option><option value="titz">Título Z → A</option><option value="art">Artista A → Z</option><option value="rec">Modificadas recientemente</option><option value="tono">Tono</option><option value="man">Manual (▲ ▼)</option></select></div>
 <div id="bibconf" class="vconf" hidden><div id="bibconfTxt"></div><div id="bibconfBtns" class="btns"></div></div>
 <div id="biblist" class="biblist"></div>
@@ -517,8 +578,11 @@ body{background:#fff}
 <label for="syncclave">Clave (la misma que pusiste en el script)</label>
 <input id="syncclave" type="password" autocomplete="off" onchange="syncCfgGuardar()">
 <div class="btns"><button id="syncya" class="main" onclick="syncAhora(true)">↻ Sincronizar ahora</button><button id="syncrest" onclick="syncRestaurar(this)">Restaurar copia previa</button></div>
+<label class="bvno" style="margin-top:6px"><input type="checkbox" id="adjon" onchange="adjCfg()">Subir los adjuntos de Pendientes a Drive (carpeta privada “Cifrado PRO - Adjuntos”)</label>
+<div id="adjmsg" class="rt" style="display:block"></div>
 <div id="syncmsg" class="rt" style="display:block"></div>
 </details>
+<details id="audrep" class="aud" open><summary>🎧 Links a Escuchar Canción (Versión) <span id="audrepn" class="audn"></span></summary><div id="audrepf" class="bibfilt" hidden></div><div id="audrepl" class="audl"></div><div class="btns"><button id="audcopiar" onclick="audCopiar()">Copiar el listado para la planilla</button></div><div id="audrepm" class="rt"></div></details>
 </div>
 <div id="bibp-set" class="bibpane" hidden>
 <div id="setlistas">
@@ -572,6 +636,7 @@ body{background:#fff}
 <div id="songbar" class="songbar" role="button" tabindex="0" title="Ir a Escritura para editar los datos de la canción" onclick="irTab('esc')"><div class="sb1"><b id="sb-t"></b><span id="sb-a"></span></div><div class="sb2" id="sb-2"></div></div>
 <nav class="tabs"><button data-tab="esc" class="on" onclick="irTab('esc')">Escritura<i id="dot-esc" class="dot" style="display:none"></i></button><button data-tab="ton" onclick="irTab('ton')">Tonalidad</button><button data-tab="fmt" onclick="irTab('fmt')">Formato</button><button data-tab="epro" onclick="irTab('epro')">Estructura PRO</button><button data-tab="arc" onclick="irTab('arc')">Archivo</button></nav>
 <section class="tab on" data-tab="esc">
+<div id="penref" class="penref" hidden><div class="prh"><b>📝 Transcribiendo: <span id="penreft"></span></b><span><button onclick="penRefVer()">Ver pendiente</button><button onclick="penRefCerrar()">Ocultar</button></span></div><div id="penrefd" class="prd"></div><div id="penrefl" class="prl"></div><div id="penrefa" class="penadjs"></div></div>
 <label for="title">Título <span class="req" title="Campo obligatorio">*</span></label><input id="title">
 <div id="hint-title" class="rt"></div>
 <label for="artist">Artista</label><input id="artist">
@@ -717,8 +782,9 @@ body{background:#fff}
 </div>
 <div class="right">
 <div class="nsw" id="nsw"><span class="nswl">Notación:</span><button id="nsw-orig" data-n="orig" onclick="setNot('orig')">Origen</button><button id="nsw-am" data-n="am" onclick="setNot('am')">C D E</button><button id="nsw-lat" data-n="lat" onclick="setNot('lat')">Do Re Mi</button><button id="nsw-rom" data-n="rom" onclick="setNot('rom')">I II III</button><button id="nsw-impl" data-n="impl" onclick="setNot('impl')">1 2 3</button><button id="nsw-nash" data-n="nash" onclick="setNot('nash')">1 2m 3</button><button id="nsw-neg" onclick="negSet('E')" title="Hoja en negativo (solo pantalla)">◐ Negativo</button><label class="nswl" for="nsec">Debajo:</label><select id="nsec"><option value="no">Nada</option><option value="am">C D E</option><option value="lat">Do Re Mi</option><option value="rom">I II III</option><option value="impl">1 2 3</option><option value="nash">1 2m 3</option></select><select id="npri" style="display:none"><option value="orig">Origen</option><option value="am">C D E</option><option value="lat">Do Re Mi</option><option value="rom">I II III</option><option value="impl">1 2 3</option><option value="nash">1 2m 3</option></select></div>
-<div id="pavis" class="pavis" hidden role="status"><div id="pavcnt" class="pc"></div><div class="pt">En lugar de <b>Impresora</b> seleccioná <b>Guardar como PDF</b> y en <b>Tamaño de papel</b> elegí <b>“ISO A4”</b> o <b>“A4”</b> (si está disponible).</div><div class="pb"><button class="main" onclick="imprimirYa()">Abrir ya ▶</button><button class="lnk" onclick="imprimirNoMostrar()">No volver a mostrar esta notificación</button></div></div>
+<div id="pavis" class="pavis" hidden role="status"><div id="pavcnt" class="pc"></div><div class="pt">En lugar de <b>Impresora</b> seleccioná [<b>Guardar como PDF</b>] y en <b>Tamaño Papel</b> elegí [<b>ISO A4</b>] o [<b>A4</b>] (si está disponible).</div><div class="pb"><button class="main" onclick="imprimirYa()">Abrir ya ▶</button><button class="lnk" onclick="imprimirNoMostrar()">No volver a mostrar esta notificación</button></div></div>
 <div class="wrap" id="wrap" data-desc="Vista previa de la hoja"><article class="paper" id="paper"></article></div>
+<details id="audhoja" class="aud audh" open><summary>🎧 Link a Escuchar Canción (Versión)</summary><div id="audhojal" class="audl"></div><div id="audhojam" class="rt"></div></details>
 <div class="g gH">
 <p class="help"><b>Sección:</b> <code>:: Letra | NOMBRE | nota</code> (letra y nota opcionales; se usa <code>::</code> para no confundirlo con los sostenidos, aunque <code>&gt;</code> y <code>#</code> también se aceptan).<br>
 <b>Compases:</b> sin <code>|</code>, cada acorde separado por espacio es un compás (máx. 4 por línea; si pasás de 4 sigue en la línea siguiente). Con <code>|</code> separás los compases a mano: <code>C G | Am F</code>.<br>
@@ -747,6 +813,9 @@ body{background:#fff}
 <b>Metrónomo:</b> “♩ Metrónomo” (junto a TAP, en el Escenario y en Formato) da un pulso visual con el BPM del campo, marcando el primer tiempo según el primer @3/4, @6/8… (4/4 si no hay). El click de audio es opcional; mientras suena, el control flotante permite silenciarlo (🔇) o detenerlo (■) desde cualquier pantalla, y también los controles multimedia del dispositivo.<br>
 <b>Sincronización en la nube:</b> en “♫ Repertorio” › “☁ Sincronización en la nube” se activa con la URL del script de Google y su clave (instrucciones en el .zip). El repertorio siempre se usa desde el dispositivo, con o sin internet; al sincronizar se combinan los cambios de todos los dispositivos (gana la modificación más reciente) y nunca se borra algo solo porque falte en la nube. Si falla la conexión o el script, los cambios quedan pendientes y se reintenta; antes de cada combinación se guarda una copia previa que se puede restaurar.<br>
 <b>Pasos guiados:</b> en “⚙” (barra superior o Inicio) se activa la asistencia. Cada guía resalta el control de cada paso sobre la pantalla real, con “Paso n de N”, ◀ Atrás, Siguiente ▶ y ✕ Salir, y avanza sola cuando hacés la acción. Las guías se definen en la pestaña “Guias” de la planilla del menú (columnas guia, titulo, orden, texto, destino, completa); sin planilla se usan las incluidas. En el menú del Inicio se lanzan con el destino guia:&lt;nombre&gt;.<br>
+<b>Links a Escuchar Canción (Versión):</b> se configuran en la pestaña “Audios” de la planilla de Repertorio (cancion, artista, link, detalle) y se leen al sincronizar. Se muestran en ♫ Repertorio › Canciones, en el mismo orden y con el mismo filtro que la lista, y debajo de la hoja para la canción en pantalla. Sin fila en la planilla: “Link no configurado”; con fila sin link: “Escuchar desde Spotify”.<br>
+<b>Pendientes de transcribir:</b> en ♫ Repertorio › Pendientes se anotan canciones con título (obligatorio), artista, descripción, hasta 3 links y adjuntos (imágenes, PDF, documentos, planillas; también foto con la cámara o pegando una imagen). “➜ Empezar a transcribir” crea una hoja con título y artista y muestra el pendiente como referencia en Escritura; al guardar la canción en el Repertorio, el pendiente queda como transcripto y vinculado.<br>
+<b>Adjuntos en Drive:</b> con la sincronización activa y el script en su versión 3, los adjuntos de Pendientes se suben solos a la carpeta privada “Cifrado PRO - Adjuntos” de tu Drive (☁). En los otros dispositivos se abren en Drive tocándolos o se traen al dispositivo con “⬇ Traer”. Quitar un adjunto lo manda a la papelera de Drive.<br>
 <b>Repertorio (biblioteca):</b> “♫ Repertorio”, en la barra superior, abre la lista de canciones guardadas en este navegador, con buscador. “Guardar en la biblioteca” guarda la canción completa (estructura, datos, tono, transposición, notación y formato); al abrirla se ve igual que como la dejaste. La canción abierta desde la biblioteca se guarda sola mientras la editás, y al abrir otra la actual se guarda antes. Con ✎ se renombra y con ✕ se elimina (dos toques). Si editás el título de una canción abierta desde la biblioteca, su nombre en la lista se actualiza (un nombre puesto con ✎ se mantiene hasta que cambies el título). No se autoguardan la transposición rápida del Escenario ni el ejemplo, las demos, la plantilla de Estructura o una hoja vacía sin modificar. Ejemplo, Vaciar, las demos y las importaciones de una sola canción reemplazan la hoja y la desvinculan, sin tocar la biblioteca. “Exportar repertorio” baja todas las canciones en un solo archivo, como copia de seguridad o para pasarlas a otro dispositivo; al importarlo podés agregarlas (si una ya estaba, queda la versión más reciente) o reemplazar la biblioteca. Las “Versiones guardadas” (variantes de tono de una canción) siguen aparte.<br>
 <b>Setlists:</b> en “♫ Repertorio”, pestaña “Setlists”, creá un setlist con nombre y fecha y agregale canciones de la biblioteca (una misma canción puede ir más de una vez, por ejemplo un bis); se ordenan con ▲ ▼ y se quitan con ✕ sin borrarlas de la biblioteca. “▶ Usar en el Escenario” lo deja activo y entra al Escenario; “Abrir el primer tema” carga el primero. Si eliminás una canción de la biblioteca, se quita de los setlists. Exportar e importar el repertorio incluye los setlists. En el Escenario, con un setlist activo aparecen “◀ Tema”, “Tema ▶” y el indicador (por ejemplo “3 de 12”); al tocar el indicador se abre la lista con el tema actual resaltado y un toque salta a ese tema. Solo se cambia de tema con esos botones: el pedal y las flechas siguen moviendo la hoja. Al cambiar de tema se descarta la transposición rápida de ±1 y el tema abre con su propia transposición guardada. En el último tema, “Tema ▶” queda deshabilitado (no vuelve al primero).<br>
 <b>Copia de seguridad:</b> si pasan más de 7 días sin exportar el repertorio, aparece un punto rojo en “♫ Repertorio” y un aviso en el cajón con “Exportar ahora” o “Recordármelo en 3 días”.<br>
@@ -1432,6 +1501,9 @@ u1M0/kZW0TQdukZHUlBn4XQoaA1iQVAJNVNqYfEgKBGJtezh1tgxVSchyO1wipf1J0chYnLI8PXR2EDo
 /* ===== Versión y registro de cambios (agregar cada versión nueva ARRIBA de todo) ===== */
 const ULTCOMP='Última versión compartida con la otra plantilla: PRO v0.22 (e0.34) ↔ Estándar v0.34 (p0.22)'; /* actualizar SOLO cuando un cambio se aplique a ambas versiones */
 const VERSION_LOG=[
+{v:'PRO 0.48',f:'09/11/2026',c:['[PRO] Adjuntos de Pendientes en Drive (script versión 3, incluido en el .zip): después de cada sincronización se suben, de a uno, a la carpeta privada “Cifrado PRO - Adjuntos” de tu Drive, sin duplicarse. Cada adjunto muestra ☁ cuando ya está en Drive y ⏳ mientras espera.','[PRO] En los otros dispositivos los adjuntos aparecen con ☁: tocándolos se abren en Drive, y “⬇ Traer” los descarga al dispositivo (con miniatura y uso sin conexión). Quitar un adjunto lo manda a la papelera de Drive (si no hay conexión, se hace en la próxima sincronización).','[PRO] En ☁ Sincronización en la nube: opción “Subir los adjuntos de Pendientes a Drive” (activada por defecto) y estado de la subida. Si el script es una versión anterior, se avisa que hay que actualizarlo.']},
+{v:'PRO 0.47',f:'09/11/2026',c:['[PRO] Links a Escuchar Canción (Versión): se configuran en la pestaña “Audios” de la planilla de Repertorio (cancion, artista, link, detalle) y llegan con la sincronización (script versión 2, incluido en el .zip). La coincidencia es por nombre de la versión, luego por título y artista, y por último por título, sin importar mayúsculas ni tildes. Sin fila: “Link no configurado”; con fila sin link: “Escuchar desde Spotify” (búsqueda por título y artista); el detalle se muestra al lado.','[PRO] Se muestran en ♫ Repertorio › Canciones, desplegados, al final de la pestaña, en el mismo orden y con el mismo filtro que la lista, y debajo de la hoja (antes del texto de ayuda) para la canción en pantalla. “Copiar el listado para la planilla” copia las canciones con sus nombres exactos para pegarlas en la pestaña “Audios”.','[PRO] Buscador de Canciones: botón “✕ Borrar filtro” a la derecha y, con un filtro escrito, el aviso “Filtro aplicado: se muestran n de N canciones; m quedan ocultas”, también en la sección de links.','[PRO] Pendientes de transcribir: primera pestaña del cajón ♫ Repertorio (al abrirlo se muestra siempre Canciones), con la cantidad de pendientes. Cada pendiente tiene título (obligatorio), artista, estado, descripción larga, hasta 3 links (con botón que reconoce YouTube, Spotify o Drive) y adjuntos: imágenes, PDF, documentos y planillas, foto con la cámara del celular o imagen pegada; las fotos se reducen a 1600 px salvo que se pida conservar el original.','[PRO] “➜ Empezar a transcribir” crea una hoja con título y artista y muestra el pendiente como referencia arriba de Escritura (descripción, links y adjuntos). Al guardar la canción en el Repertorio, el pendiente pasa a Transcripta y queda vinculado. Los textos y links se sincronizan con el resto del repertorio; los adjuntos quedan en el dispositivo (se suben a Drive en la próxima entrega). Exportar e importar pendientes incluye los adjuntos.']},
+{v:'PRO 0.46',f:'03/11/2026',c:['[PRO] Aviso de “Guardar como PDF”: textos nuevos, “Se abrirá en 10 s...” y “En lugar de Impresora seleccioná [Guardar como PDF] y en Tamaño Papel elegí [ISO A4] o [A4] (si está disponible).”, con las negritas en las palabras y no en los corchetes.','[PRO] Corrección: con la asistencia activada y la opción de ofrecer las guías, el cuadro “Primera vez” no aparecía en el Inicio al recargar o al volver a entrar a la app, porque el Inicio se abría antes de que las guías estuvieran listas. Ahora aparece mientras no se haya hecho ninguna guía.','[PRO] Guías desde la planilla: columnas nuevas “activa” y “primera_vez” (si / no, en cualquier fila de la guía; vacías = sí). Solo las guías activas aparecen en ⚙ › Guías y se pueden lanzar con guia:<nombre>; el cuadro “Primera vez” muestra solo las activas marcadas para “Primera vez”.']},
 {v:'PRO 0.45',f:'03/11/2026',c:['[PRO] Aviso de “Guardar como PDF”: permanece 10 segundos (antes 5) y cambia el orden: primero “Se abre en…”, debajo el mensaje y luego “Abrir ya ▶” a la derecha, con el enlace “No volver a mostrar esta notificación” debajo, a la izquierda.']},
 {v:'PRO 0.44',f:'03/11/2026',c:['[PRO] Barra superior reorganizada: a la izquierda el título “Plantilla de Cifrado PRO” con la versión y “Changelog” debajo; a la derecha ⌂ Inicio y ⚙ Configuración, de 40 px. Abajo, botones con el ícono sobre el texto: ♫ Repertorio, ⎙ Guardar como PDF / [Imprimir] (destacado) y ▶ Escenario.','[PRO] “Guardar como PDF / [Imprimir]” (en la barra, en Escritura, en Formato y en la acción del menú) muestra antes un aviso sobre la parte superior de la vista previa: “En lugar de Impresora seleccioná Guardar como PDF y en Tamaño de papel elegí ISO A4 o A4 (si está disponible)”. Queda 5 segundos con cuenta regresiva (o hasta “Abrir ya ▶”) y después se abre la pantalla de impresión. El aviso no sale en el PDF.','[PRO] El enlace “No volver a mostrar esta notificación” pausa la cuenta y abre ⚙, donde esa opción es la primera: tildada, el aviso no vuelve a aparecer hasta la próxima versión. Al cerrar ⚙ se abre la pantalla de impresión.']},
 {v:'PRO 0.43',f:'03/11/2026',c:['[PRO] Botón “⚙” de configuración general en la barra superior (todas las pestañas) y en el Inicio. Por ahora reúne la activación de la asistencia con pasos guiados, la opción de ofrecer las guías en el Inicio mientras no se haya hecho ninguna y la lista de guías para empezarlas.','[PRO] Pasos guiados (formato de foco sobre la pantalla real): se oscurece la pantalla salvo el control del paso, con un globo “Paso n de N”, ◀ Atrás, Siguiente ▶ (u Omitir ▶) y ✕ Salir. El paso avanza solo al hacer la acción (tocar, escribir, elegir o entrar al Escenario). Se recuerda dónde quedó cada guía. No se muestran durante el Escenario.','[PRO] Guías incluidas: “Tu primera canción”, “Preparar un show” y “Transportar y guardar una versión”. Se pueden redefinir sin versiones nuevas desde la pestaña “Guias” de la planilla del menú (columnas guia, titulo, orden, texto, destino, completa), con la misma lectura directa o alternativa del menú y copia sin conexión. Destino de menú nuevo: guia:<nombre>.','[PRO] Nombres nuevos para apuntar controles: tapply (Aplicar al texto), vsavet (Guardar versión transportada), bibnueva (Guardar como nueva) y setusar (▶ Usar en el Escenario).']},
@@ -3631,19 +3703,23 @@ function syncGuardarEstado(){try{localStorage.setItem(SYNCK,JSON.stringify({on:S
 const syncHash=t=>{let h=5381;for(let i=0;i<t.length;i++)h=((h<<5)+h+t.charCodeAt(i))|0;return(h>>>0).toString(36)+':'+t.length};
 const syncDatoC=x=>JSON.stringify({id:x.id,nombre:x.nombre,t:x.t,est:x.est,cfg:x.cfg});
 const syncDatoS=x=>JSON.stringify({id:x.id,nombre:x.nombre,fecha:x.fecha,items:x.items,t:x.t});
+const syncDatoP=x=>JSON.stringify({id:x.id,titulo:x.titulo,artista:x.artista,desc:x.desc,links:x.links,estado:x.estado,adj:(x.adj||[]).map(a=>({id:a.id,nombre:a.nombre,tipo:a.tipo,tam:a.tam,url:a.url||''})),cancion:x.cancion||'',creado:x.creado,t:x.t});
 const syncUrlOk=u=>/^https:\/\/script\.google(usercontent)?\.com\/[^\s]+$/i.test(u);
 /* Registros locales: canciones, setlists y borrados */
 function syncLocales(){const R={};BIB.lib.forEach(x=>R['c:'+x.id]={id:'c:'+x.id,tipo:'cancion',t:+x.t||0,nombre:x.nombre,dato:syncDatoC(x),ref:x});
 SET.l.forEach(x=>R['s:'+x.id]={id:'s:'+x.id,tipo:'setlist',t:+x.t||0,nombre:x.nombre,dato:syncDatoS(x),ref:x});
-Object.keys(SYNC.tomb).forEach(k=>{if(!R[k])R[k]={id:k,tipo:k[0]==='c'?'cancion':'setlist',t:SYNC.tomb[k],del:true,nombre:'',dato:''}});return R}
+(window.PEN?PEN.l:[]).forEach(x=>R['p:'+x.id]={id:'p:'+x.id,tipo:'pendiente',t:+x.t||0,nombre:x.titulo,dato:syncDatoP(x),ref:x});
+Object.keys(SYNC.tomb).forEach(k=>{if(!R[k])R[k]={id:k,tipo:k[0]==='c'?'cancion':k[0]==='p'?'pendiente':'setlist',t:SYNC.tomb[k],del:true,nombre:'',dato:''}});return R}
 /* Detecta ediciones que no actualizaron la fecha y se la actualiza, para que ganen al combinar */
 function syncMarcar(){const now=Date.now();let cb=false,cs=false;
 BIB.lib.forEach(x=>{const k='c:'+x.id,h=syncHash(syncDatoC(Object.assign({},x,{t:0})));if(SYNC.h[k]&&SYNC.h[k].h!==h&&(+x.t||0)<=SYNC.h[k].t){x.t=now;cb=true}});
 SET.l.forEach(x=>{const k='s:'+x.id,h=syncHash(syncDatoS(Object.assign({},x,{t:0})));if(SYNC.h[k]&&SYNC.h[k].h!==h&&(+x.t||0)<=SYNC.h[k].t){x.t=now;cs=true}});
-if(cb)bibSaveRaw();if(cs)setSaveRaw()}
+let cp=false;(window.PEN?PEN.l:[]).forEach(x=>{const k='p:'+x.id,h=syncHash(syncDatoP(Object.assign({},x,{t:0})));if(SYNC.h[k]&&SYNC.h[k].h!==h&&(+x.t||0)<=SYNC.h[k].t){x.t=now;cp=true}});
+if(cb)bibSaveRaw();if(cs)setSaveRaw();if(cp)penSaveRaw()}
 function syncPendientes(){if(!SYNC.on)return 0;let n=0;
 BIB.lib.forEach(x=>{const k='c:'+x.id,s=SYNC.h[k];if(!s||s.h!==syncHash(syncDatoC(Object.assign({},x,{t:0})))||s.t<(+x.t||0))n++});
 SET.l.forEach(x=>{const k='s:'+x.id,s=SYNC.h[k];if(!s||s.h!==syncHash(syncDatoS(Object.assign({},x,{t:0})))||s.t<(+x.t||0))n++});
+(window.PEN?PEN.l:[]).forEach(x=>{const k='p:'+x.id,s=SYNC.h[k];if(!s||s.h!==syncHash(syncDatoP(Object.assign({},x,{t:0})))||s.t<(+x.t||0))n++});
 Object.keys(SYNC.tomb).forEach(k=>{const s=SYNC.h[k];if(!s||!s.del)n++});return n}
 /* Borrados explícitos: se registran comparando lo guardado antes y después (eliminar, reemplazar el repertorio, eliminar setlist) */
 const bibSaveRaw=bibSave,setSaveRaw=setSave;
@@ -3666,13 +3742,13 @@ const f=document.createElement('form');f.method='POST';f.action=SYNC.url;f.targe
 let fin=false;const end=()=>{if(fin)return;fin=true;setTimeout(()=>{f.remove();fr.remove()},500);ok()};fr.onload=end;setTimeout(end,15000);f.submit()});return{ok:true,confirmar:true}}}
 /* Validación de lo que llega de la nube */
 function syncValido(j){if(!j||typeof j!=='object')return'La nube respondió algo inesperado.';if(j.ok===false)return j.error==='clave'?'La clave no coincide con la del script.':'El script respondió un error ('+(j.error||'desconocido')+').';
-if(!Array.isArray(j.registros))return'La nube respondió sin datos del repertorio.';for(const r of j.registros){if(!r||typeof r.id!=='string'||!/^[cs]:/.test(r.id)||!isFinite(+r.t))return'Hay datos dañados en la planilla.';if(!r.del){try{const d=JSON.parse(r.dato);if(!d||!d.id)return'Hay datos dañados en la planilla.';if(r.tipo==='cancion'&&typeof d.est!=='string')return'Hay datos dañados en la planilla.'}catch(e){return'Hay datos incompletos en la planilla (una canción no se pudo leer).'}}}return''}
+if(!Array.isArray(j.registros))return'La nube respondió sin datos del repertorio.';for(const r of j.registros){if(!r||typeof r.id!=='string'||!/^[csp]:/.test(r.id)||!isFinite(+r.t))return'Hay datos dañados en la planilla.';if(!r.del){try{const d=JSON.parse(r.dato);if(!d||!d.id)return'Hay datos dañados en la planilla.';if(r.tipo==='cancion'&&typeof d.est!=='string')return'Hay datos dañados en la planilla.'}catch(e){return'Hay datos incompletos en la planilla (una canción no se pudo leer).'}}}return''}
 async function syncAhora(manual){if(!SYNC.on||SYNC.corriendo)return;if(!syncUrlOk(SYNC.url)||!SYNC.clave){SYNC.err='Falta la URL del script o la clave.';syncUi();return}
 if(navigator.onLine===false){SYNC.err='Sin conexión: se usa la copia del dispositivo.';syncUi();return}
 SYNC.corriendo=true;syncUi();let msg='';
 try{clearTimeout(BIB.tm);bibFlush(false);syncMarcar();
 let j;try{j=await syncLeer()}catch(e){throw new Error(e&&e.message==='html'?'El script no está publicado como aplicación web para “Cualquier usuario”.':'No se pudo conectar con la nube (sin conexión o el script no respondió). Se usa la copia del dispositivo.')}
-const inv=syncValido(j);if(inv)throw new Error(inv+' No se cambió nada en este dispositivo.');
+const inv=syncValido(j);if(inv)throw new Error(inv+' No se cambió nada en este dispositivo.');try{audGuardar(j)}catch(e){}SYNC.ver=+j.version||1;try{penAdjMapa(j)}catch(e){}
 const S={};j.registros.forEach(r=>S[r.id]=r);const L=syncLocales(),bajar=[],subir=[];
 new Set(Object.keys(S).concat(Object.keys(L))).forEach(k=>{const a=L[k],b=S[k];if(b&&(!a||+b.t>a.t))bajar.push(b);else if(a&&(!b||a.t>+b.t))subir.push(a)});
 const enEsc=document.body.classList.contains('stage');
@@ -3683,9 +3759,10 @@ else if(bajar.length){
  bajar.forEach(b=>{const tipo=b.id[0],id=b.id.slice(2);
   if(tipo==='c'){const i=BIB.lib.findIndex(x=>x.id===id);if(b.del){if(i>=0){BIB.lib.splice(i,1);if(BIB.cur===id){BIB.cur=null;BIB.snap='';bibCurSave()}}SYNC.tomb[b.id]=+b.t}
    else{const d=JSON.parse(b.dato),e={id,nombre:String(d.nombre||'Sin título').slice(0,80),t:+b.t,est:String(d.est).slice(0,200000),cfg:d.cfg&&typeof d.cfg==='object'?cfgClean(d.cfg):{}};if(i>=0)BIB.lib[i]=e;else BIB.lib.push(e);delete SYNC.tomb[b.id];if(id===curAntes)curNuevo=true}}
+  else if(tipo==='p'){const i=PEN.l.findIndex(x=>x.id===id);if(b.del){if(i>=0)PEN.l.splice(i,1);SYNC.tomb[b.id]=+b.t}else{const d=penSanear(JSON.parse(b.dato));if(d){d.id=id;d.t=+b.t;const loc=i>=0?PEN.l[i]:null;if(loc)d.adj=penMergeAdj(loc.adj,d.adj);if(i>=0)PEN.l[i]=d;else PEN.l.push(d);delete SYNC.tomb[b.id]}}}
   else{const i=SET.l.findIndex(x=>x.id===id);if(b.del){if(i>=0)SET.l.splice(i,1);SYNC.tomb[b.id]=+b.t}
    else{const d=setSanear([JSON.parse(b.dato)])[0];d.id=id;d.t=+b.t;if(i>=0)SET.l[i]=d;else SET.l.push(d);delete SYNC.tomb[b.id]}}});
- bibSaveRaw();setSaveRaw();SYNC.prevB=new Set(BIB.lib.map(x=>x.id));SYNC.prevS=new Set(SET.l.map(x=>x.id));setLimpiar();setSaveRaw();SYNC.aplicando=false;
+ bibSaveRaw();setSaveRaw();penSaveRaw();SYNC.prevP=new Set(PEN.l.map(x=>x.id));SYNC.prevB=new Set(BIB.lib.map(x=>x.id));SYNC.prevS=new Set(SET.l.map(x=>x.id));if(typeof penUi==='function')penUi();setLimpiar();setSaveRaw();SYNC.aplicando=false;
  if(curNuevo){if(!editado){const e=BIB.lib.find(x=>x.id===curAntes);const c=cfgClean(e.cfg||{});if(!c.prev)c.prev=[];applyData(e.est,c);BIB.cur=curAntes;bibCurSave();BIB.snap=bibSnap()}else msg='La canción abierta también cambió en otro dispositivo; se conserva lo que estás editando acá.'}
  if(typeof bibUi==='function')bibUi();if(typeof setUi==='function'&&!$('bibp-set').hidden)setUi()}
 if(subir.length){const w=await syncEscribir(subir);if(!w||w.ok===false)throw new Error(w&&w.error==='clave'?'La clave no coincide con la del script.':'No se pudieron subir los cambios; quedan pendientes.');
@@ -3693,11 +3770,11 @@ if(subir.length){const w=await syncEscribir(subir);if(!w||w.ok===false)throw new
   if(subir.some(a=>!S2[a.id]||+S2[a.id].t<a.t))throw new Error('No se pudo confirmar la subida; los cambios quedan pendientes.');Object.assign(S,S2)}
  subir.forEach(a=>S[a.id]={id:a.id,t:a.t,del:a.del})}
 /* registro de lo ya sincronizado */
-const H={};const L2=syncLocales();Object.keys(L2).forEach(k=>{const a=L2[k];if(a.del)H[k]={t:a.t,del:true};else H[k]={t:a.t,h:syncHash(a.tipo==='cancion'?syncDatoC(Object.assign({},a.ref,{t:0})):syncDatoS(Object.assign({},a.ref,{t:0})))}});
+const H={};const L2=syncLocales();Object.keys(L2).forEach(k=>{const a=L2[k];if(a.del)H[k]={t:a.t,del:true};else{const z=Object.assign({},a.ref,{t:0});H[k]={t:a.t,h:syncHash(a.tipo==='cancion'?syncDatoC(z):a.tipo==='pendiente'?syncDatoP(z):syncDatoS(z))}}});
 SYNC.h=H;SYNC.ult=Date.now();SYNC.err='';syncGuardarEstado();
 if(manual||bajar.length||subir.length)msg=msg||('Sincronizado: '+bajar.length+' cambio'+(bajar.length===1?'':'s')+' recibido'+(bajar.length===1?'':'s')+' y '+subir.length+' enviado'+(subir.length===1?'':'s')+'.')}
 catch(e){SYNC.err=e&&e.message||'Error de sincronización.';syncGuardarEstado()}
-SYNC.corriendo=false;syncUi(msg)}
+SYNC.corriendo=false;syncUi(msg);if(!SYNC.err)setTimeout(()=>{try{penSubirCola()}catch(e){}},200)}
 function syncUi(msg){const ch=[$('syncchip'),$('syncchip2')],p=syncPendientes(),f=t=>new Date(t).toLocaleString('es',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
 let t='',c='';if(!SYNC.on){t='desactivada';c=''}else if(SYNC.corriendo){t='☁ sincronizando…';c=''}else if(SYNC.err){t='☁ ⚠ '+(p?p+' pendiente'+(p===1?'':'s'):'sin sincronizar');c=navigator.onLine===false?'w':'e'}else if(p){t='☁ ⏳ '+p+' pendiente'+(p===1?'':'s');c='w'}else if(SYNC.ult){t='☁ ✓ '+f(SYNC.ult);c='ok'}else{t='☁ sin sincronizar';c='w'}
 ch.forEach((e,i)=>{if(!e)return;e.textContent=i===1&&!SYNC.on?'':t;e.className='syncchip '+c});
@@ -3738,23 +3815,25 @@ const GDEF=[
 ['transportar-version','Transportar y guardar una versión',5,'Si además la querés en el Repertorio como versión aparte, tocá “Guardar como nueva”: el nombre lleva el tono, por ejemplo “{ A (+2) }”.','cajon:can/bibnueva','clic'],
 ['transportar-version','Transportar y guardar una versión',6,'Desde “Versión a restaurar” volvés a cualquier versión guardada, y “Volver al tono original” transporta de nuevo al primer tono.','ir:ton/vsel','siguiente']
 ].map(r=>({guia:r[0],titulo:r[1],orden:r[2],texto:r[3],destino:r[4],completa:r[5]}));
-const GCOL=['guia','titulo','orden','texto','destino','completa'],GCOMP=['siguiente','clic','escribir','cambio','escenario'];
+const GCOL=['guia','titulo','orden','texto','destino','completa','activa','primera_vez'],GCOMP=['siguiente','clic','escribir','cambio','escenario'];
 const G={on:false,ofr:true,act:null,i:0,tick:null,lis:null,deb:null,el:null};
 try{Object.assign(G,JSON.parse(localStorage.getItem(GCK))||{})}catch(e){}G.act=null;
 function guiaCfgSave(){try{localStorage.setItem(GCK,JSON.stringify({on:G.on,ofr:G.ofr}))}catch(e){}}
 function guiaHechas(){try{return JSON.parse(localStorage.getItem(GHK))||{}}catch(e){return{}}}
 function guiaFilas(){let c=null;try{c=JSON.parse(localStorage.getItem(GK))}catch(e){}return c&&Array.isArray(c.filas)&&c.filas.length?c.filas:GDEF}
-function guiaLista(){const by={},ord=[];guiaFilas().forEach(r=>{if(!by[r.guia]){by[r.guia]={id:r.guia,titulo:r.titulo||r.guia,pasos:[]};ord.push(r.guia)}if(r.titulo&&!by[r.guia].titulo)by[r.guia].titulo=r.titulo;by[r.guia].pasos.push(r)});
+function guiaListaTodas(){const by={},ord=[];guiaFilas().forEach(r=>{if(!by[r.guia]){by[r.guia]={id:r.guia,titulo:r.titulo||r.guia,pasos:[],activa:'',primera:''};ord.push(r.guia)}const g=by[r.guia];if(r.titulo&&!g.titulo)g.titulo=r.titulo;if(!g.activa&&r.activa)g.activa=r.activa;if(!g.primera&&r.primera_vez)g.primera=r.primera_vez;g.pasos.push(r)});
+ord.forEach(k=>{by[k].activa=by[k].activa||'si';by[k].primera=by[k].primera||'si'});
 return ord.map(k=>{by[k].pasos.sort((a,b)=>a.orden-b.orden);return by[k]})}
+function guiaLista(){return guiaListaTodas().filter(g=>g.activa!=='no')}
 /* Lectura desde la pestaña “Guias” de la planilla del menú (misma vía que el menú: directa o alternativa) */
 function guiaFila(r,i,warn){const g=k=>String(r[k]==null?'':r[k]).trim();const id=bvNorm(g('guia')).replace(/\s+/g,'-'),tx=g('texto');if(!id||!tx)return null;
 let c=bvNorm(g('completa'))||'siguiente';if(!GCOMP.includes(c)){warn.push('Guía «'+id+'», paso '+(g('orden')||i+1)+': «completa» no válida ('+c+'), se usa “siguiente”.');c='siguiente'}
-const o=parseFloat(String(r.orden).replace(',','.'));return{guia:id,titulo:g('titulo').slice(0,80),orden:isFinite(o)?o:1000+i,texto:tx.slice(0,400),destino:g('destino').slice(0,120),completa:c}}
+const o=parseFloat(String(r.orden).replace(',','.')),sn=v=>{v=bvNorm(v);return!v?'':/^(no|0|false|falso)$/.test(v)?'no':'si'};return{guia:id,titulo:g('titulo').slice(0,80),orden:isFinite(o)?o:1000+i,texto:tx.slice(0,400),destino:g('destino').slice(0,120),completa:c,activa:sn(g('activa')),primera_vez:sn(g('primera_vez'))}}
 async function guiaSync(){const s=bvSrc();if(!s.on)return;const m=String(s.url).match(/^https:\/\/docs\.google\.com\/spreadsheets\/d\/([A-Za-z0-9_-]{20,})\//);if(!m)return;
 const base='https://docs.google.com/spreadsheets/d/'+m[1]+'/gviz/tq?headers=1&sheet=Guias';let rows=null;
-try{const r=await fetch(base+'&tqx=out:csv&_t='+Date.now(),{cache:'no-store'});const t=await r.text();if(r.ok&&!/^\s*</.test(t)){const R=bvCsv(t.replace(/^﻿/,''));const H=(R[0]||[]).map(bvNorm);if(H.includes('guia')&&H.includes('texto'))rows=R.slice(1).filter(x=>x.some(c=>c.trim())).map(x=>{const o={};H.forEach((h,j)=>{if(GCOL.includes(h))o[h]=x[j]||''});return o})}}
+try{const r=await fetch(base+'&tqx=out:csv&_t='+Date.now(),{cache:'no-store'});const t=await r.text();if(r.ok&&!/^\s*</.test(t)){const R=bvCsv(t.replace(/^﻿/,''));const H=(R[0]||[]).map(x=>bvNorm(x).replace(/\s+/g,'_'));if(H.includes('guia')&&H.includes('texto'))rows=R.slice(1).filter(x=>x.some(c=>c.trim())).map(x=>{const o={};H.forEach((h,j)=>{if(GCOL.includes(h))o[h]=x[j]||''});return o})}}
 catch(e){try{const R=await new Promise((ok,ko)=>{const cb='gcb'+Date.now(),sc=document.createElement('script');let fin=false;const end=(f,v)=>{if(fin)return;fin=true;clearTimeout(t);try{delete window[cb]}catch(x){}sc.remove();f(v)};const t=setTimeout(()=>end(ko,0),10000);
-window[cb]=j=>{try{if(!j||j.status==='error')return end(ko,0);const H=j.table.cols.map(c=>bvNorm(c.label||''));end(ok,j.table.rows.map(r=>{const o={};H.forEach((h,i)=>{const x=(r.c||[])[i];if(GCOL.includes(h))o[h]=x==null||x.v==null?'':String(x.v)});return o}))}catch(x){end(ko,0)}};sc.onerror=()=>end(ko,0);sc.src=base+'&tqx=out:json;responseHandler:'+cb+'&_t='+Date.now();document.head.appendChild(sc)});
+window[cb]=j=>{try{if(!j||j.status==='error')return end(ko,0);const H=j.table.cols.map(c=>bvNorm(c.label||'').replace(/\s+/g,'_'));end(ok,j.table.rows.map(r=>{const o={};H.forEach((h,i)=>{const x=(r.c||[])[i];if(GCOL.includes(h))o[h]=x==null||x.v==null?'':String(x.v)});return o}))}catch(x){end(ko,0)}};sc.onerror=()=>end(ko,0);sc.src=base+'&tqx=out:json;responseHandler:'+cb+'&_t='+Date.now();document.head.appendChild(sc)});
 if(R.length&&'guia'in R[0])rows=R}catch(x){}}
 if(!rows)return;const warn=[],filas=rows.slice(0,300).map((r,i)=>guiaFila(r,i,warn)).filter(Boolean);if(!filas.length)return;
 try{localStorage.setItem(GK,JSON.stringify({fecha:Date.now(),filas}))}catch(e){}G.warn=warn;guiaUi()}
@@ -3764,17 +3843,17 @@ function cfgGenCerrar(){$('cfggen').style.display='none'}
 function guiaCfg(){G.on=$('gon').checked;G.ofr=$('gofr').checked;guiaCfgSave();if(!G.on&&G.act)guiaFin(false);guiaUi();if(!$('bv').hidden)guiaOfrecer()}
 function guiaUi(){if(!$('gon'))return;$('gon').checked=G.on;$('gofr').checked=G.ofr;$('gofr').disabled=!G.on;const box=$('glista');box.textContent='';const H=guiaHechas();let c=null;try{c=JSON.parse(localStorage.getItem(GK))}catch(e){}
 guiaLista().forEach(g=>{const it=mk('div','bibit'),bo=mkBtn('',G.on?'Empezar la guía':'Activá la asistencia para usar las guías',()=>{cfgGenCerrar();guiaIniciar(g.id)},'bo');bo.disabled=!G.on;
-bo.appendChild(mk('span','a',(H[g.id]?'✓ ':'')+g.titulo));bo.appendChild(mk('span','b',g.pasos.length+' pasos'+(H[g.id]?' · hecha':'')+' · destino de menú: guia:'+g.id));it.appendChild(bo);box.appendChild(it)});
+bo.appendChild(mk('span','a',(H[g.id]?'✓ ':'')+g.titulo));bo.appendChild(mk('span','b',g.pasos.length+' pasos'+(H[g.id]?' · hecha':'')+(g.primera!=='no'?' · en “Primera vez”':'')+' · destino de menú: guia:'+g.id));it.appendChild(bo);box.appendChild(it)});
 $('gmsg').textContent=(c?'Guías tomadas de la planilla ('+new Date(c.fecha).toLocaleString('es',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+').':'Guías incluidas en la app.')+(G.warn&&G.warn.length?' Avisos: '+G.warn.join(' '):'')}
 function guiaOfrecer(){const b=$('gofrece');if(!b)return;const H=guiaHechas();let no=false;try{no=localStorage.getItem('cifrado-pro-guias-ofr-no')==='1'}catch(e){}
 if(!G.on||!G.ofr||no||Object.keys(H).length){b.hidden=true;return}const bb=$('gofreceB');bb.textContent='';
-guiaLista().slice(0,3).forEach(g=>{const x=mkBtn(g.titulo,'',()=>{bvCerrar();guiaIniciar(g.id)},'');bb.appendChild(x)});
+const PV=guiaLista().filter(g=>g.primera!=='no');if(!PV.length){b.hidden=true;return}PV.forEach(g=>{const x=mkBtn(g.titulo,'',()=>{bvCerrar();guiaIniciar(g.id)},'');bb.appendChild(x)});
 bb.appendChild(mkBtn('No, gracias','',()=>{try{localStorage.setItem('cifrado-pro-guias-ofr-no','1')}catch(e){}b.hidden=true},''));b.hidden=false}
 {const a=bvAbrir;bvAbrir=function(){const r=a.apply(this,arguments);try{guiaOfrecer()}catch(e){}return r}}
 {const a=bvSync;bvSync=async function(){const r=await a.apply(this,arguments);try{await guiaSync()}catch(e){}return r}}
 /* Motor de la guía */
 function guiaIniciar(id){if(!G.on){bvAviso('Activá la asistencia con pasos guiados en ⚙ Configuración.');return}if(document.body.classList.contains('stage'))return;
-const g=guiaLista().find(x=>x.id===bvNorm(id).replace(/\s+/g,'-'));if(!g){bvAviso('No existe la guía «'+id+'».');return}
+const g=guiaLista().find(x=>x.id===bvNorm(id).replace(/\s+/g,'-'));if(!g){bvAviso(guiaListaTodas().some(x=>x.id===bvNorm(id).replace(/\s+/g,'-'))?'La guía «'+id+'» no está activa en la planilla.':'No existe la guía «'+id+'».');return}
 let pos=null;try{pos=JSON.parse(localStorage.getItem(GPK))}catch(e){}G.act=g;G.i=pos&&pos.id===g.id&&pos.i>0&&pos.i<g.pasos.length?pos.i:0;
 if(!$('bv').hidden)bvCerrar();cfgGenCerrar();cerrarChangelog();guiaMostrar();clearInterval(G.tick);G.tick=setInterval(guiaPos,300)}
 function guiaResolver(dest){const d=String(dest||'').trim();if(!d){bibCerrar();return null}const R=bvGen(d);if(!R||R.err)return null;
@@ -3811,6 +3890,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&G.act)guiaFin(false
 {const a=bvGenIr;bvGenIr=function(G2){if(G2&&G2.tipo==='guia'){guiaIniciar(G2.id);return}return a.apply(this,arguments)}}
 {const a=bvGenDesc;bvGenDesc=function(d){const R=bvGen(d);if(R&&R.tipo==='guia'){const g=guiaLista().find(x=>x.id===R.id);return'Guía paso a paso'+(g?': '+g.titulo:'')}return a.apply(this,arguments)}}
 guiaUi();
+/* PRO v0.46: el Inicio se abre al cargar antes de que existan las guías; se ofrece “Primera vez” al terminar de cargar */
+try{if(!$('bv').hidden)guiaOfrecer()}catch(e){}
 
 /* ===== PRO v0.44: aviso antes de abrir la pantalla de impresión =====
    La pantalla de impresión es del navegador: la app no puede mostrar nada encima. Por eso el aviso aparece antes,
@@ -3822,12 +3903,179 @@ const pavOculto=()=>{try{return localStorage.getItem(PAVK)===APPV}catch(e){retur
 function imprimirPdf(){if(document.body.classList.contains('stage')){window.print();return}if(pavOculto()){window.print();return}
 const a=$('pavis');a.hidden=false;PAV.n=10;PAV.pend=false;bibCerrar();
 if(!document.body.classList.contains('stage')){const r=$('wrap').getBoundingClientRect();if(r.top<0||r.top>innerHeight*0.6)$('pavis').scrollIntoView({block:'start',behavior:'smooth'})}
-const paso=()=>{$('pavcnt').textContent='Se abre en '+PAV.n+' s…';if(PAV.n<=0){imprimirYa();return}PAV.n--;PAV.tm=setTimeout(paso,1000)};clearTimeout(PAV.tm);paso()}
+const paso=()=>{$('pavcnt').textContent='Se abrirá en '+PAV.n+' s...';if(PAV.n<=0){imprimirYa();return}PAV.n--;PAV.tm=setTimeout(paso,1000)};clearTimeout(PAV.tm);paso()}
 function imprimirYa(){clearTimeout(PAV.tm);PAV.pend=false;$('pavis').hidden=true;setTimeout(()=>window.print(),60)}
 function imprimirNoMostrar(){clearTimeout(PAV.tm);PAV.pend=true;$('pavcnt').textContent='En pausa';cfgGenAbrir();setTimeout(()=>{const l=$('pavnol');if(l){l.classList.add('gofl');setTimeout(()=>l.classList.remove('gofl'),2600)}},60)}
 function imprimirCfg(){try{if($('pavno').checked)localStorage.setItem(PAVK,APPV);else localStorage.removeItem(PAVK)}catch(e){}}
 {const a=cfgGenAbrir;cfgGenAbrir=function(){const r=a.apply(this,arguments);$('pavno').checked=pavOculto();return r}}
 {const a=cfgGenCerrar;cfgGenCerrar=function(){const r=a.apply(this,arguments);if(PAV.pend)imprimirYa();return r}}
+
+/* ===== PRO v0.47: Links a Escuchar Canción (Versión) =====
+   Pestaña “Audios” de la planilla “Cifrado PRO - Repertorio” (cancion, artista, link, detalle), leída por el script (versión 2) al sincronizar. */
+const AUDK='cifrado-pro-audios';
+function audCache(){try{return JSON.parse(localStorage.getItem(AUDK))||null}catch(e){return null}}
+function audGuardar(j){if(!j||!j.ok)return;if(!Array.isArray(j.audios)){try{localStorage.setItem(AUDK,JSON.stringify({fecha:Date.now(),viejo:true,filas:(audCache()||{}).filas||[]}))}catch(e){}audUi();return}
+const filas=j.audios.filter(x=>x&&typeof x.cancion==='string'&&x.cancion.trim()).slice(0,3000).map(x=>({cancion:String(x.cancion).slice(0,160),artista:String(x.artista||'').slice(0,120),link:String(x.link||'').trim().slice(0,600),detalle:String(x.detalle||'').slice(0,300)}));
+try{localStorage.setItem(AUDK,JSON.stringify({fecha:Date.now(),filas}))}catch(e){}audUi()}
+const audN=t=>bvNorm(t).replace(/\s+/g,' ').trim();
+const audBase=t=>String(t||'').replace(/\s*\(\d+\)\s*$/,'').replace(/\s*(\[ .+ \]|\{ .+ \})\s*$/,'').replace(/\s*\(\d+\)\s*$/,'').trim();
+function audBuscar(nombre,titulo,artista){const C=audCache();if(!C||!C.filas)return null;const F=C.filas,n=audN(nombre),bt=audN(audBase(titulo||nombre)),ar=audN(artista);
+return F.find(r=>audN(r.cancion)===n)||F.find(r=>audN(audBase(r.cancion))===bt&&ar&&audN(r.artista)===ar)||F.find(r=>audN(audBase(r.cancion))===bt&&!audN(r.artista))||F.find(r=>audN(audBase(r.cancion))===bt)||null}
+function audFila(nombre,titulo,artista){const it=mk('div','audi'),r=audBuscar(nombre,titulo,artista),tt=mk('div','t',nombre||'(sin título)');if(artista)tt.appendChild(mk('span','',' — '+artista));it.appendChild(tt);
+if(!r){it.appendChild(mk('span','nc','Link no configurado'))}
+else if(/^https?:\/\/\S+$/i.test(r.link)){const a=mk('a','dr','🎧 Escuchar');a.href=r.link;a.target='_blank';a.rel='noopener';it.appendChild(a)}
+else{const a=mk('a','sp','Escuchar desde Spotify');a.href='https://open.spotify.com/search/'+encodeURIComponent((audBase(titulo||nombre)+' '+(artista||'')).trim());a.target='_blank';a.rel='noopener';it.appendChild(a)}
+if(r&&r.detalle)it.appendChild(mk('div','d',r.detalle));return it}
+function audAviso(el){const C=audCache();el.textContent=!C?'Los links se leen de la pestaña “Audios” de la planilla de Repertorio al sincronizar (♫ Repertorio › ☁ Sincronización en la nube).':C.viejo?'Para ver los links, actualizá el script de Google a la versión 2 (viene en el .zip).':''}
+/* En la lista de Canciones: mismas canciones y mismo orden que la lista (incluido el filtro del buscador) */
+function audRepUi(L,total,q){const box=$('audrepl');if(!box)return;box.textContent='';L.forEach(x=>box.appendChild(audFila(x.nombre,(x.cfg||{}).title,(x.cfg||{}).artist)));
+$('audrepn').textContent=q?L.length+' de '+total:String(total);const f=$('audrepf');f.hidden=!q;f.textContent='';
+if(q){f.appendChild(mk('span','','🔎 '));f.appendChild(mk('b','','Filtro aplicado'));f.appendChild(mk('span','',': se muestran '+L.length+' de '+total+' canciones («'+q+'»).'));f.appendChild(mkBtn('✕ Borrar filtro','',bibFiltroBorrar,''))}
+if(!L.length)box.appendChild(mk('div','bibvac',total?'Ninguna canción coincide con el filtro.':'Todavía no hay canciones en el Repertorio.'));audAviso($('audrepm'))}
+function audHojaUi(){const box=$('audhojal');if(!box)return;box.textContent='';const d=get(),cur=(typeof BIB!=='undefined')&&BIB.cur?BIB.lib.find(x=>x.id===BIB.cur):null;
+box.appendChild(audFila(cur?cur.nombre:d.title.trim(),d.title.trim(),d.artist.trim()));audAviso($('audhojam'))}
+function audUi(){try{audHojaUi()}catch(e){}try{if($('bibd')&&!$('bibd').hidden)bibUi()}catch(e){}}
+function audCopiar(){const L=bibOrdenar(BIB.lib.slice());const t='cancion\tartista\tlink\tdetalle\n'+L.map(x=>{const r=audBuscar(x.nombre,(x.cfg||{}).title,(x.cfg||{}).artist);return[x.nombre,(x.cfg||{}).artist||'',r?r.link:'',r?r.detalle:''].map(v=>String(v).replace(/[\t\n]/g,' ')).join('\t')}).join('\n');
+const ok=()=>{$('audrepm').textContent='Copiado: '+L.length+' canciones. En la pestaña “Audios” de la planilla, hacé clic en A1 y pegá (Ctrl+V): cada dato cae en su columna.'};
+try{navigator.clipboard.writeText(t).then(ok,()=>{prompt('Copiá el listado:',t)})}catch(e){prompt('Copiá el listado:',t)}}
+/* Buscador de Canciones: filtro visible y botón para borrarlo */
+function bibFiltroBorrar(){$('bibq').value='';bibUi();try{$('bibq').focus()}catch(e){}}
+{const a=bibUi;bibUi=function(){const r=a.apply(this,arguments);try{const q=($('bibq').value||'').trim(),ql=q.toLowerCase(),L=bibOrdenar(BIB.lib.filter(x=>!ql||(x.nombre+' '+((x.cfg||{}).artist||'')).toLowerCase().includes(ql))),N=BIB.lib.length;
+$('bibqx').disabled=!q;const f=$('bibfilt');f.hidden=!q;f.textContent='';if(q){f.appendChild(mk('span','','🔎 '));f.appendChild(mk('b','','Filtro aplicado'));f.appendChild(mk('span','',': se muestran '+L.length+' de '+N+' canciones; '+(N-L.length)+' quedan ocultas.'))}
+audRepUi(L,N,q)}catch(e){}return r}}
+{const a=render;render=function(){const r=a.apply(this,arguments);try{audHojaUi()}catch(e){}return r}}
+['title','artist'].forEach(id=>$(id).addEventListener('input',()=>{try{audHojaUi()}catch(e){}}));
+
+/* ===== PRO v0.47: Pendientes de Transcribir =====
+   Textos y links: en el navegador y sincronizados con el repertorio. Adjuntos: en este dispositivo (IndexedDB), con fotos reducidas. */
+const PENK='cifrado-pendientes-v1',PENTK='cifrado-pendiente-trab';
+const PEN={l:[],ed:null,tm:null,urls:[],trab:null};
+try{PEN.l=JSON.parse(localStorage.getItem(PENK))||[]}catch(e){}if(!Array.isArray(PEN.l))PEN.l=[];
+try{PEN.trab=localStorage.getItem(PENTK)||null}catch(e){}
+window.PEN=PEN;
+function penSanear(x){if(!x||typeof x!=='object')return null;const tit=String(x.titulo||'').trim().slice(0,120);if(!tit)return null;
+return{id:typeof x.id==='string'&&/^[\w-]{1,40}$/.test(x.id)?x.id:'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),titulo:tit,artista:String(x.artista||'').slice(0,120),desc:String(x.desc||'').slice(0,100000),
+links:(Array.isArray(x.links)?x.links:[]).slice(0,3).map(v=>String(v||'').slice(0,600)),estado:['pendiente','proceso','transcripta'].includes(x.estado)?x.estado:'pendiente',
+adj:(Array.isArray(x.adj)?x.adj:[]).slice(0,60).filter(a=>a&&typeof a.id==='string').map(a=>({id:a.id.slice(0,40),nombre:String(a.nombre||'archivo').slice(0,160),tipo:String(a.tipo||'').slice(0,80),tam:+a.tam||0,url:/^https:\/\/(drive|docs)\.google\.com\/\S+$/.test(a.url||'')?a.url:''})),
+cancion:typeof x.cancion==='string'?x.cancion.slice(0,40):'',creado:+x.creado||Date.now(),t:+x.t||Date.now()}}
+function penMergeAdj(loc,rem){const m={};(rem||[]).forEach(a=>m[a.id]=a);(loc||[]).forEach(a=>{if(m[a.id]&&!m[a.id].url&&a.url)m[a.id].url=a.url});(loc||[]).forEach(a=>{if(!m[a.id]&&a.soloLocal)m[a.id]=a});return Object.values(m)}
+function penSaveRaw(){try{localStorage.setItem(PENK,JSON.stringify(PEN.l));return true}catch(e){return false}}
+SYNC.prevP=new Set(PEN.l.map(x=>x.id));
+function penSave(){const r=penSaveRaw();if(r){const now=new Set(PEN.l.map(x=>x.id));SYNC.prevP.forEach(id=>{if(!now.has(id)&&!SYNC.aplicando)SYNC.tomb['p:'+id]=Date.now()});now.forEach(id=>{delete SYNC.tomb['p:'+id]});SYNC.prevP=now;syncGuardarEstado();syncProgramar()}return r}
+/* IndexedDB para los adjuntos */
+let PENDB=null;
+function penDb(){if(PENDB)return Promise.resolve(PENDB);return new Promise((ok,ko)=>{if(!window.indexedDB)return ko(new Error('sin IndexedDB'));const r=indexedDB.open('cifrado-pro',1);r.onupgradeneeded=()=>{const d=r.result;if(!d.objectStoreNames.contains('adjuntos'))d.createObjectStore('adjuntos')};r.onsuccess=()=>{PENDB=r.result;ok(PENDB)};r.onerror=()=>ko(r.error)})}
+async function penIdb(op,key,val){const d=await penDb();return new Promise((ok,ko)=>{const tx=d.transaction('adjuntos',op==='get'?'readonly':'readwrite'),st=tx.objectStore('adjuntos');const q=op==='get'?st.get(key):op==='put'?st.put(val,key):st.delete(key);q.onsuccess=()=>ok(q.result);q.onerror=()=>ko(q.error)})}
+function penMsg(t,err){const m=PEN.ed?$('penmsg2'):$('penmsg');if(!m)return;m.textContent=t;m.className='rt'+(err?' err':'')}
+const penIcon=t=>/^image\//.test(t)?'🖼':/pdf/.test(t)?'📄':/sheet|excel|csv/.test(t)?'📊':/word|document|text/.test(t)?'📝':'📎';
+const penLinkTipo=u=>/youtu\.?be/.test(u)?'▶ YouTube':/spotify/.test(u)?'🎧 Spotify':/drive\.google|docs\.google/.test(u)?'📁 Drive':'🔗 Web';
+function penUi(){const n=PEN.l.filter(x=>x.estado!=='transcripta').length;if($('pencnt'))$('pencnt').textContent=n?String(n):'';if(!$('bibp-pen')||$('bibp-pen').hidden)return;
+if(PEN.ed){$('penlista').hidden=true;$('pened').hidden=false;return}$('penlista').hidden=false;$('pened').hidden=true;
+const box=$('penitems');box.textContent='';const A=PEN.l.filter(x=>x.estado!=='transcripta').sort((a,b)=>b.t-a.t),T=PEN.l.filter(x=>x.estado==='transcripta').sort((a,b)=>b.t-a.t);
+const item=x=>{const it=mk('div','bibit'),bo=mkBtn('','Abrir',()=>penEditar(x.id),'bo'),a=mk('span','a',x.titulo);a.appendChild(mk('span','penchip '+x.estado,{pendiente:'Pendiente',proceso:'En proceso',transcripta:'Transcripta'}[x.estado]));bo.appendChild(a);
+bo.appendChild(mk('span','b',[x.artista,x.links.filter(Boolean).length?x.links.filter(Boolean).length+' link'+(x.links.filter(Boolean).length>1?'s':''):'',x.adj.length?x.adj.length+' adjunto'+(x.adj.length>1?'s':''):'',new Date(x.t).toLocaleDateString('es')].filter(Boolean).join(' · ')));it.appendChild(bo);return it};
+if(!A.length&&!T.length)box.appendChild(mk('div','bibvac','No hay pendientes. Tocá “＋ Nuevo pendiente” para anotar una canción.'));
+A.forEach(x=>box.appendChild(item(x)));if(T.length){const d=mk('details');d.appendChild(mk('summary','','Transcriptas ('+T.length+')'));T.forEach(x=>d.appendChild(item(x)));box.appendChild(d)}}
+{const a=bibTab;bibTab=function(t){if(t==='pen'){document.querySelectorAll('.bibtabs button').forEach(b=>b.classList.toggle('on',b.dataset.bt==='pen'));$('bibp-can').hidden=true;$('bibp-set').hidden=true;$('bibp-pen').hidden=false;penUi();return}$('bibp-pen').hidden=true;return a.apply(this,arguments)}}
+{const a=bibAbrirCajon;bibAbrirCajon=function(){try{localStorage.setItem('cifrado-biblio-tab','can')}catch(e){}const r=a.apply(this,arguments);bibTab('can');return r}}
+function penGet(){return PEN.ed&&PEN.ed!=='nuevo'?PEN.l.find(x=>x.id===PEN.ed)||null:null}
+function penEditar(id){PEN.ed=id;const x=penGet()||{titulo:'',artista:'',desc:'',links:['','',''],estado:'pendiente',adj:[]};
+$('pentit').value=x.titulo;$('penart').value=x.artista;$('pendesc').value=x.desc;$('penest').value=x.estado;[1,2,3].forEach(i=>$('penl'+i).value=x.links[i-1]||'');$('pentith').textContent='';$('penmsg2').textContent='';
+$('pendel').hidden=id==='nuevo';$('pentrab').hidden=id==='nuevo';penUi();penAdjUi();penLinkUi();if(id==='nuevo')setTimeout(()=>$('pentit').focus(),50)}
+function penVolver(){penGuardarYa();PEN.ed=null;penUi()}
+function penLeer(){return{titulo:$('pentit').value.trim().slice(0,120),artista:$('penart').value.trim().slice(0,120),desc:$('pendesc').value.slice(0,100000),estado:$('penest').value,links:[1,2,3].map(i=>$('penl'+i).value.trim().slice(0,600))}}
+function penGuardarYa(){clearTimeout(PEN.tm);if(!PEN.ed)return;const v=penLeer();
+if(!v.titulo){$('pentith').textContent='El título es obligatorio.';$('pentith').className='rt req-r';return false}$('pentith').textContent='';
+let x=penGet();if(!x){x={id:'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),adj:PEN.nuevoAdj||[],cancion:'',creado:Date.now()};PEN.l.push(x);PEN.ed=x.id;PEN.nuevoAdj=null;$('pendel').hidden=false;$('pentrab').hidden=false}
+Object.assign(x,v,{t:Date.now()});if(!penSave())penMsg('No se pudo guardar (almacenamiento lleno o bloqueado).',1);penUi();return true}
+['pentit','penart','pendesc','penl1','penl2','penl3'].forEach(id=>$(id).addEventListener('input',()=>{clearTimeout(PEN.tm);PEN.tm=setTimeout(penGuardarYa,600);if(/^penl/.test(id))penLinkUi()}));
+$('penest').addEventListener('change',penGuardarYa);
+function penLinkUi(){[1,2,3].forEach(i=>{const u=$('penl'+i).value.trim(),b=document.querySelector('.penlk button[data-l="'+i+'"]');b.disabled=!/^https?:\/\//i.test(u);b.textContent=/^https?:\/\//i.test(u)?penLinkTipo(u):'Abrir'})}
+function penAbrirLink(i){const u=$('penl'+i).value.trim();if(/^https?:\/\//i.test(u))window.open(u,'_blank','noopener')}
+/* Adjuntos */
+async function penReducir(f){if(!/^image\/(jpeg|png|webp|bmp)$/i.test(f.type)||$('penorig').checked)return f;
+try{const bm=await createImageBitmap(f),M=1600,k=Math.min(1,M/Math.max(bm.width,bm.height));if(k>=1&&f.size<1.5e6)return f;
+const c=document.createElement('canvas');c.width=Math.round(bm.width*k);c.height=Math.round(bm.height*k);c.getContext('2d').drawImage(bm,0,0,c.width,c.height);
+const b=await new Promise(ok=>c.toBlob(ok,'image/jpeg',0.85));if(b&&b.size<f.size)return new File([b],f.name.replace(/\.\w+$/,'')+'.jpg',{type:'image/jpeg'});return f}catch(e){return f}}
+async function penAdjuntar(files){files=[...(files||[])];if(!files.length)return;if(!penGet()&&!penGuardarYa()){penMsg('Escribí el título antes de adjuntar.',1);return}const x=penGet();let ok=0;
+for(const f0 of files){if(f0.size>20*1048576){penMsg('«'+f0.name+'» supera 20 MB y no se adjuntó.',1);continue}
+try{const f=await penReducir(f0),id='a'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);await penIdb('put',id,f);x.adj.push({id,nombre:f.name||('imagen_'+new Date().toISOString().slice(0,19).replace(/\D/g,'')+'.png'),tipo:f.type||'',tam:f.size});ok++}
+catch(e){penMsg('No se pudo guardar «'+f0.name+'» en el dispositivo.',1)}}
+x.t=Date.now();penSave();penAdjUi();if(ok)penMsg(ok+(ok===1?' adjunto guardado.':' adjuntos guardados.'),0)}
+async function penAdjUi(box,x,ro){box=box||$('penadjs');x=x||penGet();(box._urls||[]).forEach(u=>URL.revokeObjectURL(u));box._urls=[];box.textContent='';if(!x)return;const URLS=box._urls;
+for(const a of x.adj){const c=mk('div','penadj'),th=mk('div','th',penIcon(a.tipo)),nm=mk('div','nm',a.nombre);c.appendChild(th);c.appendChild(nm);c.title=a.nombre+' · '+Math.round(a.tam/1024)+' KB';
+let b=null;try{b=await penIdb('get',a.id)}catch(e){}
+if(b){const u=URL.createObjectURL(b);URLS.push(u);if(/^image\//.test(a.tipo)&&!/heic|heif|tiff/i.test(a.tipo)){th.textContent='';const im=document.createElement('img');im.src=u;im.alt=a.nombre;th.appendChild(im)}
+th.onclick=()=>{if(/^image\/|pdf|text\//.test(a.tipo))window.open(u,'_blank','noopener');else{const l=document.createElement('a');l.href=u;l.download=a.nombre;document.body.appendChild(l);l.click();l.remove()}}}
+else if(a.url){th.title='Abrir en Drive';th.onclick=()=>window.open(a.url,'_blank','noopener');nm.className='nm o';nm.textContent='☁ '+a.nombre;const bj=mkBtn('⬇ Traer','Descargar a este dispositivo',()=>penBajar(x,a),'tr');c.appendChild(bj)}
+else{nm.className='nm o';nm.textContent=a.nombre+' (guardado en otro dispositivo)'}
+if(b){const st=mk('span','st',a.url?'☁':(SYNC.on&&typeof ADJ!=='undefined'&&ADJ.on?'⏳':''));st.title=a.url?'Guardado también en Drive':'Todavía no se subió a Drive';if(st.textContent)c.appendChild(st)}
+if(!ro){const del=mkBtn('✕','Quitar el adjunto (dos toques)',()=>{if(!del.dataset.arm){del.dataset.arm='1';del.textContent='?';setTimeout(()=>{delete del.dataset.arm;del.textContent='✕'},3500);return}x.adj=x.adj.filter(y=>y.id!==a.id);penIdb('del',a.id).catch(()=>{});if(a.url)penBorrarDrive(a.id);x.t=Date.now();penSave();penAdjUi()},'x');c.appendChild(del)}
+box.appendChild(c)}}
+$('pened').addEventListener('paste',e=>{const it=[...((e.clipboardData||{}).items||[])].filter(i=>i.kind==='file').map(i=>i.getAsFile()).filter(Boolean);if(it.length){e.preventDefault();penAdjuntar(it)}});
+function penEliminar(b){const x=penGet();if(!x)return;if(!b.dataset.arm){b.dataset.arm='1';b.textContent='¿Eliminar «'+x.titulo+'»? Tocá de nuevo';b.classList.add('arm');b._t=setTimeout(()=>{delete b.dataset.arm;b.textContent='✕ Eliminar pendiente';b.classList.remove('arm')},3500);return}
+clearTimeout(b._t);delete b.dataset.arm;b.textContent='✕ Eliminar pendiente';b.classList.remove('arm');x.adj.forEach(a=>penIdb('del',a.id).catch(()=>{}));PEN.l=PEN.l.filter(y=>y.id!==x.id);penSave();if(PEN.trab===x.id)penRefCerrar(true);PEN.ed=null;penUi();penMsg('Eliminado «'+x.titulo+'».',0)}
+/* Empezar a transcribir: hoja nueva con título y artista, y el pendiente como referencia en Escritura */
+function penTrabajar(){if(!penGuardarYa())return;const x=penGet();if(!x)return;bibCerrar();irTab('esc');
+pedirReemplazo(()=>{const d=Object.assign({},BLANK,{title:x.titulo,artist:x.artista});reset(d);x.estado=x.estado==='transcripta'?x.estado:'proceso';x.t=Date.now();penSave();PEN.ed=null;PEN.trab=x.id;try{localStorage.setItem(PENTK,x.id)}catch(e){}penRefUi();songUi()});
+setTimeout(()=>{const r=$('repconf');if(r)bvFlash(r)},80)}
+function penRefUi(){const x=PEN.trab?PEN.l.find(y=>y.id===PEN.trab):null,b=$('penref');if(!x){b.hidden=true;return}b.hidden=false;$('penreft').textContent=x.titulo+(x.artista?' — '+x.artista:'');
+$('penrefd').textContent=x.desc||'(sin descripción)';const l=$('penrefl');l.textContent='';x.links.filter(u=>/^https?:\/\//i.test(u)).forEach(u=>{const a=mk('a','',penLinkTipo(u));a.href=u;a.target='_blank';a.rel='noopener';l.appendChild(a)});penAdjUi($('penrefa'),x,true)}
+function penRefCerrar(sil){PEN.trab=null;try{localStorage.removeItem(PENTK)}catch(e){}$('penref').hidden=true}
+function penRefVer(){const id=PEN.trab;bibAbrirCajon();bibTab('pen');if(id)penEditar(id)}
+/* Al guardar la canción en el Repertorio, el pendiente en trabajo pasa a Transcripta y queda vinculado */
+function penVincular(){if(!PEN.trab||!BIB.cur)return;const x=PEN.l.find(y=>y.id===PEN.trab);if(!x)return;x.estado='transcripta';x.cancion=BIB.cur;x.t=Date.now();if(PEN.ed===x.id)$('penest').value='transcripta';penSave();penRefCerrar(true);bibMsg('El pendiente «'+x.titulo+'» quedó como transcripto y vinculado a esta canción.',0)}
+['bibGuardar','bibGuardarNueva','bibReemplazar'].forEach(n=>{const a=window[n];window[n]=function(){const r=a.apply(this,arguments);try{penVincular()}catch(e){}return r}});
+/* Exportar e importar pendientes (con adjuntos) */
+async function penExportar(){if(!PEN.l.length){penMsg('No hay pendientes para exportar.',1);return}penMsg('Preparando el archivo…',0);const L=[];
+for(const x of PEN.l){const y=JSON.parse(syncDatoP(x));y.archivos={};for(const a of x.adj){try{const b=await penIdb('get',a.id);if(b)y.archivos[a.id]=await new Promise(ok=>{const r=new FileReader();r.onload=()=>ok(r.result);r.readAsDataURL(b)})}catch(e){}}L.push(y)}
+dl('pendientes_'+hoyISO()+'.cifrado.json',JSON.stringify({app:APPID,formato:1,version:APPV,tipo:'pendientes',exportado:new Date().toISOString(),pendientes:L}),'application/json');penMsg('Exportados '+L.length+' pendientes con sus adjuntos.',0)}
+function penArchivo(f){impLeerArchivo(f,async txt=>{const d=impDiag(txt);if(d.err){penMsg(d.err,1);return}const o=d.o;if(o.tipo!=='pendientes'){penMsg('El archivo no contiene pendientes.',1);return}
+let nu=0,ac=0;for(const r of (o.pendientes||[])){const x=penSanear(r);if(!x)continue;for(const a of x.adj){const du=r.archivos&&r.archivos[a.id];if(du){try{const b=await (await fetch(du)).blob();await penIdb('put',a.id,b)}catch(e){}}}
+const i=PEN.l.findIndex(y=>y.id===x.id);if(i<0){PEN.l.push(x);nu++}else if(x.t>PEN.l[i].t){PEN.l[i]=x;ac++}}penSave();penUi();penMsg('Importados: '+nu+' pendientes nuevos y '+ac+' actualizados.',0)},penMsg,100*1048576)}
+{const a=impLeer;impLeer=function(txt,name){let o=null;try{const t=txt.replace(/^﻿/,'');if(t.trim()[0]==='{')o=JSON.parse(t)}catch(e){}if(o&&o.app===APPID&&o.tipo==='pendientes'){impMsg('Es un archivo de pendientes: se abrió “♫ Repertorio” › Pendientes. Importalo con “Importar pendientes…”.',0);bibAbrirCajon();bibTab('pen');return}return a.apply(this,arguments)}}
+/* Destinos: cajon:pen */
+{const a=bvGen;bvGen=function(raw){const m=String(raw||'').trim().match(/^caj[oó]n\s*:\s*pen(?:dientes)?\s*(?:\/\s*([A-Za-z0-9_-]+))?\s*$/i);if(m){const el=m[1]&&$(m[1])&&$('bibp-pen').contains($(m[1]))?$(m[1]).id:'';if(m[1]&&!el)return{err:'el elemento «'+m[1]+'» no existe en Pendientes'};return{tipo:'cajon',tab:'pen',el,dest:'cajon:pen'+(el?'/'+el:'')}}return a.apply(this,arguments)}}
+{const a=bibCargar;bibCargar=function(){const r=a.apply(this,arguments);try{audHojaUi();songUi()}catch(e){}return r}}
+{const a=bibSoltar;bibSoltar=function(){const r=a.apply(this,arguments);try{audHojaUi()}catch(e){}return r}}
+penUi();penRefUi();audHojaUi();
+
+/* ===== PRO v0.48: adjuntos de Pendientes en Drive (script versión 3) =====
+   Después de cada sincronización se suben, de a uno, los adjuntos que todavía no están en Drive. En los otros dispositivos
+   aparecen con ☁: se abren en Drive o se traen al dispositivo con “⬇ Traer”. Quitar un adjunto lo manda a la papelera de Drive. */
+const ADJK='cifrado-adj-cfg',ADJBK='cifrado-adj-borrar',ADJ={on:true,subiendo:false,err:''};
+try{const c=JSON.parse(localStorage.getItem(ADJK));if(c&&typeof c.on==='boolean')ADJ.on=c.on}catch(e){}
+function adjCfg(){ADJ.on=$('adjon').checked;try{localStorage.setItem(ADJK,JSON.stringify({on:ADJ.on}))}catch(e){}adjUi();if(ADJ.on)penSubirCola()}
+function adjSinSubir(){let n=0,b=0;PEN.l.forEach(x=>x.adj.forEach(a=>{if(!a.url)n++;else b++}));return{n,b}}
+function adjUi(msg){const m=$('adjmsg');if(!m)return;$('adjon').checked=ADJ.on;$('adjon').disabled=!SYNC.on;const c=adjSinSubir();
+let t='';if(!SYNC.on)t='Se activa junto con la sincronización.';else if(!ADJ.on)t='Los adjuntos quedan solo en cada dispositivo.';else if((SYNC.ver||0)<3&&c.n)t='Para subir adjuntos a Drive, actualizá el script a la versión 3 (viene en el .zip).';
+else if(ADJ.subiendo)t='⏫ Subiendo adjuntos a Drive…';else if(ADJ.err)t='⚠ '+ADJ.err;else if(c.n)t='⏳ '+c.n+' adjunto'+(c.n>1?'s':'')+' por subir'+(c.b?'; '+c.b+' ya en Drive.':'.');else if(c.b)t='☁ '+c.b+' adjunto'+(c.b>1?'s':'')+' en Drive.';
+m.textContent=(msg?msg+' ':'')+t;m.className='rt'+(ADJ.err?' err':'')}
+const b64De=blob=>new Promise((ok,ko)=>{const r=new FileReader();r.onload=()=>ok(String(r.result).replace(/^data:[^,]*,/,''));r.onerror=()=>ko(r.error);r.readAsDataURL(blob)});
+async function adjPost(o){const r=await fetch(SYNC.url,{method:'POST',body:JSON.stringify(Object.assign({clave:SYNC.clave},o)),cache:'no-store'});if(!r.ok)throw new Error('http '+r.status);const t=await r.text();if(/^\s*</.test(t))throw new Error('html');return JSON.parse(t)}
+async function penSubirCola(){if(!SYNC.on||!ADJ.on||ADJ.subiendo||(SYNC.ver||0)<3||navigator.onLine===false||!syncUrlOk(SYNC.url))return adjUi();
+ADJ.subiendo=true;ADJ.err='';adjUi();let sub=0;
+try{/* primero, los borrados pendientes */let bor=[];try{bor=JSON.parse(localStorage.getItem(ADJBK))||[]}catch(e){}
+if(bor.length){const r=await adjPost({accion:'borrarAdj',ids:bor});if(r&&r.ok)try{localStorage.removeItem(ADJBK)}catch(e){}}
+for(const x of PEN.l){for(const a of x.adj){if(a.url)continue;let b=null;try{b=await penIdb('get',a.id)}catch(e){}if(!b)continue;
+if(b.size>20*1048576)continue;const r=await adjPost({accion:'subir',id:a.id,nombre:a.nombre,tipo:a.tipo||b.type,tam:b.size,b64:await b64De(b)});
+if(!r||!r.ok){ADJ.err=r&&r.error==='clave'?'La clave no coincide con la del script.':'No se pudo subir «'+a.nombre+'».';break}
+a.url=r.url;x.t=Date.now();sub++;penSaveRaw();adjUi()}if(ADJ.err)break}}
+catch(e){ADJ.err='No se pudieron subir los adjuntos (sin conexión o el script no respondió); se reintenta en la próxima sincronización.'}
+ADJ.subiendo=false;if(sub){penSave();try{if(PEN.ed)penAdjUi()}catch(e){}try{penRefUi()}catch(e){}}adjUi(sub?'Subidos '+sub+' adjunto'+(sub>1?'s':'')+' a Drive.':'')}
+/* Links ya subidos (por este u otro dispositivo) que el registro local todavía no tenía */
+function penAdjMapa(j){if(!Array.isArray(j.adjuntos))return;const M={};j.adjuntos.forEach(a=>{if(a&&a.id&&/^https:\/\//.test(a.url||''))M[a.id]=a.url});let c=false;
+PEN.l.forEach(x=>x.adj.forEach(a=>{if(!a.url&&M[a.id]){a.url=M[a.id];x.t=Date.now();c=true}}));if(c)penSaveRaw()}
+function penBorrarDrive(id){let L=[];try{L=JSON.parse(localStorage.getItem(ADJBK))||[]}catch(e){}if(!L.includes(id))L.push(id);try{localStorage.setItem(ADJBK,JSON.stringify(L))}catch(e){}if(SYNC.on)setTimeout(penSubirCola,300)}
+async function penBajar(x,a){if(!SYNC.on||!syncUrlOk(SYNC.url)){penMsg('Activá la sincronización para traer adjuntos desde Drive, o abrilo en Drive tocándolo.',1);return}
+penMsg('Trayendo «'+a.nombre+'» desde Drive…',0);
+try{const u=SYNC.url+(SYNC.url.includes('?')?'&':'?')+'accion=bajar&id='+encodeURIComponent(a.id)+'&clave='+encodeURIComponent(SYNC.clave)+'&_t='+Date.now();
+let j;try{const r=await fetch(u,{cache:'no-store'});const t=await r.text();j=JSON.parse(t)}catch(e){j=await syncJsonp(u)}
+if(!j||!j.ok||!j.b64)throw new Error(j&&j.error||'sin datos');const bin=atob(j.b64),arr=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+await penIdb('put',a.id,new Blob([arr],{type:j.tipo||a.tipo||'application/octet-stream'}));penMsg('Listo: «'+a.nombre+'» quedó en este dispositivo.',0);if(PEN.ed)penAdjUi();penRefUi()}
+catch(e){penMsg('No se pudo traer «'+a.nombre+'» (sin conexión, o el script no es la versión 3). Podés abrirlo en Drive tocándolo.',1)}}
+{const a=syncUi;syncUi=function(){const r=a.apply(this,arguments);try{adjUi()}catch(e){}return r}}
+adjUi();
 </script>
 </body>
 </html>
