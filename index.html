@@ -352,6 +352,7 @@ body.stage .bv{display:none!important}
 .penadj .st{position:absolute;left:5px;top:4px;font-size:13px;text-shadow:0 0 3px rgba(0,0,0,.7)}
 #syncya.corr{opacity:.75}#syncya:active{transform:scale(.97)}
 .sdiag{margin-top:10px;font-size:13px}.sdiag summary{cursor:pointer;padding:6px 0}.sdiag pre{white-space:pre-wrap;word-break:break-word;font-size:11.5px;background:rgba(127,127,127,.12);padding:8px;border-radius:8px;max-height:260px;overflow:auto;margin:6px 0}
+@media print{.paper{zoom:1!important}}
 /* Diálogo del botón Atrás */
 .atr{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px}
 .atrb{width:100%;max-width:400px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 8px 30px rgba(0,0,0,.35)}
@@ -1505,6 +1506,7 @@ u1M0/kZW0TQdukZHUlBn4XQoaA1iQVAJNVNqYfEgKBGJtezh1tgxVSchyO1wipf1J0chYnLI8PXR2EDo
 /* ===== Versión y registro de cambios (agregar cada versión nueva ARRIBA de todo) ===== */
 const ULTCOMP='Última versión compartida con la otra plantilla: PRO v0.22 (e0.34) ↔ Estándar v0.34 (p0.22)'; /* actualizar SOLO cuando un cambio se aplique a ambas versiones */
 const VERSION_LOG=[
+{v:'PRO 0.52',f:'10/11/2026',c:['[PRO] Corregido: en la vista previa, a veces faltaban letras sueltas del cifrado (por ejemplo “m” en lugar de “Bm”) después de desplazarse o tocar otras secciones. La hoja ahora se achica con el ajuste nativo del navegador, que dibuja el texto a su tamaño final, en lugar de una transformación que Chrome a veces redibujaba mal.','[PRO] Redibujado de seguridad de la hoja al volver a la app o a la ventana, y al terminar de desplazarse en el Escenario.']},
 {v:'PRO 0.51',f:'10/11/2026',c:['[PRO] “↻ Sincronizar ahora”: al tocarlo aparece “Toque recibido a las hh:mm:ss”. Si el navegador registra el toque pero no lo convierte en clic (pasa en algunas tablets), el botón se activa igual por una vía alternativa.','[PRO] Nuevo “🩺 Diagnóstico de la sincronización”, debajo del botón: versión de la app y de Chrome, estado de la sincronización, último toque y clic, si algo tapa el botón y los últimos errores de la app. “Copiar diagnóstico” lo copia para enviarlo.']},
 {v:'PRO 0.50',f:'10/11/2026',c:['[PRO] Corregido: si un pendiente estaba abierto en un dispositivo mientras llegaba una versión más nueva desde otro (por ejemplo, la Descripción), el formulario seguía mostrando el texto viejo y, al volver atrás, lo guardaba con fecha nueva y pisaba el cambio del otro dispositivo. Ahora el formulario se actualiza solo; si estabas escribiendo, se conserva lo tuyo y se avisa.','[PRO] Volver atrás desde un pendiente sin haber cambiado nada ya no le pone fecha nueva. Antes de cada sincronización se guarda lo que se esté escribiendo en un pendiente, aunque no hayan pasado los 0,6 s del guardado automático.','[PRO] Sincronización automática más frecuente: además de al abrir la app y 5 s después de cada cambio, al pasar la app a segundo plano (sube lo pendiente), al volver a ella, al abrir ♫ Repertorio y cada 3 minutos mientras está abierta (trae lo nuevo).','[PRO] Aviso si el reloj del dispositivo está desfasado 3 minutos o más respecto de Google, porque la combinación decide por la fecha y hora de cada cambio.']},
 {v:'PRO 0.49',f:'09/11/2026',c:['[PRO] “↻ Sincronizar ahora” ya no queda sin responder: si la sincronización no está activada lo explica y resalta la casilla; si ya hay una en curso lo avisa con la hora; mientras trabaja el botón muestra “⏳ Sincronizando…”.','[PRO] Todas las llamadas al script tienen un tiempo máximo (30 s para guardar, 2 min para subir adjuntos): si la red o Google no responden, la sincronización termina con aviso en lugar de quedar trabada, y el botón vuelve a funcionar.','[PRO] El botón usa la URL y la clave tal como están escritas, aunque no se haya cerrado el teclado antes de tocarlo.']},
@@ -2067,7 +2069,7 @@ fl.forEach((x,i)=>{if(!x.e.tie)return;const nx=fl[i+1];
 if(!nx||nx.e.k!=='c'){warns.push(`Línea ${x.e.ln}: la ligadura de «${x.e.t}» no tiene un acorde a continuación.`);x.e.tie=false;return}
 if(nx.e.t!==x.e.t){warns.push(`Línea ${x.e.ln}: la ligadura de «${x.e.t}» no coincide con el acorde siguiente «${nx.e.t}».`);x.e.tie=false;return}
 x.e.tid=++tid;nx.e.tin=tid;if(nx.b!==x.b)x.b.tieNext=true});
-const p=$('paper');p.style.transform='none';p.dataset.dn='0';p.classList.remove('paged');p.classList.toggle('hup',d.hmay!=='no');
+const p=$('paper');p.style.transform='none';p.style.zoom='';p.dataset.dn='0';p.classList.remove('paged');p.classList.toggle('hup',d.hmay!=='no');
 const RP=d.repl||'der',R=48;p.style.setProperty('--res',(!hasRep?4:RP==='der'?R:RP==='izq'?R+4:2*R)+'px');p.style.setProperty('--rl',(!hasRep||RP==='der'?0:R)+'px');
 /* medición del ancho mínimo de cada compás a la letra mínima */
 p.innerHTML=`<div class="meas" style="--fs:${minFs()}px"><div class="row" id="wref" style="width:calc(100% - 12px - var(--res))"></div>${all.map(b=>`<div class="bar${b.dd?' dd':''}" style="width:min-content">${evsHtml(b)}</div>`).join('')}</div>`;
@@ -2152,9 +2154,13 @@ if(ia)arc(x1,Math.max(x1+10,ra.getBoundingClientRect().right-ox+6),y1,4);
 if(ib)arc(Math.min(x2-10,rb.getBoundingClientRect().left-ox-6),x2,y2,4)});
 const svg=document.createElementNS(X,'svg');svg.setAttribute('class','ties');svg.style.left=cs.paddingLeft;svg.style.top=cs.paddingTop;
 const path=document.createElementNS(X,'path');path.setAttribute('d',d);svg.appendChild(path);pg.appendChild(svg)})}
+/* PRO v0.52: en la vista previa la hoja se achica con “zoom” (el texto se dibuja a su tamaño final). Con transform:scale,
+   Chrome a veces pierde letras sueltas al redibujar (por ejemplo, al desplazarse). En el Escenario se mantiene transform. */
+const ZOOMOK=(()=>{try{return CSS.supports('zoom','0.5')}catch(e){return false}})();
 function scalePaper(){
-const w=$('wrap'),p=$('paper');p.style.transform='none';p.style.marginLeft='0';
-const pw=p.offsetWidth,s=Math.min(document.body.classList.contains('stage')?4:1,w.clientWidth/pw);
+const w=$('wrap'),p=$('paper'),st=document.body.classList.contains('stage');p.style.transform='none';p.style.zoom='';p.style.marginLeft='0';
+const pw=p.offsetWidth,s=Math.min(st?4:1,w.clientWidth/pw);
+if(!st&&ZOOMOK){if(s<1)p.style.zoom=String(Math.floor(s*1000)/1000);const z=+p.style.zoom||1;p.style.marginLeft=(Math.max(0,(w.clientWidth-pw*z)/2)/z)+'px';w.style.height='';return}
 p.style.transformOrigin='0 0';
 if(s!==1)p.style.transform=`scale(${s})`;
 p.style.marginLeft=Math.max(0,(w.clientWidth-pw*s)/2)+'px';
@@ -4130,6 +4136,12 @@ function syncDiagCopiar(){const t=syncDiagTexto();$('syncdtx').textContent=t;con
 try{if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).then(ok,ko);else{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();const r=document.execCommand('copy');a.remove();r?ok():ko()}}catch(e){ko()}}
 $('syncdiag').addEventListener('toggle',()=>{if($('syncdiag').open)syncDiagUi()});
 {const a=syncUi;syncUi=function(){const r=a.apply(this,arguments);try{if($('syncdiag').open)syncDiagUi()}catch(e){}return r}}
+
+/* PRO v0.52: redibujado de seguridad de la hoja al volver a la app o a la ventana, y al terminar de desplazarse en el Escenario */
+function hojaRepintar(){const p=$('paper');if(!p)return;p.style.outline='0.01px solid transparent';requestAnimationFrame(()=>requestAnimationFrame(()=>{p.style.outline=''}))}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')setTimeout(hojaRepintar,50)});
+addEventListener('focus',()=>setTimeout(hojaRepintar,50));
+{let tm=null;addEventListener('scroll',()=>{if(!document.body.classList.contains('stage'))return;clearTimeout(tm);tm=setTimeout(()=>{const p=$('paper');if(p){p.style.outline='0.01px solid transparent';requestAnimationFrame(()=>{p.style.outline=''})}},250)},{passive:true})}
 </script>
 </body>
 </html>
