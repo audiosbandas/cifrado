@@ -351,6 +351,7 @@ body.stage .bv{display:none!important}
 .penadj .tr{position:absolute;left:3px;bottom:22px;min-height:30px!important;padding:0 8px;font-size:11.5px;border-radius:999px;background:#2563eb;color:#fff;border:0}
 .penadj .st{position:absolute;left:5px;top:4px;font-size:13px;text-shadow:0 0 3px rgba(0,0,0,.7)}
 #syncya.corr{opacity:.75}#syncya:active{transform:scale(.97)}
+.sdiag{margin-top:10px;font-size:13px}.sdiag summary{cursor:pointer;padding:6px 0}.sdiag pre{white-space:pre-wrap;word-break:break-word;font-size:11.5px;background:rgba(127,127,127,.12);padding:8px;border-radius:8px;max-height:260px;overflow:auto;margin:6px 0}
 /* Diálogo del botón Atrás */
 .atr{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px}
 .atrb{width:100%;max-width:400px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 8px 30px rgba(0,0,0,.35)}
@@ -582,6 +583,8 @@ body{background:#fff}
 <label class="bvno" style="margin-top:6px"><input type="checkbox" id="adjon" onchange="adjCfg()">Subir los adjuntos de Pendientes a Drive (carpeta privada “Cifrado PRO - Adjuntos”)</label>
 <div id="adjmsg" class="rt" style="display:block"></div>
 <div id="syncmsg" class="rt" style="display:block"></div>
+<div id="synctoq" class="rt" style="display:block"></div>
+<details id="syncdiag" class="sdiag"><summary>🩺 Diagnóstico de la sincronización</summary><pre id="syncdtx"></pre><div class="btns"><button onclick="syncDiagCopiar()">Copiar diagnóstico</button><button onclick="syncDiagUi()">Actualizar</button></div><div id="syncdmsg" class="rt" style="display:block"></div></details>
 </details>
 <details id="audrep" class="aud" open><summary>🎧 Links a Escuchar Canción (Versión) <span id="audrepn" class="audn"></span></summary><div id="audrepf" class="bibfilt" hidden></div><div id="audrepl" class="audl"></div><div class="btns"><button id="audcopiar" onclick="audCopiar()">Copiar el listado para la planilla</button></div><div id="audrepm" class="rt"></div></details>
 </div>
@@ -1502,6 +1505,7 @@ u1M0/kZW0TQdukZHUlBn4XQoaA1iQVAJNVNqYfEgKBGJtezh1tgxVSchyO1wipf1J0chYnLI8PXR2EDo
 /* ===== Versión y registro de cambios (agregar cada versión nueva ARRIBA de todo) ===== */
 const ULTCOMP='Última versión compartida con la otra plantilla: PRO v0.22 (e0.34) ↔ Estándar v0.34 (p0.22)'; /* actualizar SOLO cuando un cambio se aplique a ambas versiones */
 const VERSION_LOG=[
+{v:'PRO 0.51',f:'10/11/2026',c:['[PRO] “↻ Sincronizar ahora”: al tocarlo aparece “Toque recibido a las hh:mm:ss”. Si el navegador registra el toque pero no lo convierte en clic (pasa en algunas tablets), el botón se activa igual por una vía alternativa.','[PRO] Nuevo “🩺 Diagnóstico de la sincronización”, debajo del botón: versión de la app y de Chrome, estado de la sincronización, último toque y clic, si algo tapa el botón y los últimos errores de la app. “Copiar diagnóstico” lo copia para enviarlo.']},
 {v:'PRO 0.50',f:'10/11/2026',c:['[PRO] Corregido: si un pendiente estaba abierto en un dispositivo mientras llegaba una versión más nueva desde otro (por ejemplo, la Descripción), el formulario seguía mostrando el texto viejo y, al volver atrás, lo guardaba con fecha nueva y pisaba el cambio del otro dispositivo. Ahora el formulario se actualiza solo; si estabas escribiendo, se conserva lo tuyo y se avisa.','[PRO] Volver atrás desde un pendiente sin haber cambiado nada ya no le pone fecha nueva. Antes de cada sincronización se guarda lo que se esté escribiendo en un pendiente, aunque no hayan pasado los 0,6 s del guardado automático.','[PRO] Sincronización automática más frecuente: además de al abrir la app y 5 s después de cada cambio, al pasar la app a segundo plano (sube lo pendiente), al volver a ella, al abrir ♫ Repertorio y cada 3 minutos mientras está abierta (trae lo nuevo).','[PRO] Aviso si el reloj del dispositivo está desfasado 3 minutos o más respecto de Google, porque la combinación decide por la fecha y hora de cada cambio.']},
 {v:'PRO 0.49',f:'09/11/2026',c:['[PRO] “↻ Sincronizar ahora” ya no queda sin responder: si la sincronización no está activada lo explica y resalta la casilla; si ya hay una en curso lo avisa con la hora; mientras trabaja el botón muestra “⏳ Sincronizando…”.','[PRO] Todas las llamadas al script tienen un tiempo máximo (30 s para guardar, 2 min para subir adjuntos): si la red o Google no responden, la sincronización termina con aviso en lugar de quedar trabada, y el botón vuelve a funcionar.','[PRO] El botón usa la URL y la clave tal como están escritas, aunque no se haya cerrado el teclado antes de tocarlo.']},
 {v:'PRO 0.48',f:'09/11/2026',c:['[PRO] Adjuntos de Pendientes en Drive (script versión 3, incluido en el .zip): después de cada sincronización se suben, de a uno, a la carpeta privada “Cifrado PRO - Adjuntos” de tu Drive, sin duplicarse. Cada adjunto muestra ☁ cuando ya está en Drive y ⏳ mientras espera.','[PRO] En los otros dispositivos los adjuntos aparecen con ☁: tocándolos se abren en Drive, y “⬇ Traer” los descarga al dispositivo (con miniatura y uso sin conexión). Quitar un adjunto lo manda a la papelera de Drive (si no hay conexión, se hace en la próxima sincronización).','[PRO] En ☁ Sincronización en la nube: opción “Subir los adjuntos de Pendientes a Drive” (activada por defecto) y estado de la subida. Si el script es una versión anterior, se avisa que hay que actualizarlo.']},
@@ -4097,6 +4101,35 @@ document.addEventListener('visibilitychange',()=>{if(!SYNC.on)return;
  else syncAuto(30000)});
 setInterval(()=>{if(document.visibilityState==='visible')syncAuto(170000)},60000);
 {const a=bibAbrirCajon;bibAbrirCajon=function(){const r=a.apply(this,arguments);syncAuto(60000);return r}}
+
+/* ===== PRO v0.51: diagnóstico del botón “Sincronizar ahora” =====
+   Al tocar el botón se confirma en pantalla que el toque llegó. Si el navegador registra el toque pero no genera el “clic”
+   (pasa en algunas tablets), el botón se activa igual a los 0,6 s. Los errores de la app quedan registrados para el diagnóstico. */
+const ERRK='cifrado-pro-errores',SDG={toq:0,clic:0,tm:null};
+function errReg(m){try{const L=JSON.parse(localStorage.getItem(ERRK)||'[]');L.unshift(new Date().toLocaleString('es')+' · '+String(m).slice(0,300));localStorage.setItem(ERRK,JSON.stringify(L.slice(0,8)))}catch(e){}}
+addEventListener('error',e=>errReg((e.message||'error')+(e.lineno?' (línea '+e.lineno+')':'')));
+addEventListener('unhandledrejection',e=>errReg('promesa: '+((e.reason&&e.reason.message)||e.reason)));
+const hhmmss=t=>new Date(t).toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+{const b=$('syncya');
+ const toque=()=>{SDG.toq=Date.now();$('synctoq').textContent='Toque recibido a las '+hhmmss(SDG.toq)+'.';clearTimeout(SDG.tm);
+  SDG.tm=setTimeout(()=>{if(SDG.clic<SDG.toq){SDG.clic=Date.now();$('synctoq').textContent+=' (activado por la vía alternativa)';syncBoton()}},600)};
+ let ts=null;b.addEventListener('pointerup',e=>{if(e.pointerType!=='mouse')toque()});b.addEventListener('touchstart',e=>{const t=e.touches[0];ts=t?[t.clientX,t.clientY]:null},{passive:true});b.addEventListener('touchend',e=>{const t=e.changedTouches[0];if(ts&&t&&Math.abs(t.clientX-ts[0])<12&&Math.abs(t.clientY-ts[1])<12&&Date.now()-SDG.toq>300)toque()},{passive:true});
+ b.addEventListener('click',()=>{SDG.clic=Date.now();clearTimeout(SDG.tm)},true)}
+function syncDiagTexto(){const ua=navigator.userAgent,cv=(ua.match(/Chrome\/([\d.]+)/)||[])[1]||'?',f=t=>t?new Date(t).toLocaleString('es'):'nunca';
+let E=[];try{E=JSON.parse(localStorage.getItem(ERRK)||'[]')}catch(e){}
+const r=$('syncya').getBoundingClientRect(),el=r.width?document.elementFromPoint(r.left+r.width/2,r.top+r.height/2):null,tapa=!el?'(botón no visible)':(el===$('syncya')||$('syncya').contains(el))?'no':(el.id||el.className||el.tagName);
+return ['Cifrado '+verFmt(APPV,true),'Chrome '+cv+' · '+(/Android/.test(ua)?'Android':navigator.platform)+' · pantalla '+innerWidth+'×'+innerHeight,'Dirección: '+location.href.slice(0,80),
+'Sincronización activada: '+(SYNC.on?'sí':'no')+' · URL válida: '+(syncUrlOk(SYNC.url)?'sí':'no')+' · clave: '+(SYNC.clave?'sí':'no'),
+'En curso: '+(SYNC.corriendo?'sí, desde '+f(SYNC.desde):'no')+' · conexión: '+(navigator.onLine===false?'sin conexión':'sí'),
+'Última sincronización: '+f(SYNC.ult)+' · versión del script: '+(SYNC.ver||'?')+' · desfase del reloj: '+(SYNC.desf||0)+' min',
+'Pendientes de subir: '+syncPendientes()+' · último error: '+(SYNC.err||'ninguno'),
+'Último toque: '+(SDG.toq?hhmmss(SDG.toq):'—')+' · último clic: '+(SDG.clic?hhmmss(SDG.clic):'—')+' · algo tapa el botón: '+tapa,
+'Errores de la app: '+(E.length?'\n  '+E.join('\n  '):'ninguno')].join('\n')}
+function syncDiagUi(){$('syncdtx').textContent=syncDiagTexto()}
+function syncDiagCopiar(){const t=syncDiagTexto();$('syncdtx').textContent=t;const ok=()=>$('syncdmsg').textContent='Copiado: pegalo en el chat.',ko=()=>{const r=document.createRange();r.selectNodeContents($('syncdtx'));const s=getSelection();s.removeAllRanges();s.addRange(r);$('syncdmsg').textContent='Quedó seleccionado: mantené apretado y elegí Copiar.'};
+try{if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).then(ok,ko);else{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();const r=document.execCommand('copy');a.remove();r?ok():ko()}}catch(e){ko()}}
+$('syncdiag').addEventListener('toggle',()=>{if($('syncdiag').open)syncDiagUi()});
+{const a=syncUi;syncUi=function(){const r=a.apply(this,arguments);try{if($('syncdiag').open)syncDiagUi()}catch(e){}return r}}
 </script>
 </body>
 </html>
