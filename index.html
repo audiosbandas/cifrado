@@ -373,6 +373,27 @@ body.stage.bibcolon{margin-right:0}
 .bibit.drg{position:relative;z-index:3;background:var(--panel);box-shadow:0 6px 18px rgba(0,0,0,.35);border-color:#60a5fa}
 body.dragn,body.dragn *{cursor:grabbing!important;user-select:none!important;-webkit-user-select:none!important}
 .h4n{font-weight:400;color:var(--mut);font-size:12px}
+
+/* ===== PRO v0.55: presets de auto-scroll y franja superior del Escenario ===== */
+.sttop{display:none;position:fixed;top:10px;left:12px;right:12px;z-index:60;align-items:center;gap:8px;pointer-events:none}
+body.stage .sttop{display:flex}.sttop button{pointer-events:auto}.sttop .ladoI,.sttop .ladoD{flex:1 1 0;display:flex;justify-content:flex-end;min-width:0}
+.sttop .stagex{display:block!important;position:static}
+.stpres{display:flex;gap:6px}
+.sttop button{min-height:48px;min-width:48px;font-size:15px;color:#fff;background:rgba(20,20,20,.85);border:1px solid rgba(255,255,255,.35);border-radius:10px;padding:0 10px;white-space:nowrap}
+.sttop .stpre{font-size:13px;line-height:1.1;padding:2px 9px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.sttop .stpre small{font-size:10.5px;opacity:.75}
+.sttop .stpre.on{background:#1d4ed8;border-color:#93c5fd}
+.sttop .stauto2.on{background:#15803d;border-color:#86efac}
+.sttop .stagex.arm{background:#facc15!important;color:#1d1d1b!important;border-color:#facc15!important}
+@media(max-width:520px){.sttop{gap:5px;left:6px;right:6px}.sttop button{padding:0 7px;font-size:13.5px}.sttop .stpre{padding:2px 6px;font-size:12px}}
+.stset{max-height:calc(100vh - 170px);overflow-y:auto}
+.sspre{margin:6px 0 4px;display:flex;flex-direction:column;gap:8px}
+.sspre .pr{border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:8px}
+.sspre .pr b{font-size:13px}.sspre .prg{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
+.sspre .prg label{margin:0;font-size:11.5px}.sspre input,.sspre select{min-height:38px;font-size:14px;width:100%}
+.sspre .pb{display:flex;gap:6px;margin-top:6px}.sspre .pb button{min-height:36px;font-size:13px}
+body.stage.stmin .sttop{display:flex}
+@media print{.sttop{display:none!important}}
 /* Diálogo del botón Atrás */
 .atr{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px}
 .atrb{width:100%;max-width:400px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 8px 30px rgba(0,0,0,.35)}
@@ -518,7 +539,7 @@ body{background:#fff}
 <body>
 <script>try{var t=localStorage.getItem("cifrado-pro-tema")||"oscuro";if(t==="oscuro")document.documentElement.setAttribute("data-theme","dark");else if(t==="claro")document.documentElement.setAttribute("data-theme","light");else document.documentElement.removeAttribute("data-theme")}catch(e){document.documentElement.setAttribute("data-theme","dark")}</script>
 <div class="topbar"><div class="ttl"><div class="tbt"><h2>Plantilla de Cifrado PRO</h2><div class="ver"><span id="verTxt"></span><button id="tb-cl" class="lnk" onclick="abrirChangelog()">Changelog</button></div></div><div class="tbic"><button class="bvb" onclick="bvAbrir()" title="Página de inicio" aria-label="Inicio">⌂</button><button id="tb-cfg" class="cfgb" onclick="cfgGenAbrir()" title="Configuración general" aria-label="Configuración general">⚙</button></div></div><div class="tbr"><button id="bibbtn" onclick="bibAbrirCajon()" title="Biblioteca de canciones y setlists"><span class="ic">♫</span><span class="tx">Repertorio</span><i id="bibdot" class="bibdot" hidden></i></button><button id="tb-pdf" class="main" onclick="imprimirPdf()" title="Guardar como PDF o imprimir la hoja"><span class="ic">⎙</span><span class="tx">Guardar como PDF / [Imprimir]</span></button><button id="tb-esc" onclick="entrarEscenario()"><span class="ic">▶</span><span class="tx">Escenario</span></button></div></div>
-<button class="stagex" onclick="salirEscenario()">✕ Salir</button>
+<div id="sttop" class="sttop"><span class="ladoI"><span id="st-pres" class="stpres"></span></span><button id="st-auto2" class="stauto2" onclick="toggleAuto()">▶ Auto-scroll</button><span class="ladoD"><button class="stagex" id="st-salir" onclick="stSalirToque()">✕ Salir</button></span></div>
 <button class="stzone l" tabindex="-1" onclick="stZone(-1)" aria-label="Retroceder">◀</button><button class="stzone r" tabindex="-1" onclick="stZone(1)" aria-label="Avanzar">▶</button>
 <div class="stbar" id="stbar"><span class="stg" id="st-setg" hidden><button id="st-tp" onclick="stTema(-1)" title="Tema anterior del setlist">◀ Tema</button><button id="st-ti" onclick="stSetLista()">– de –</button><button id="st-tn" onclick="stTema(1)" title="Tema siguiente del setlist">Tema ▶</button></span><span class="stg"><button id="st-m" onclick="stTrans(-1)" title="Bajar un semitono">♭ −1</button><b id="st-key">—</b><button id="st-p" onclick="stTrans(1)" title="Subir un semitono">♯ +1</button><button onclick="stTrans(0,1)" title="Volver al tono original">↺</button></span><button class="bpmonly" onclick="stNudge(-1)" title="Atrasar una fila">◀ fila</button><button id="st-auto" onclick="toggleAuto()">▶ Auto-scroll</button><button class="bpmonly" onclick="stNudge(1)" title="Adelantar una fila">fila ▶</button><select id="st-not" onchange="stNot(this.value)" title="Notación"><option value="orig">Origen</option><option value="am">C D E</option><option value="lat">Do Re Mi</option><option value="rom">I II III</option><option value="impl">1 2 3</option><option value="nash">1 2m 3</option></select><button id="st-tap" onclick="tapTempo()" title="Tap tempo">TAP</button><button id="st-tapr" onclick="tapRestore()" disabled title="Restablecer el BPM anterior">↺ BPM</button><button id="st-met" onclick="metToggle()" title="Metrónomo">♩ Metrónomo</button><button id="st-neg" onclick="negSet('S')" title="Hoja en negativo">◐ Negativo</button><button id="st-cfg" onclick="$('stset').classList.toggle('open')" title="Parámetros de desplazamiento">⚙</button><button onclick="document.body.classList.add('stmin')" title="Ocultar barra">▾</button></div>
 <button class="stchip" onclick="document.body.classList.remove('stmin')">⋯</button>
@@ -535,7 +556,8 @@ body{background:#fff}
 <div id="metf" class="metf" hidden role="group" aria-label="Metrónomo"><span id="metdot" class="metdot"></span><b id="metbpm">♩</b><button id="metmute" onclick="metMute()" title="Silenciar o activar el sonido del metrónomo">🔊</button><button onclick="metStop()" title="Detener el metrónomo">■</button></div>
 <div class="stsl" id="stsl" hidden></div>
 <div class="stset" id="stset"><b>Desplazamiento</b>
-<label>Criterio</label><select id="ss-crit" onchange="stCfg()"><option value="tiempo">Por tiempo</option><option value="bpm">Por BPM (compases)</option></select>
+<label>Criterio</label><select id="ss-crit" onchange="stCfg()"><option value="pre">Por compases (presets) · recomendado</option><option value="tiempo">Por tiempo</option><option value="bpm">Por BPM (fila por fila)</option></select>
+<div id="ss-pre" class="sspre"></div>
 <label>Por tiempo: cada cuántos segundos</label><input id="ss-seg" type="number" min="1" max="10" step="1" onchange="stCfg()">
 <label>Por tiempo: cuánto avanza</label><select id="ss-pt" onchange="stCfg()"><option value="fila">1 fila</option><option value="dos">2 filas</option><option value="media">Media pantalla</option></select>
 <label>Por BPM: cuándo avanza</label><select id="ss-bu" onchange="stCfg()"><option value="fila">Por fila (según sus compases y repeticiones)</option><option value="1">Cada 1 compás</option><option value="2">Cada 2 compases</option><option value="4">Cada 4 compases</option></select>
@@ -1529,6 +1551,7 @@ u1M0/kZW0TQdukZHUlBn4XQoaA1iQVAJNVNqYfEgKBGJtezh1tgxVSchyO1wipf1J0chYnLI8PXR2EDo
 /* ===== Versión y registro de cambios (agregar cada versión nueva ARRIBA de todo) ===== */
 const ULTCOMP='Última versión compartida con la otra plantilla: PRO v0.22 (e0.34) ↔ Estándar v0.34 (p0.22)'; /* actualizar SOLO cuando un cambio se aplique a ambas versiones */
 const VERSION_LOG=[
+{v:'PRO 0.55',f:'11/11/2026',c:['[PRO] Escenario: auto-scroll “Por compases (presets)”, ahora el predeterminado. Cada N compases, contados desde que se toca ▶ Auto-scroll con el BPM y el compás de la canción, la hoja avanza ¼, ⅓ o ½ hoja, o 1 o 2 filas. Si el metrónomo ya está sonando, la cuenta empieza en su próximo tiempo 1.','[PRO] Tres presets, Lento · Normal · Rápido (de fábrica: 32, 16 y 8 compases, ¼ hoja; Normal es el predeterminado). Se editan, borran o vuelven a crear en ⚙ › Desplazamiento, con ajuste de velocidad de ±5% o ±10%.','[PRO] Nueva franja flotante arriba en el Escenario: los presets, ▶ Auto-scroll / ⏸ Pausar y ✕ Salir. Con el auto-scroll detenido, un preset solo prepara el modo; en marcha, cambia de modo sin cortar, desde donde está la hoja. Las zonas táctiles, las flechas y el pedal mueven la hoja sin detener el conteo.','[PRO] ✕ Salir del Escenario requiere dos toques: el primero lo pone amarillo y el segundo (dentro de 3 s) sale.']},
 {v:'PRO 0.54',f:'11/11/2026',c:['[PRO] Reordenar arrastrando y soltando: cada fila de Canciones, Setlists, Temas del setlist, Agregar canciones y Pendientes tiene una agarradera ⠿ (funciona con mouse y con el dedo). Cerca del borde, la lista se desplaza sola.','[PRO] Canciones, Setlists y Pendientes tienen orden “Manual”, que se guarda en cada dispositivo. Arrastrar una fila pasa la lista a “Manual” a partir del orden que se estaba viendo; elegir otro orden no lo borra. Con una búsqueda escrita, la agarradera se desactiva.','[PRO] “Agregar canciones de la biblioteca” muestra las canciones en el mismo orden que la pestaña Canciones; reordenar en cualquiera de las dos cambia ambas.','[PRO] Arrastrar un tema dentro del setlist cambia el orden del setlist (se sincroniza) y acomoda el tema actual del Escenario. Los ▲ ▼ siguen disponibles.']},
 {v:'PRO 0.53',f:'10/11/2026',c:['[PRO] Al abrir una canción desde ♫ Repertorio (Canciones o Setlists), el cajón ya no se cierra: se contrae hacia la derecha y queda una franja angosta “‹ ♫ Repertorio”; tocándola vuelve a mostrarse tal como estaba. La página se corre ese ancho para que la franja no tape la barra de desplazamiento. También se puede contraer con “» Contraer”; “✕ Cerrar” lo sigue cerrando.','[PRO] Setlists: los temas del setlist se pueden tocar para abrirlos. Si el setlist está activo en el Escenario, antes pregunta si en el Escenario se salta a ese tema: “Sí” lo deja como tema actual (sin ir al Escenario; se retoma desde ahí al entrar) y “No” lo abre sin cambiar el tema actual.','[PRO] Setlists: en “Agregar canciones de la biblioteca” también se puede tocar una canción para abrirla y revisarla antes de sumarla; no cambia el setlist ni el tema actual.']},
 {v:'PRO 0.52',f:'10/11/2026',c:['[PRO] Corregido: en la vista previa, a veces faltaban letras sueltas del cifrado (por ejemplo “m” en lugar de “Bm”) después de desplazarse o tocar otras secciones. La hoja ahora se achica con el ajuste nativo del navegador, que dibuja el texto a su tamaño final, en lugar de una transformación que Chrome a veces redibujaba mal.','[PRO] Redibujado de seguridad de la hoja al volver a la app o a la ventana, y al terminar de desplazarse en el Escenario.']},
@@ -4240,6 +4263,57 @@ if(modo==='man'){const ix={};PENO.forEach((id,i)=>ix[id]=i);return L.sort((a,b)=
 return L.sort((a,b)=>b.t-a.t)}
 function penOrdSet(v){PENMODO=v;if(v==='man'&&!PENO.length)PENO=penOrdenar(PEN.l.slice(),'rec').map(x=>x.id);penOrdSave();penUi()}
 function penOrdenA(keys){if(keys){const full=penOrdenar(PEN.l.slice()).map(x=>x.id);if(PENMODO!=='man'){PENMODO='man';penMsg('El orden pasó a “Manual”, a partir del que estabas viendo.',0)}PENO=ordSub(full,keys);penOrdSave()}penUi()}
+
+/* ===== PRO v0.55: auto-scroll por compases con presets =====
+   Cada N compases (según el BPM y el compás de la canción, contados desde que se toca ▶ Auto-scroll) avanza ¼, ⅓ o ½ hoja,
+   o 1 o 2 filas. Si el metrónomo ya está sonando, la cuenta empieza en su próximo tiempo 1. Tres presets fijos
+   (Lento · Normal · Rápido): con el auto-scroll detenido solo lo preparan; en marcha cambian el modo sin cortar. */
+const PREK='cifrado-pro-stage-pre',PREAV={q:'¼ hoja',t:'⅓ hoja',h:'½ hoja',f1:'1 fila',f2:'2 filas'},PRECAJ=['Lento','Normal','Rápido'];
+const preDef=()=>[{c:32,av:'q',adj:0},{c:16,av:'q',adj:0},{c:8,av:'q',adj:0}];
+let PRE={l:preDef(),a:1};
+{let r=null;try{r=JSON.parse(localStorage.getItem(PREK))}catch(e){}
+ if(r&&Array.isArray(r.l)&&r.l.length===3){PRE.l=r.l.map(x=>x&&+x.c>0?{c:Math.min(64,Math.max(1,+x.c)),av:PREAV[x.av]?x.av:'q',adj:[-10,-5,0,5,10].includes(+x.adj)?+x.adj:0}:null);PRE.a=[0,1,2].includes(r.a)?r.a:1;if(r.crit==='pre')STG.crit='pre'}
+ else STG.crit='pre'}
+function preSave(){try{localStorage.setItem(PREK,JSON.stringify({l:PRE.l,a:PRE.a,crit:STG.crit}))}catch(e){}}
+const preTxt=x=>x?x.c+' c · '+PREAV[x.av]:'';
+function preAct(){let x=PRE.l[PRE.a];if(!x){const i=PRE.l.findIndex(Boolean);if(i<0)return null;PRE.a=i;x=PRE.l[i]}return x}
+function prePx(av){if(av==='f1')return stPitch();if(av==='f2')return stPitch()*2;const pg=document.querySelector('.page'),h=pg?pg.getBoundingClientRect().height:innerHeight;return h*(av==='h'?.5:av==='t'?1/3:.25)}
+function preRun(seguir){const x=preAct();if(!x){STG.on=false;stToast('No hay presets: creá uno en ⚙ › Desplazamiento.');return}
+const bpm=bpmNum();if(!bpm){STG.on=false;stToast('Para el auto-scroll por compases, el campo BPM debe empezar con un número de 2 o 3 dígitos. Podés fijarlo con TAP.');return}
+{const rs=stRows(),l=rs[rs.length-1];if(!l||l.getBoundingClientRect().bottom+scrollY<=innerHeight-80){STG.on=false;stToast('La canción entra completa en la pantalla: no hace falta desplazarla.');return}}
+const per=x.c*metBeats()*60/bpm/(1+x.adj/100)*1000;let t0=performance.now();
+if(!seguir&&MET.on&&MET.next){const sec=60/bpm,b=metBeats(),now=MET.ctx&&MET.son==='si'?MET.ctx.currentTime:performance.now()/1000,k=Math.ceil(MET.n/b)*b,at=MET.next+(k-MET.n)*sec;t0+=Math.max(0,(at-now)*1000)}
+if(seguir&&STG.pre0&&STG.pre0.per){/* cambio de preset en marcha: conserva el avance ya transcurrido del intervalo */const fr=Math.min(.99,((performance.now()-STG.pre0.t0)%STG.pre0.per)/STG.pre0.per);t0=performance.now()-fr*per}
+STG.pre0={t0,per};let k=Math.floor((performance.now()-t0)/per)+1;
+const tick=()=>{if(!STG.on||STG.crit!=='pre')return;if(stEnd()){autoStop();return}scrollBy({top:prePx(x.av),behavior:'smooth'});k++;STG.timer=setTimeout(tick,Math.max(30,t0+k*per-performance.now()))};
+STG.timer=setTimeout(tick,Math.max(30,t0+k*per-performance.now()))}
+{const a=autoStart;autoStart=function(row){if(STG.crit!=='pre')return a.apply(this,arguments);clearTimeout(STG.timer);STG.timer=null;STG.on=true;preRun(row===true);stUi()}}
+function prePulsar(i){if(!PRE.l[i])return;const corria=STG.on;if(STG.crit!=='pre')STG.pre0=null;PRE.a=i;STG.crit='pre';preSave();stSave();
+if(corria){clearTimeout(STG.timer);STG.timer=null;autoStart(true);stToast('Auto-scroll: '+PRECAJ[i]+' · '+preTxt(PRE.l[i]))}else stUi()}
+function preTopUi(){const box=$('st-pres');if(!box)return;box.textContent='';
+PRE.l.forEach((x,i)=>{if(!x)return;const b=mkBtn('','Preset '+PRECAJ[i]+': cada '+x.c+' compases avanza '+PREAV[x.av]+(x.adj?' ('+(x.adj>0?'+':'')+x.adj+'%)':''),()=>prePulsar(i),'stpre'+(STG.crit==='pre'&&PRE.a===i?' on':''));
+b.appendChild(mk('span','',x.c+' c · '+PREAV[x.av].replace(' hoja','').replace(' fila','f').replace(' filas','f')));b.appendChild(mk('small','',PRECAJ[i]));box.appendChild(b)});
+const au=$('st-auto2');au.textContent=STG.on?'⏸ Pausar':'▶ Auto-scroll';au.classList.toggle('on',STG.on)}
+function preCfgUi(){const box=$('ss-pre');if(!box)return;box.hidden=STG.crit!=='pre';if(box.hidden)return;if(box.contains(document.activeElement))return;box.textContent='';
+box.appendChild(mk('div','rt','Cada preset avanza cada N compases, contados desde ▶ Auto-scroll con el BPM y el compás de la canción. Si el metrónomo ya está sonando, empieza en su próximo tiempo 1. En la franja de arriba quedan ordenados Lento · Normal · Rápido.'));
+PRE.l.forEach((x,i)=>{const pr=mk('div','pr');pr.appendChild(mk('b','',PRECAJ[i]+(i===1?' (predeterminado)':'')+(x?' · '+preTxt(x):' · vacío')));
+if(x){const g=mk('div','prg');
+ const sel=(lab,ops,v,fn)=>{const w=mk('div');w.appendChild(mk('label','',lab));const e=document.createElement('select');ops.forEach(([k,t])=>{const o=document.createElement('option');o.value=k;o.textContent=t;e.appendChild(o)});e.value=String(v);e.onchange=()=>{fn(e.value);preSave();preTopUi();preCfgUi();if(STG.on&&STG.crit==='pre'&&PRE.a===i)autoStart(true)};w.appendChild(e);g.appendChild(w)};
+ sel('Cada cuántos compases',[1,2,4,8,12,16,24,32,48,64].map(n=>[n,n+' compás'+(n>1?'es':'')]),x.c,v=>x.c=+v);
+ sel('Cuánto avanza',Object.entries(PREAV),x.av,v=>x.av=v);
+ sel('Ajuste de velocidad',[[-10,'−10%'],[-5,'−5%'],[0,'Exacto'],[5,'+5%'],[10,'+10%']],x.adj,v=>x.adj=+v);pr.appendChild(g);
+ const pb=mk('div','pb');pb.appendChild(dosToques('Borrar','Quitar este preset',()=>{PRE.l[i]=null;preSave();preTopUi();preCfgUi()}));pr.appendChild(pb)}
+else{const pb=mk('div','pb');pb.appendChild(mkBtn('＋ Crear','Crear este preset',()=>{PRE.l[i]=preDef()[i];preSave();preTopUi();preCfgUi()}));pr.appendChild(pb)}
+box.appendChild(pr)});
+const pb=mk('div','pb');pb.appendChild(mkBtn('Restablecer los 3 presets','Volver a 32 · 16 · 8 compases, ¼ hoja',()=>{PRE.l=preDef();PRE.a=1;preSave();preTopUi();preCfgUi()}));box.appendChild(pb)}
+{const a=stUi;stUi=function(){const r=a.apply(this,arguments);try{preTopUi();preCfgUi()}catch(e){}return r}}
+{const a=stCfg;stCfg=function(){const r=a.apply(this,arguments);preSave();return r}}
+/* zonas táctiles, flechas y pedal en modo por compases: mueven la hoja sin cortar ni reiniciar el conteo */
+{const a=stZone;stZone=function(dir){if(STG.on&&STG.crit==='pre'){const z=document.querySelector('.stzone.'+(dir>0?'r':'l'));if(z){z.classList.remove('hit');void z.offsetWidth;z.classList.add('hit');clearTimeout(z._h);z._h=setTimeout(()=>z.classList.remove('hit'),260)}stScroll(dir,STG.pm);return}return a.apply(this,arguments)}}
+/* Salir: primer toque lo pone amarillo; el segundo (dentro de 3 s) sale */
+function stSalirToque(){const b=$('st-salir');if(b.classList.contains('arm')){clearTimeout(b._t);b.classList.remove('arm');b.textContent='✕ Salir';salirEscenario();return}
+b.classList.add('arm');b.textContent='✕ Salir (otra vez)';clearTimeout(b._t);b._t=setTimeout(()=>{b.classList.remove('arm');b.textContent='✕ Salir'},3000)}
+preTopUi();
 </script>
 </body>
 </html>
