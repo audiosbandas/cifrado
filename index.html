@@ -353,6 +353,19 @@ body.stage .bv{display:none!important}
 #syncya.corr{opacity:.75}#syncya:active{transform:scale(.97)}
 .sdiag{margin-top:10px;font-size:13px}.sdiag summary{cursor:pointer;padding:6px 0}.sdiag pre{white-space:pre-wrap;word-break:break-word;font-size:11.5px;background:rgba(127,127,127,.12);padding:8px;border-radius:8px;max-height:260px;overflow:auto;margin:6px 0}
 @media print{.paper{zoom:1!important}}
+
+/* ===== PRO v0.53: cajón contraído ===== */
+.bibcol{display:none}
+.bibd.col{transform:translateX(calc(100% - 30px));box-shadow:-2px 0 8px rgba(0,0,0,.18);padding:0;cursor:pointer}
+.bibd.col>*{visibility:hidden}
+.bibd.col>.bibcol{visibility:visible;display:flex;position:absolute;left:0;top:0;bottom:0;width:30px;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--panel);color:var(--ink);border-right:1px solid var(--line)}
+.bibcol b{font-size:20px;line-height:1}.bibcol span{writing-mode:vertical-rl;transform:rotate(180deg);font-size:13px;font-weight:700;white-space:nowrap}
+.bibd.col:hover>.bibcol{background:var(--line)}
+body.bibcolon{margin-right:30px}
+body.stage.bibcolon{margin-right:0}
+@media print{body.bibcolon{margin-right:0!important}}
+.setsalta{margin:-2px 0 4px;padding:8px 10px;border:1px solid #d97706;border-radius:10px;background:rgba(217,119,6,.10);font-size:13.5px}
+.setsalta .btns{margin-top:6px}
 /* Diálogo del botón Atrás */
 .atr{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px}
 .atrb{width:100%;max-width:400px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 8px 30px rgba(0,0,0,.35)}
@@ -527,7 +540,8 @@ body{background:#fff}
 <div class="rt" style="display:block">El auto-scroll está desactivado por defecto: se activa con el botón “Auto-scroll”. Por BPM avanza fila a fila según el tempo (con el BPM del campo), cuenta las repeticiones ×N y se resincroniza tocando una fila o con ◀ fila / fila ▶. Se pausa al deslizar con el dedo o la rueda y se detiene solo al llegar al final. Los toques en los costados, las flechas y el pedal funcionan siempre: sin auto-scroll avanzan o retroceden; por tiempo, además reinician el conteo; por BPM pasan a la fila siguiente o anterior sin detenerlo.</div></div>
 <div id="bibov" class="bibov" hidden onclick="bibCerrar()"></div>
 <aside id="bibd" class="bibd" hidden role="dialog" aria-label="Repertorio">
-<div class="bh"><b>♫ Repertorio</b><span id="syncchip2" class="syncchip"></span><button onclick="bibCerrar()">✕ Cerrar</button></div>
+<div id="bibcol" class="bibcol" onclick="bibExpandir()" title="Mostrar el Repertorio" role="button" aria-label="Mostrar el Repertorio"><b>‹</b><span>♫ Repertorio</span></div>
+<div class="bh"><b>♫ Repertorio</b><span id="syncchip2" class="syncchip"></span><button onclick="bibContraer()" title="Contraer hacia la derecha (queda una franja para volver a abrirlo)">» Contraer</button><button onclick="bibCerrar()">✕ Cerrar</button></div>
 <div id="bibrec" class="vconf" hidden><div id="bibrecTxt"></div><div class="btns"><button class="main" onclick="bibExportar()">Exportar ahora</button><button onclick="bibPosponer()">Recordármelo en 3 días</button></div></div>
 <div class="bibtabs"><button data-bt="pen" onclick="bibTab('pen')">Pendientes<i id="pencnt" class="pencnt"></i></button><button data-bt="can" class="on" onclick="bibTab('can')">Canciones</button><button data-bt="set" onclick="bibTab('set')">Setlists</button></div>
 <div id="bibp-pen" class="bibpane" hidden>
@@ -1506,6 +1520,7 @@ u1M0/kZW0TQdukZHUlBn4XQoaA1iQVAJNVNqYfEgKBGJtezh1tgxVSchyO1wipf1J0chYnLI8PXR2EDo
 /* ===== Versión y registro de cambios (agregar cada versión nueva ARRIBA de todo) ===== */
 const ULTCOMP='Última versión compartida con la otra plantilla: PRO v0.22 (e0.34) ↔ Estándar v0.34 (p0.22)'; /* actualizar SOLO cuando un cambio se aplique a ambas versiones */
 const VERSION_LOG=[
+{v:'PRO 0.53',f:'10/11/2026',c:['[PRO] Al abrir una canción desde ♫ Repertorio (Canciones o Setlists), el cajón ya no se cierra: se contrae hacia la derecha y queda una franja angosta “‹ ♫ Repertorio”; tocándola vuelve a mostrarse tal como estaba. La página se corre ese ancho para que la franja no tape la barra de desplazamiento. También se puede contraer con “» Contraer”; “✕ Cerrar” lo sigue cerrando.','[PRO] Setlists: los temas del setlist se pueden tocar para abrirlos. Si el setlist está activo en el Escenario, antes pregunta si en el Escenario se salta a ese tema: “Sí” lo deja como tema actual (sin ir al Escenario; se retoma desde ahí al entrar) y “No” lo abre sin cambiar el tema actual.','[PRO] Setlists: en “Agregar canciones de la biblioteca” también se puede tocar una canción para abrirla y revisarla antes de sumarla; no cambia el setlist ni el tema actual.']},
 {v:'PRO 0.52',f:'10/11/2026',c:['[PRO] Corregido: en la vista previa, a veces faltaban letras sueltas del cifrado (por ejemplo “m” en lugar de “Bm”) después de desplazarse o tocar otras secciones. La hoja ahora se achica con el ajuste nativo del navegador, que dibuja el texto a su tamaño final, en lugar de una transformación que Chrome a veces redibujaba mal.','[PRO] Redibujado de seguridad de la hoja al volver a la app o a la ventana, y al terminar de desplazarse en el Escenario.']},
 {v:'PRO 0.51',f:'10/11/2026',c:['[PRO] “↻ Sincronizar ahora”: al tocarlo aparece “Toque recibido a las hh:mm:ss”. Si el navegador registra el toque pero no lo convierte en clic (pasa en algunas tablets), el botón se activa igual por una vía alternativa.','[PRO] Nuevo “🩺 Diagnóstico de la sincronización”, debajo del botón: versión de la app y de Chrome, estado de la sincronización, último toque y clic, si algo tapa el botón y los últimos errores de la app. “Copiar diagnóstico” lo copia para enviarlo.']},
 {v:'PRO 0.50',f:'10/11/2026',c:['[PRO] Corregido: si un pendiente estaba abierto en un dispositivo mientras llegaba una versión más nueva desde otro (por ejemplo, la Descripción), el formulario seguía mostrando el texto viejo y, al volver atrás, lo guardaba con fecha nueva y pisaba el cambio del otro dispositivo. Ahora el formulario se actualiza solo; si estabas escribiendo, se conserva lo tuyo y se avisa.','[PRO] Volver atrás desde un pendiente sin haber cambiado nada ya no le pone fecha nueva. Antes de cada sincronización se guarda lo que se esté escribiendo en un pendiente, aunque no hayan pasado los 0,6 s del guardado automático.','[PRO] Sincronización automática más frecuente: además de al abrir la app y 5 s después de cada cambio, al pasar la app a segundo plano (sube lo pendiente), al volver a ella, al abrir ♫ Repertorio y cada 3 minutos mientras está abierta (trae lo nuevo).','[PRO] Aviso si el reloj del dispositivo está desfasado 3 minutos o más respecto de Google, porque la combinación decide por la fecha y hora de cada cambio.']},
@@ -2973,7 +2988,7 @@ const c=cfgClean(s.cfg&&typeof s.cfg==='object'?s.cfg:{});if(!c.prev)c.prev=[];
 applyData(typeof s.est==='string'?s.est:'',c);BIB.cur=id;bibCurSave();BIB.snap=bibSnap();return true}
 function bibAbrir(id){const s=BIB.lib.find(x=>x.id===id);if(!s)return;
 if(id!==BIB.cur){if(!bibCargar(id)){bibUi();return}bibMsg('Abierta: «'+s.nombre+'».',0)}
-if(window.setSync)setSync();bibUi();bibCerrar()}
+if(window.setSync)setSync();bibUi();bibContraer()}
 function bibRenombrar(id){const s=BIB.lib.find(x=>x.id===id);if(!s)return;
 const v=prompt('Nuevo nombre para «'+s.nombre+'»',s.nombre);if(v===null||!v.trim())return;
 const old=s.nombre;s.nombre=bibNombre(v,id);if(!bibSave()){s.nombre=old;bibMsg(BIBLLENO,1)}else bibMsg('Renombrada: «'+s.nombre+'».',0);bibUi()}
@@ -3022,9 +3037,15 @@ dl.onclick=()=>{if(dl.dataset.arm){clearTimeout(dl._t);bibEliminar(s.id);return}
 it.appendChild(dl);box.appendChild(it)});
 let ex=0;try{ex=+localStorage.getItem(BIBE)||0}catch(e){}
 $('bibesp').textContent=BIB.lib.length+(BIB.lib.length===1?' canción':' canciones')+' · espacio usado en el navegador: unos '+bibEspacio()+' KB de alrededor de 5000 KB'+(ex?' · última exportación: '+new Date(ex).toLocaleDateString('es'):' · todavía no exportaste el repertorio')+'.';if(window.bibRecUi)bibRecUi()}
-function bibAbrirCajon(){let t='can';try{t=localStorage.getItem('cifrado-biblio-tab')||'can'}catch(e){}bibTab(t);$('bibconf').hidden=true;$('bibov').hidden=false;$('bibd').hidden=false}
-function bibCerrar(){$('bibov').hidden=true;$('bibd').hidden=true;$('bibconf').hidden=true}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('bibd').hidden)bibCerrar()});
+function bibAbrirCajon(){bibColQuitar();let t='can';try{t=localStorage.getItem('cifrado-biblio-tab')||'can'}catch(e){}bibTab(t);$('bibconf').hidden=true;$('bibov').hidden=false;$('bibd').hidden=false}
+function bibCerrar(){bibColQuitar();$('bibov').hidden=true;$('bibd').hidden=true;$('bibconf').hidden=true}
+/* PRO v0.53: contraer el cajón hacia la derecha. Queda una franja angosta para volver a abrirlo; la página se corre
+   ese ancho a la izquierda para que la franja no tape ninguna barra de desplazamiento. */
+const bibCol=()=>$('bibd').classList.contains('col');
+function bibColQuitar(){const d=$('bibd');if(!d||!d.classList.contains('col'))return;d.classList.remove('col');document.body.classList.remove('bibcolon');try{scalePaper()}catch(e){}}
+function bibContraer(){const d=$('bibd');if(d.hidden||d.classList.contains('col'))return;$('bibconf').hidden=true;$('bibov').hidden=true;d.classList.add('col');document.body.classList.add('bibcolon');try{scalePaper()}catch(e){}}
+function bibExpandir(){bibColQuitar();$('bibov').hidden=false;$('bibd').hidden=false;try{bibUi()}catch(e){}try{if(!$('bibp-set').hidden)setUi()}catch(e){}}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('bibd').hidden&&!bibCol())bibCerrar()});
 function bibExportar(){clearTimeout(BIB.tm);bibFlush(false);
 if(!BIB.lib.length){bibMsg('La biblioteca está vacía: no hay nada para exportar.',1);return}
 dl('repertorio_'+new Date().toISOString().slice(0,10)+'.cifrado.json',JSON.stringify({app:APPID,formato:1,version:APPV,tipo:'repertorio',exportado:new Date().toISOString(),biblioteca:BIB.lib,setlists:SET.l}),'application/json');
@@ -3072,6 +3093,7 @@ function setLimpiar(){const ids=new Set(BIB.lib.map(x=>x.id));
 SET.l.forEach(s=>{s.items=(Array.isArray(s.items)?s.items:[]).filter(i=>ids.has(i))});setSync()}
 /* El tema actual del setlist activo sigue a la canción abierta */
 function setSync(){const s=setAct();if(!s){if(SET.act){SET.act=null;setActSave()}return}
+if(SET.act.ign){if(SET.act.ign===BIB.cur)return;delete SET.act.ign}
 const p=SET.act.pos;if(!(p>=0&&s.items[p]===BIB.cur))SET.act.pos=s.items.indexOf(BIB.cur);setActSave()}
 const hoyISO=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const fecTxt=f=>{const m=/^(\d{4})-(\d\d)-(\d\d)$/.exec(f||'');return m?m[3]+'/'+m[2]+'/'+m[1]:'sin fecha'};
@@ -3103,7 +3125,7 @@ function setUsar(){const s=setGet();if(!s)return;if(!s.items.length){setMsg('El 
 SET.act={id:s.id,pos:-1};setSync();bibCerrar();entrarEscenario()}
 function setPrimero(){const s=setGet();if(!s)return;if(!s.items.length){setMsg('El setlist no tiene temas: agregá canciones antes de usarlo.',1);return}
 if(!bibCargar(s.items[0])){setMsg('No se pudo abrir el primer tema.',1);return}
-SET.act={id:s.id,pos:0};setActSave();bibMsg('Abierta: «'+bibNom(s.items[0])+'» (tema 1 de '+s.items.length+' de «'+s.nombre+'»).',0);bibCerrar()}
+SET.act={id:s.id,pos:0};setActSave();bibMsg('Abierta: «'+bibNom(s.items[0])+'» (tema 1 de '+s.items.length+' de «'+s.nombre+'»).',0);setUi();bibContraer()}
 function setDesactivar(){SET.act=null;setActSave();setMsg('El setlist ya no está activo en el Escenario.',0);setUi()}
 function setVolver(){SET.ed=null;setUi()}
 function setUi(){const lst=$('setlistas'),ed=$('seted');if(!lst)return;const s=setGet();
@@ -3122,14 +3144,14 @@ $('setact').textContent=act?'● Activo en el Escenario'+(SET.act.pos>=0?' · te
 const bi=$('setitems');bi.textContent='';
 if(!s.items.length)bi.appendChild(mk('div','bibvac','Sin temas todavía: agregalos desde la lista de abajo.'));
 s.items.forEach((id,i)=>{const it=mk('div','bibit'+(act&&SET.act.pos===i?' cur':''));it.appendChild(mk('span','num',(i+1)+'.'));
-const bo=mk('div','bo');bo.appendChild(mk('span','a',bibNom(id)));const c=(BIB.lib.find(x=>x.id===id)||{}).cfg||{};
+const bo=mkBtn('','Abrir este tema',()=>setTemaAbrir(i),'bo');bo.appendChild(mk('span','a',bibNom(id)));const c=(BIB.lib.find(x=>x.id===id)||{}).cfg||{};
 bo.appendChild(mk('span','b',[c.artist,c.key?'Tono '+c.key+(c.dest?' → '+c.dest:''):''].filter(Boolean).join(' · ')||' '));it.appendChild(bo);
 const u=mkBtn('▲','Subir',()=>setMover(i,-1)),d=mkBtn('▼','Bajar',()=>setMover(i,1));u.disabled=i===0;d.disabled=i===s.items.length-1;
 it.appendChild(u);it.appendChild(d);it.appendChild(mkBtn('✕','Quitar del setlist (no se borra de la biblioteca)',()=>setQuitar(i)));bi.appendChild(it)});
 const q=($('setq').value||'').trim().toLowerCase(),bl=$('setlib');bl.textContent='';
 const L=BIB.lib.filter(x=>!q||(x.nombre+' '+((x.cfg||{}).artist||'')).toLowerCase().includes(q)).sort((a,b)=>a.nombre.localeCompare(b.nombre,'es',{sensitivity:'base'}));
 if(!L.length)bl.appendChild(mk('div','bibvac',BIB.lib.length?'Ninguna canción coincide con la búsqueda.':'La biblioteca está vacía: guardá canciones en la pestaña “Canciones”.'));
-L.forEach(x=>{const it=mk('div','bibit'),bo=mk('div','bo');bo.appendChild(mk('span','a',x.nombre));
+L.forEach(x=>{const it=mk('div','bibit'),bo=mkBtn('','Abrir para revisarla (no cambia el setlist)',()=>setLibAbrir(x.id),'bo');bo.appendChild(mk('span','a',x.nombre));
 const n=s.items.filter(y=>y===x.id).length;bo.appendChild(mk('span','b',[(x.cfg||{}).artist,n?'ya está en el setlist'+(n>1?' ('+n+' veces)':''):''].filter(Boolean).join(' · ')||' '));
 it.appendChild(bo);it.appendChild(mkBtn('＋','Agregar al final del setlist',()=>setAgregar(x.id)));bl.appendChild(it)})}
 /* Exportar e importar: los setlists viajan con el repertorio */
@@ -3271,7 +3293,7 @@ const bvEl=t=>typeof t==='function'?t():$(t);
 function bvTab(tab,t){irTab(tab);setTimeout(()=>bvFlash(bvEl(t)),60)}
 function bvCajon(tab,t){bibAbrirCajon();bibTab(tab);setTimeout(()=>bvFlash(bvEl(t)),60)}
 /* Al elegir una canción desde “Escenario › Ver Repertorio guardado”, se abre en el Escenario */
-{const _ba=bibAbrir,_bc=bibCerrar;bibCerrar=function(){_bc();BV.st=false};bibAbrir=function(id){const st=BV.st;_ba(id);if(st&&$('bibd').hidden)entrarEscenario()}}
+{const _ba=bibAbrir,_bc=bibCerrar;bibCerrar=function(){_bc();BV.st=false};bibAbrir=function(id){const st=BV.st;_ba(id);if(st&&($('bibd').hidden||bibCol()))entrarEscenario()}}
 function bvMsg(t,err){const m=$('bvmsg');m.textContent=t;m.className='rt'+(err?' bvw':'')}
 function bvCsv(t){const R=[];let row=[],f='',q=false;for(let i=0;i<t.length;i++){const ch=t[i];
 if(q){if(ch==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=ch}
@@ -3878,7 +3900,7 @@ let pos=null;try{pos=JSON.parse(localStorage.getItem(GPK))}catch(e){}G.act=g;G.i
 if(!$('bv').hidden)bvCerrar();cfgGenCerrar();cerrarChangelog();guiaMostrar();clearInterval(G.tick);G.tick=setInterval(guiaPos,300)}
 function guiaResolver(dest){const d=String(dest||'').trim();if(!d){bibCerrar();return null}const R=bvGen(d);if(!R||R.err)return null;
 if(R.tipo==='ir'){bibCerrar();irTab(R.tab);return R.el?$(R.el):document.querySelector('.tab[data-tab="'+R.tab+'"] .tbox')||document.querySelector('.tab[data-tab="'+R.tab+'"]')}
-if(R.tipo==='cajon'){if($('bibd').hidden)bibAbrirCajon();bibTab(R.tab);return R.el?$(R.el):$('bibp-'+R.tab)}
+if(R.tipo==='cajon'){if($('bibd').hidden||bibCol())bibAbrirCajon();bibTab(R.tab);return R.el?$(R.el):$('bibp-'+R.tab)}
 if(R.tipo==='hoja'){bibCerrar();return R.el?$(R.el):$('wrap')}if(R.tipo==='barra'){bibCerrar();return $(R.el)}return null}
 function guiaMostrar(){const g=G.act;if(!g)return;const p=g.pasos[G.i];guiaSoltar();
 try{localStorage.setItem(GPK,JSON.stringify({id:g.id,i:G.i}))}catch(e){}
@@ -4142,6 +4164,25 @@ function hojaRepintar(){const p=$('paper');if(!p)return;p.style.outline='0.01px 
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')setTimeout(hojaRepintar,50)});
 addEventListener('focus',()=>setTimeout(hojaRepintar,50));
 {let tm=null;addEventListener('scroll',()=>{if(!document.body.classList.contains('stage'))return;clearTimeout(tm);tm=setTimeout(()=>{const p=$('paper');if(p){p.style.outline='0.01px solid transparent';requestAnimationFrame(()=>{p.style.outline=''})}},250)},{passive:true})}
+
+/* ===== PRO v0.53: abrir temas desde el setlist =====
+   Tocar un tema del setlist lo abre (el cajón se contrae). Si ese setlist está activo en el Escenario, antes pregunta
+   si en el Escenario se salta a ese tema: “Sí” lo deja como tema actual (sin ir al Escenario); “No” deja el tema actual como estaba.
+   En “Agregar canciones” también se puede abrir una canción para revisarla, sin cambiar el setlist. */
+function setTemaAbrir(i){const s=setGet();if(!s||s.items[i]==null)return;document.querySelectorAll('.setsalta').forEach(e=>e.remove());
+const act=!!(SET.act&&SET.act.id===s.id);if(!act){setTemaIr(i,null);return}
+if(SET.act.pos===i){setTemaIr(i,true);return}
+const row=$('setitems').children[i];const q=mk('div','setsalta');
+q.appendChild(mk('div','',(SET.act.pos>=0?'El tema actual en el Escenario es el '+(SET.act.pos+1)+'. ':'')+'¿Querés que en el Escenario se salte a este tema ('+(i+1)+'. «'+bibNom(s.items[i])+'»)?'));
+const b=mk('div','btns');b.appendChild(mkBtn('Sí, saltar a este tema','',()=>setTemaIr(i,true),'main'));b.appendChild(mkBtn('No, solo abrirlo','',()=>setTemaIr(i,false)));b.appendChild(mkBtn('Cancelar','',()=>q.remove()));q.appendChild(b);
+row.after(q);q.scrollIntoView({block:'nearest'})}
+function setTemaIr(i,saltar){const s=setGet();if(!s)return;const id=s.items[i],act=!!(SET.act&&SET.act.id===s.id),prev=act?SET.act.pos:-1;
+bibAbrir(id);if(BIB.cur!==id)return;
+if(act){if(saltar){SET.act.pos=i;delete SET.act.ign;setMsg('En el Escenario se sigue desde el tema '+(i+1)+' de «'+s.nombre+'».',0)}
+ else if(saltar===false){SET.act.pos=prev;SET.act.ign=id;setMsg('Abierto sin cambiar el tema actual del Escenario.',0)}setActSave()}
+setUi()}
+function setLibAbrir(id){const prev=SET.act?{pos:SET.act.pos}:null;bibAbrir(id);if(BIB.cur!==id)return;
+if(SET.act&&prev&&SET.act.pos!==prev.pos){SET.act.pos=prev.pos;SET.act.ign=id;setActSave()}setUi()}
 </script>
 </body>
 </html>
