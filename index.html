@@ -366,6 +366,13 @@ body.stage.bibcolon{margin-right:0}
 @media print{body.bibcolon{margin-right:0!important}}
 .setsalta{margin:-2px 0 4px;padding:8px 10px;border:1px solid #d97706;border-radius:10px;background:rgba(217,119,6,.10);font-size:13.5px}
 .setsalta .btns{margin-top:6px}
+
+/* ===== PRO v0.54: arrastrar y soltar ===== */
+.bibit .dh{flex:none;display:flex;align-items:center;justify-content:center;width:26px;margin:-4px 0 -4px -4px;padding-left:2px;border-radius:9px 0 0 9px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;color:var(--mut);font-size:18px;line-height:1}
+.bibit .dh:hover{background:var(--line);color:var(--ink)}.bibit .dh.off{cursor:default;opacity:.3}.bibit .dh.off:hover{background:none}
+.bibit.drg{position:relative;z-index:3;background:var(--panel);box-shadow:0 6px 18px rgba(0,0,0,.35);border-color:#60a5fa}
+body.dragn,body.dragn *{cursor:grabbing!important;user-select:none!important;-webkit-user-select:none!important}
+.h4n{font-weight:400;color:var(--mut);font-size:12px}
 /* Diálogo del botón Atrás */
 .atr{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px}
 .atrb{width:100%;max-width:400px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 8px 30px rgba(0,0,0,.35)}
@@ -548,6 +555,7 @@ body{background:#fff}
 <div id="penlista">
 <div class="rt" style="display:block">Pendientes de transcribir: anotá canciones con lo que tengas (letra, acordes sueltos, links, fotos, PDF) para transcribirlas después.</div>
 <div class="btns"><button id="pennuevo" class="main" onclick="penEditar('nuevo')">＋ Nuevo pendiente</button></div>
+<div class="bibord"><label for="penord">Ordenar por</label><select id="penord" onchange="penOrdSet(this.value)"><option value="rec">Modificados recientemente</option><option value="tit">Título A → Z</option><option value="man">Manual (⠿ arrastrar)</option></select></div>
 <div id="penitems" class="biblist"></div>
 <div class="btns"><button id="penexp" onclick="penExportar()">Exportar pendientes (con adjuntos)</button><button id="penimp" onclick="$('penfile').click()">Importar pendientes…</button></div>
 <input type="file" id="penfile" style="display:none" onchange="penArchivo(this.files[0]);this.value=''">
@@ -580,7 +588,7 @@ body{background:#fff}
 <div class="btns"><button id="bibg" class="main" onclick="bibGuardar()">Guardar en la biblioteca</button><button id="bibnueva" onclick="bibGuardar(true)">Guardar como nueva</button></div>
 <div class="bibqrow"><input id="bibq" type="search" placeholder="Buscar por título o artista" autocomplete="off" oninput="bibUi()"><button id="bibqx" onclick="bibFiltroBorrar()" title="Borrar el filtro y mostrar todas las canciones">✕ Borrar filtro</button></div>
 <div id="bibfilt" class="bibfilt" hidden></div>
-<div class="bibord"><label for="bibord">Ordenar por</label><select id="bibord" onchange="bibOrdSet(this.value)"><option value="tit">Título A → Z</option><option value="titz">Título Z → A</option><option value="art">Artista A → Z</option><option value="rec">Modificadas recientemente</option><option value="tono">Tono</option><option value="man">Manual (▲ ▼)</option></select></div>
+<div class="bibord"><label for="bibord">Ordenar por</label><select id="bibord" onchange="bibOrdSet(this.value)"><option value="tit">Título A → Z</option><option value="titz">Título Z → A</option><option value="art">Artista A → Z</option><option value="rec">Modificadas recientemente</option><option value="tono">Tono</option><option value="man">Manual (⠿ arrastrar o ▲ ▼)</option></select></div>
 <div id="bibconf" class="vconf" hidden><div id="bibconfTxt"></div><div id="bibconfBtns" class="btns"></div></div>
 <div id="biblist" class="biblist"></div>
 <div id="bibmsg" class="rt"></div>
@@ -606,6 +614,7 @@ body{background:#fff}
 <div id="bibp-set" class="bibpane" hidden>
 <div id="setlistas">
 <div class="setnew"><b>Nuevo setlist</b><input id="setnom" maxlength="60" placeholder="Nombre (por ejemplo: Bar La Esquina)" autocomplete="off"><input id="setfec" type="date" aria-label="Fecha"><button id="setcrear" class="main" onclick="setCrear()">＋ Crear setlist</button></div>
+<div class="bibord"><label for="setord">Ordenar por</label><select id="setord" onchange="setOrdSet(this.value)"><option value="fec">Fecha (más recientes primero)</option><option value="nom">Nombre A → Z</option><option value="man">Manual (⠿ arrastrar)</option></select></div>
 <div id="setlist" class="biblist"></div>
 <div class="btns"><button id="setexpall" onclick="setExportar()">Exportar todos los setlists</button><button id="setimp" onclick="$('setfile').click()">Importar setlist…</button></div>
 <div class="rt" style="display:block">Los setlists se guardan solos en este navegador. Exportarlos sirve para pasarlos a otro dispositivo o a otro músico: cada archivo incluye sus canciones.</div>
@@ -621,7 +630,7 @@ body{background:#fff}
 <div id="setdup" class="vconf" hidden><label for="setdupnom" style="margin-top:0">Nombre del setlist duplicado</label><input id="setdupnom" maxlength="60" autocomplete="off" onkeydown="if(event.key==='Enter')setDuplicar()"><div class="btns"><button class="main" onclick="setDuplicar()">Guardar el duplicado</button><button onclick="$('setdup').hidden=true">Cancelar</button></div></div>
 <div id="setact" class="rt"></div>
 <h4>Temas del setlist</h4><div id="setitems" class="biblist"></div>
-<h4>Agregar canciones de la biblioteca</h4><input id="setq" type="search" placeholder="Buscar por título o artista" autocomplete="off" oninput="setUi()"><div id="setlib" class="biblist"></div>
+<h4>Agregar canciones de la biblioteca <span class="h4n">(mismo orden que en Canciones)</span></h4><input id="setq" type="search" placeholder="Buscar por título o artista" autocomplete="off" oninput="setUi()"><div id="setlib" class="biblist"></div>
 </div>
 <div id="setmsg" class="rt"></div>
 </div>
@@ -1520,6 +1529,7 @@ u1M0/kZW0TQdukZHUlBn4XQoaA1iQVAJNVNqYfEgKBGJtezh1tgxVSchyO1wipf1J0chYnLI8PXR2EDo
 /* ===== Versión y registro de cambios (agregar cada versión nueva ARRIBA de todo) ===== */
 const ULTCOMP='Última versión compartida con la otra plantilla: PRO v0.22 (e0.34) ↔ Estándar v0.34 (p0.22)'; /* actualizar SOLO cuando un cambio se aplique a ambas versiones */
 const VERSION_LOG=[
+{v:'PRO 0.54',f:'11/11/2026',c:['[PRO] Reordenar arrastrando y soltando: cada fila de Canciones, Setlists, Temas del setlist, Agregar canciones y Pendientes tiene una agarradera ⠿ (funciona con mouse y con el dedo). Cerca del borde, la lista se desplaza sola.','[PRO] Canciones, Setlists y Pendientes tienen orden “Manual”, que se guarda en cada dispositivo. Arrastrar una fila pasa la lista a “Manual” a partir del orden que se estaba viendo; elegir otro orden no lo borra. Con una búsqueda escrita, la agarradera se desactiva.','[PRO] “Agregar canciones de la biblioteca” muestra las canciones en el mismo orden que la pestaña Canciones; reordenar en cualquiera de las dos cambia ambas.','[PRO] Arrastrar un tema dentro del setlist cambia el orden del setlist (se sincroniza) y acomoda el tema actual del Escenario. Los ▲ ▼ siguen disponibles.']},
 {v:'PRO 0.53',f:'10/11/2026',c:['[PRO] Al abrir una canción desde ♫ Repertorio (Canciones o Setlists), el cajón ya no se cierra: se contrae hacia la derecha y queda una franja angosta “‹ ♫ Repertorio”; tocándola vuelve a mostrarse tal como estaba. La página se corre ese ancho para que la franja no tape la barra de desplazamiento. También se puede contraer con “» Contraer”; “✕ Cerrar” lo sigue cerrando.','[PRO] Setlists: los temas del setlist se pueden tocar para abrirlos. Si el setlist está activo en el Escenario, antes pregunta si en el Escenario se salta a ese tema: “Sí” lo deja como tema actual (sin ir al Escenario; se retoma desde ahí al entrar) y “No” lo abre sin cambiar el tema actual.','[PRO] Setlists: en “Agregar canciones de la biblioteca” también se puede tocar una canción para abrirla y revisarla antes de sumarla; no cambia el setlist ni el tema actual.']},
 {v:'PRO 0.52',f:'10/11/2026',c:['[PRO] Corregido: en la vista previa, a veces faltaban letras sueltas del cifrado (por ejemplo “m” en lugar de “Bm”) después de desplazarse o tocar otras secciones. La hoja ahora se achica con el ajuste nativo del navegador, que dibuja el texto a su tamaño final, en lugar de una transformación que Chrome a veces redibujaba mal.','[PRO] Redibujado de seguridad de la hoja al volver a la app o a la ventana, y al terminar de desplazarse en el Escenario.']},
 {v:'PRO 0.51',f:'10/11/2026',c:['[PRO] “↻ Sincronizar ahora”: al tocarlo aparece “Toque recibido a las hh:mm:ss”. Si el navegador registra el toque pero no lo convierte en clic (pasa en algunas tablets), el botón se activa igual por una vía alternativa.','[PRO] Nuevo “🩺 Diagnóstico de la sincronización”, debajo del botón: versión de la app y de Chrome, estado de la sincronización, último toque y clic, si algo tapa el botón y los últimos errores de la app. “Copiar diagnóstico” lo copia para enviarlo.']},
@@ -3024,7 +3034,7 @@ const q=($('bibq').value||'').trim().toLowerCase();
 const L=bibOrdenar(BIB.lib.filter(x=>!q||(x.nombre+' '+((x.cfg||{}).artist||'')).toLowerCase().includes(q)));const LA=bibOrdenar(BIB.lib.slice()).map(x=>x.id);$('bibord').value=BIBMODO;
 box.textContent='';
 if(!L.length){const v=document.createElement('div');v.className='bibvac';v.textContent=BIB.lib.length?'Ninguna canción coincide con la búsqueda.':'Todavía no hay canciones guardadas. Tocá “Guardar en la biblioteca” para guardar la que está en pantalla.';box.appendChild(v)}
-L.forEach(s=>{const it=document.createElement('div');it.className='bibit'+(s.id===BIB.cur?' cur':'');
+L.forEach(s=>{const it=document.createElement('div');it.className='bibit'+(s.id===BIB.cur?' cur':'');it.dataset.k=s.id;it.appendChild(q?dhOff('Borrá la búsqueda para reordenar'):dhMk(bibOrdenA));
 const bo=document.createElement('button');bo.className='bo';bo.type='button';bo.title='Abrir';bo.onclick=()=>bibAbrir(s.id);
 const a=document.createElement('span');a.className='a';a.textContent=s.nombre;
 const c=s.cfg||{},b=document.createElement('span');b.className='b';
@@ -3131,9 +3141,9 @@ function setVolver(){SET.ed=null;setUi()}
 function setUi(){const lst=$('setlistas'),ed=$('seted');if(!lst)return;const s=setGet();
 if(!s){SET.ed=null;lst.hidden=false;ed.hidden=true;if(!$('setfec').value)$('setfec').value=hoyISO();
 const box=$('setlist');box.textContent='';
-const L=SET.l.slice().sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||'')||a.nombre.localeCompare(b.nombre,'es',{sensitivity:'base'}));
+const L=setOrdenar(SET.l.slice());$('setord').value=SETMODO;
 if(!L.length)box.appendChild(mk('div','bibvac','Todavía no hay setlists. Creá uno con nombre y fecha y agregale canciones de la biblioteca.'));
-L.forEach(x=>{const act=!!(SET.act&&SET.act.id===x.id),it=mk('div','bibit'+(act?' cur':'')),bo=mkBtn('','Abrir el setlist',()=>{SET.ed=x.id;setMsg('',0);setUi()},'bo');
+L.forEach(x=>{const act=!!(SET.act&&SET.act.id===x.id),it=mk('div','bibit'+(act?' cur':''));it.dataset.k=x.id;it.appendChild(dhMk(setOrdenA));const bo=mkBtn('','Abrir el setlist',()=>{SET.ed=x.id;setMsg('',0);setUi()},'bo');
 bo.appendChild(mk('span','a',x.nombre));const b=mk('span','b',fecTxt(x.fecha)+' · '+x.items.length+(x.items.length===1?' tema':' temas'));
 if(act)b.appendChild(mk('span','bibact',' · ● activo en el Escenario'));bo.appendChild(b);it.appendChild(bo);
 it.appendChild(dosToques('✕','Eliminar el setlist (las canciones no se borran)',()=>setEliminar(x.id)));box.appendChild(it)});return}
@@ -3143,15 +3153,15 @@ const act=!!(SET.act&&SET.act.id===s.id);
 $('setact').textContent=act?'● Activo en el Escenario'+(SET.act.pos>=0?' · tema actual: '+(SET.act.pos+1)+' de '+s.items.length:' · todavía sin tema abierto'):'No está activo en el Escenario.';$('setdes').hidden=!act;
 const bi=$('setitems');bi.textContent='';
 if(!s.items.length)bi.appendChild(mk('div','bibvac','Sin temas todavía: agregalos desde la lista de abajo.'));
-s.items.forEach((id,i)=>{const it=mk('div','bibit'+(act&&SET.act.pos===i?' cur':''));it.appendChild(mk('span','num',(i+1)+'.'));
+s.items.forEach((id,i)=>{const it=mk('div','bibit'+(act&&SET.act.pos===i?' cur':''));it.dataset.k=String(i);it.appendChild(dhMk(setTemasA));it.appendChild(mk('span','num',(i+1)+'.'));
 const bo=mkBtn('','Abrir este tema',()=>setTemaAbrir(i),'bo');bo.appendChild(mk('span','a',bibNom(id)));const c=(BIB.lib.find(x=>x.id===id)||{}).cfg||{};
 bo.appendChild(mk('span','b',[c.artist,c.key?'Tono '+c.key+(c.dest?' → '+c.dest:''):''].filter(Boolean).join(' · ')||' '));it.appendChild(bo);
 const u=mkBtn('▲','Subir',()=>setMover(i,-1)),d=mkBtn('▼','Bajar',()=>setMover(i,1));u.disabled=i===0;d.disabled=i===s.items.length-1;
 it.appendChild(u);it.appendChild(d);it.appendChild(mkBtn('✕','Quitar del setlist (no se borra de la biblioteca)',()=>setQuitar(i)));bi.appendChild(it)});
 const q=($('setq').value||'').trim().toLowerCase(),bl=$('setlib');bl.textContent='';
-const L=BIB.lib.filter(x=>!q||(x.nombre+' '+((x.cfg||{}).artist||'')).toLowerCase().includes(q)).sort((a,b)=>a.nombre.localeCompare(b.nombre,'es',{sensitivity:'base'}));
+const L=bibOrdenar(BIB.lib.filter(x=>!q||(x.nombre+' '+((x.cfg||{}).artist||'')).toLowerCase().includes(q)));
 if(!L.length)bl.appendChild(mk('div','bibvac',BIB.lib.length?'Ninguna canción coincide con la búsqueda.':'La biblioteca está vacía: guardá canciones en la pestaña “Canciones”.'));
-L.forEach(x=>{const it=mk('div','bibit'),bo=mkBtn('','Abrir para revisarla (no cambia el setlist)',()=>setLibAbrir(x.id),'bo');bo.appendChild(mk('span','a',x.nombre));
+L.forEach(x=>{const it=mk('div','bibit');it.dataset.k=x.id;it.appendChild(q?dhOff('Borrá la búsqueda para reordenar'):dhMk(bibOrdenA));const bo=mkBtn('','Abrir para revisarla (no cambia el setlist)',()=>setLibAbrir(x.id),'bo');bo.appendChild(mk('span','a',x.nombre));
 const n=s.items.filter(y=>y===x.id).length;bo.appendChild(mk('span','b',[(x.cfg||{}).artist,n?'ya está en el setlist'+(n>1?' ('+n+' veces)':''):''].filter(Boolean).join(' · ')||' '));
 it.appendChild(bo);it.appendChild(mkBtn('＋','Agregar al final del setlist',()=>setAgregar(x.id)));bl.appendChild(it)})}
 /* Exportar e importar: los setlists viajan con el repertorio */
@@ -4013,8 +4023,8 @@ const penIcon=t=>/^image\//.test(t)?'🖼':/pdf/.test(t)?'📄':/sheet|excel|csv
 const penLinkTipo=u=>/youtu\.?be/.test(u)?'▶ YouTube':/spotify/.test(u)?'🎧 Spotify':/drive\.google|docs\.google/.test(u)?'📁 Drive':'🔗 Web';
 function penUi(){const n=PEN.l.filter(x=>x.estado!=='transcripta').length;if($('pencnt'))$('pencnt').textContent=n?String(n):'';if(!$('bibp-pen')||$('bibp-pen').hidden)return;
 if(PEN.ed){$('penlista').hidden=true;$('pened').hidden=false;return}$('penlista').hidden=false;$('pened').hidden=true;
-const box=$('penitems');box.textContent='';const A=PEN.l.filter(x=>x.estado!=='transcripta').sort((a,b)=>b.t-a.t),T=PEN.l.filter(x=>x.estado==='transcripta').sort((a,b)=>b.t-a.t);
-const item=x=>{const it=mk('div','bibit'),bo=mkBtn('','Abrir',()=>penEditar(x.id),'bo'),a=mk('span','a',x.titulo);a.appendChild(mk('span','penchip '+x.estado,{pendiente:'Pendiente',proceso:'En proceso',transcripta:'Transcripta'}[x.estado]));bo.appendChild(a);
+const box=$('penitems');box.textContent='';const A=penOrdenar(PEN.l.filter(x=>x.estado!=='transcripta')),T=penOrdenar(PEN.l.filter(x=>x.estado==='transcripta'));$('penord').value=PENMODO;
+const item=x=>{const it=mk('div','bibit');it.dataset.k=x.id;it.appendChild(dhMk(penOrdenA));const bo=mkBtn('','Abrir',()=>penEditar(x.id),'bo'),a=mk('span','a',x.titulo);a.appendChild(mk('span','penchip '+x.estado,{pendiente:'Pendiente',proceso:'En proceso',transcripta:'Transcripta'}[x.estado]));bo.appendChild(a);
 bo.appendChild(mk('span','b',[x.artista,x.links.filter(Boolean).length?x.links.filter(Boolean).length+' link'+(x.links.filter(Boolean).length>1?'s':''):'',x.adj.length?x.adj.length+' adjunto'+(x.adj.length>1?'s':''):'',new Date(x.t).toLocaleDateString('es')].filter(Boolean).join(' · ')));it.appendChild(bo);return it};
 if(!A.length&&!T.length)box.appendChild(mk('div','bibvac','No hay pendientes. Tocá “＋ Nuevo pendiente” para anotar una canción.'));
 A.forEach(x=>box.appendChild(item(x)));if(T.length){const d=mk('details');d.appendChild(mk('summary','','Transcriptas ('+T.length+')'));T.forEach(x=>d.appendChild(item(x)));box.appendChild(d)}}
@@ -4183,6 +4193,53 @@ if(act){if(saltar){SET.act.pos=i;delete SET.act.ign;setMsg('En el Escenario se s
 setUi()}
 function setLibAbrir(id){const prev=SET.act?{pos:SET.act.pos}:null;bibAbrir(id);if(BIB.cur!==id)return;
 if(SET.act&&prev&&SET.act.pos!==prev.pos){SET.act.pos=prev.pos;SET.act.ign=id;setActSave()}setUi()}
+
+/* ===== PRO v0.54: reordenar con “arrastrar y soltar” =====
+   Cada fila tiene una agarradera ⠿ (mouse o dedo). Al soltar, la lista pasa a orden “Manual”, que se guarda en este dispositivo.
+   Canciones y “Agregar canciones” comparten el mismo orden. El orden de los temas de un setlist es parte del setlist (se sincroniza). */
+function dhOff(t){const h=mk('span','dh off','⠿');h.title=t;return h}
+function dhMk(fin){const h=mk('span','dh','⠿');h.title='Arrastrar para reordenar';
+h.addEventListener('pointerdown',e=>{if(e.button>0)return;e.preventDefault();const row=h.closest('.bibit'),cont=row&&row.parentNode;if(!cont)return;
+ const sc=row.closest('.bibpane');let y=e.clientY,mov=false,vivo=true,y0=e.clientY;const pid=e.pointerId;
+ row.classList.add('drg');document.body.classList.add('dragn');
+ const otros=()=>[...cont.children].filter(x=>x!==row&&x.dataset&&x.dataset.k!=null);
+ const paso=()=>{const L=otros();if(!L.length)return;let k=0;for(const o of L){const r=o.getBoundingClientRect();if(y>(r.top+r.bottom)/2)k++;else break}
+  if(k<L.length){if(row.nextElementSibling!==L[k])cont.insertBefore(row,L[k])}else if(L[L.length-1].nextElementSibling!==row)L[L.length-1].after(row)};
+ const tick=()=>{if(!vivo)return;if(sc&&mov){const r=sc.getBoundingClientRect();let d=0;if(y<r.top+48)d=-Math.ceil((r.top+48-y)/4);else if(y>r.bottom-48)d=Math.ceil((y-r.bottom+48)/4);if(d){sc.scrollTop+=d;paso()}}requestAnimationFrame(tick)};requestAnimationFrame(tick);
+ const mv=ev=>{if(ev.pointerId!==pid)return;if(ev.cancelable)ev.preventDefault();y=ev.clientY;if(Math.abs(y-y0)>3)mov=true;if(mov)paso()};
+ const fin_=ok=>{vivo=false;removeEventListener('pointermove',mv);removeEventListener('pointerup',up);removeEventListener('pointercancel',cn);row.classList.remove('drg');document.body.classList.remove('dragn');
+  if(!mov)return;const keys=[...cont.children].filter(x=>x.dataset&&x.dataset.k!=null).map(x=>x.dataset.k);fin(ok?keys:null)};
+ const up=ev=>{if(ev.pointerId===pid)fin_(true)},cn=ev=>{if(ev.pointerId===pid)fin_(false)};addEventListener('pointermove',mv,{passive:false});addEventListener('pointerup',up);addEventListener('pointercancel',cn)});
+h.addEventListener('contextmenu',e=>e.preventDefault());return h}
+const ordSub=(full,keys)=>{const S=new Set(keys);let j=0;return full.map(id=>S.has(id)?keys[j++]:id)};
+/* Canciones (y “Agregar canciones”) */
+function bibOrdenA(keys){if(keys){const full=bibOrdenar(BIB.lib.slice()).map(x=>x.id);if(BIBMODO!=='man'){BIBMODO='man';bibMsg('El orden pasó a “Manual”, a partir del que estabas viendo.',0)}BIBO=ordSub(full,keys);bibOrdSave()}
+bibUi();if(!$('bibp-set').hidden)setUi()}
+/* Setlists */
+const SETOK='cifrado-setlist-orden',SETMK='cifrado-setlist-modo';let SETO=[],SETMODO='fec';try{SETO=JSON.parse(localStorage.getItem(SETOK))||[];SETMODO=localStorage.getItem(SETMK)||'fec'}catch(e){}
+if(!Array.isArray(SETO))SETO=[];if(!['fec','nom','man'].includes(SETMODO))SETMODO='fec';
+function setOrdSave(){try{localStorage.setItem(SETOK,JSON.stringify(SETO));localStorage.setItem(SETMK,SETMODO)}catch(e){}}
+function setOrdenar(L,modo){modo=modo||SETMODO;const nc=(a,b)=>a.nombre.localeCompare(b.nombre,'es',{sensitivity:'base'});
+if(modo==='nom')return L.sort(nc);
+if(modo==='man'){const ix={};SETO.forEach((id,i)=>ix[id]=i);const v=x=>(x.id in ix)?ix[x.id]:-1e9+0;return L.sort((a,b)=>{const ia=a.id in ix,ib=b.id in ix;if(ia&&ib)return ix[a.id]-ix[b.id];if(ia!==ib)return ia?1:-1;return(b.fecha||'').localeCompare(a.fecha||'')||nc(a,b)})}
+return L.sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||'')||nc(a,b))}
+function setOrdSet(v){SETMODO=v;if(v==='man'&&!SETO.length)SETO=setOrdenar(SET.l.slice(),'fec').map(x=>x.id);setOrdSave();setUi()}
+function setOrdenA(keys){if(keys){if(SETMODO!=='man'){SETMODO='man';setMsg('El orden pasó a “Manual”, a partir del que estabas viendo.',0)}SETO=keys;setOrdSave()}setUi()}
+/* Temas de un setlist (arrastrar): se acomoda también el tema actual del Escenario */
+function setTemasA(keys){const s=setGet();if(!s||!keys){setUi();return}const idx=keys.map(Number);if(idx.length!==s.items.length){setUi();return}
+const nuevo=idx.map(i=>s.items[i]);if(nuevo.join('|')===s.items.join('|')&&idx.every((v,i)=>v===i)){setUi();return}
+if(SET.act&&SET.act.id===s.id&&SET.act.pos>=0){SET.act.pos=idx.indexOf(SET.act.pos);setActSave()}
+s.items=nuevo;s.t=Date.now();setSave();setUi()}
+/* Pendientes */
+const PENOK='cifrado-pen-orden',PENMK='cifrado-pen-modo';let PENO=[],PENMODO='rec';try{PENO=JSON.parse(localStorage.getItem(PENOK))||[];PENMODO=localStorage.getItem(PENMK)||'rec'}catch(e){}
+if(!Array.isArray(PENO))PENO=[];if(!['rec','tit','man'].includes(PENMODO))PENMODO='rec';
+function penOrdSave(){try{localStorage.setItem(PENOK,JSON.stringify(PENO));localStorage.setItem(PENMK,PENMODO)}catch(e){}}
+function penOrdenar(L,modo){modo=modo||PENMODO;
+if(modo==='tit')return L.sort((a,b)=>a.titulo.localeCompare(b.titulo,'es',{sensitivity:'base'}));
+if(modo==='man'){const ix={};PENO.forEach((id,i)=>ix[id]=i);return L.sort((a,b)=>{const ia=a.id in ix,ib=b.id in ix;if(ia&&ib)return ix[a.id]-ix[b.id];if(ia!==ib)return ia?1:-1;return b.t-a.t})}
+return L.sort((a,b)=>b.t-a.t)}
+function penOrdSet(v){PENMODO=v;if(v==='man'&&!PENO.length)PENO=penOrdenar(PEN.l.slice(),'rec').map(x=>x.id);penOrdSave();penUi()}
+function penOrdenA(keys){if(keys){const full=penOrdenar(PEN.l.slice()).map(x=>x.id);if(PENMODO!=='man'){PENMODO='man';penMsg('El orden pasó a “Manual”, a partir del que estabas viendo.',0)}PENO=ordSub(full,keys);penOrdSave()}penUi()}
 </script>
 </body>
 </html>
