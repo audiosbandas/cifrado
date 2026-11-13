@@ -1559,6 +1559,7 @@ u1M0/kZW0TQdukZHUlBn4XQoaA1iQVAJNVNqYfEgKBGJtezh1tgxVSchyO1wipf1J0chYnLI8PXR2EDo
 /* ===== Versión y registro de cambios (agregar cada versión nueva ARRIBA de todo) ===== */
 const ULTCOMP='Última versión compartida con la otra plantilla: PRO v0.22 (e0.34) ↔ Estándar v0.34 (p0.22)'; /* actualizar SOLO cuando un cambio se aplique a ambas versiones */
 const VERSION_LOG=[
+{v:'PRO 0.58',f:'12/11/2026',c:['[PRO] Estructura: al volver al principio de una línea después de desplazarse a la derecha, el campo ahora muestra su borde izquierdo y el primer carácter completo, con el cursor visible. Al pasar de una línea larga a una corta, la corta se ve entera desde el principio; cerca del borde izquierdo quedan visibles unos caracteres antes del cursor.']},
 {v:'PRO 0.57',f:'11/11/2026',c:['[PRO] Corregido: con el metrónomo sonando, al tocar ▶ Auto-scroll o ⟲ Reiniciar auto la hoja se desplazaba enseguida, en el próximo tiempo 1. Ahora la cuenta empieza en ese tiempo 1 y el primer desplazamiento llega recién al completar los compases del preset (por ejemplo, 16).']},
 {v:'PRO 0.56',f:'11/11/2026',c:['[PRO] Escenario: al arrancar el auto-scroll (con ▶ o con Reiniciar auto), la barra de abajo se oculta si estaba visible; al pausar o detener vuelve a aparecer. Si la ocultaste vos, queda oculta hasta que la muestres o vuelvas a entrar al Escenario.','[PRO] Nuevo ■ Stop, a la derecha de Pausar: el primer toque lo pone amarillo sin interrumpir; un segundo toque dentro de 3 s detiene y el botón desaparece. Después de un Stop, ▶ Auto-scroll arranca desde el principio de la canción.','[PRO] Nuevo ⟲ Reiniciar auto, entre Stop y Salir: vuelve al principio de la canción y arranca el auto-scroll.','[PRO] A la izquierda de la franja superior, acceso discreto ♩ Metrónomo: lo enciende y lo muestra en la esquina superior, como el botón de la barra de abajo.','[PRO] El metrónomo (y la cuenta de los presets) toma la métrica del primer compás; si no tiene una indicada (por ejemplo @3/4), usa 4/4. Antes tomaba la primera métrica que apareciera en cualquier parte de la canción.']},
 {v:'PRO 0.55',f:'11/11/2026',c:['[PRO] Escenario: auto-scroll “Por compases (presets)”, ahora el predeterminado. Cada N compases, contados desde que se toca ▶ Auto-scroll con el BPM y el compás de la canción, la hoja avanza ¼, ⅓ o ½ hoja, o 1 o 2 filas. Si el metrónomo ya está sonando, la cuenta empieza en su próximo tiempo 1.','[PRO] Tres presets, Lento · Normal · Rápido (de fábrica: 32, 16 y 8 compases, ¼ hoja; Normal es el predeterminado). Se editan, borran o vuelven a crear en ⚙ › Desplazamiento, con ajuste de velocidad de ±5% o ±10%.','[PRO] Nueva franja flotante arriba en el Escenario: los presets, ▶ Auto-scroll / ⏸ Pausar y ✕ Salir. Con el auto-scroll detenido, un preset solo prepara el modo; en marcha, cambia de modo sin cortar, desde donde está la hoja. Las zonas táctiles, las flechas y el pedal mueven la hoja sin detener el conteo.','[PRO] ✕ Salir del Escenario requiere dos toques: el primero lo pone amarillo y el segundo (dentro de 3 s) sale.']},
@@ -4352,6 +4353,20 @@ for(const raw of L){let l=raw.trim();if(!l||l.startsWith('::'))continue;let m;
  return 4}
 return 4};
 stTopUi();
+
+/* ===== PRO v0.58: desplazamiento horizontal de los campos sin ajuste de línea (Estructura) =====
+   Chrome desplaza lo justo para mostrar el cursor y deja oculto el margen interno: al volver al principio de la línea, el primer
+   carácter quedaba pegado al borde (o una línea corta casi oculta). Ahora, cuando el cursor queda cerca del borde izquierdo,
+   el campo se corre para mostrar el principio de la línea, o al menos unos caracteres antes del cursor. */
+{const cv=document.createElement('canvas').getContext('2d');
+ const ajustar=t=>{if(!t||t.tagName!=='TEXTAREA'||t.scrollWidth<=t.clientWidth+1)return;const cs=getComputedStyle(t);if(!/^pre/.test(cs.whiteSpace)||cs.whiteSpace==='pre-wrap')return;
+  const pos=t.selectionDirection==='backward'?t.selectionStart:t.selectionEnd,v=t.value,ini=v.lastIndexOf('\n',pos-1)+1,pre=v.slice(ini,pos).replace(/\t/g,'        ');
+  cv.font=cs.font;const w=cv.measureText(pre).width,cw=cv.measureText('M').width,vis=t.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
+  let x=null;if(w<=vis-cw*2)x=0;else if(w-t.scrollLeft<cw*4)x=Math.max(0,w-cw*6);
+  if(x!==null&&Math.abs(t.scrollLeft-x)>0.5)t.scrollLeft=x};
+ const prog=t=>requestAnimationFrame(()=>ajustar(t));
+ document.addEventListener('selectionchange',()=>{const a=document.activeElement;if(a&&a.tagName==='TEXTAREA')prog(a)});
+ ['keyup','click','input','focus'].forEach(ev=>document.addEventListener(ev,e=>{if(e.target&&e.target.tagName==='TEXTAREA')prog(e.target)},true));}
 </script>
 </body>
 </html>
